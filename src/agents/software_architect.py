@@ -139,25 +139,33 @@ def build_architect_graph(llm: Any | None = None):
     return builder.compile()
 
 
-def run_architect_agent(target_file: str, task_id: str = "ARCH-REVIEW-01") -> ArchitectureReviewResult:
+def run_architect_agent(
+        target_file: str,
+        *,
+        task_id: str = "ARCH-REVIEW-01",
+        llm: Any | None = None,
+        trace_file: str | None = None,
+) -> ArchitectureReviewResult:
     run_id = str(uuid.uuid4())
     started = time.perf_counter()
 
-    graph = build_architect_graph()
+    graph = build_architect_graph(llm=llm)
     state = graph.invoke({"target_file": target_file})
     duration = time.perf_counter() - started
+    model_name = getattr(llm, "model", None) or getattr(llm, "model_name", None) or "qwen3:4b"
 
     trace_log = {
         "run_id": run_id,
         "task_id": task_id,
         "agent": "software-architect-agent",
+        "model": model_name,
         "tools": ["read_workspace_file"],
         "duration_seconds": round(duration, 4),
     }
 
     if state.get("error"):
         trace_log.update({"status": "error", "error": state["error"]})
-        append_trace(trace_log)
+        append_trace(trace_log, trace_file)
         raise RuntimeError(state["error"])
 
     raw = dict(state["result"])
@@ -172,7 +180,7 @@ def run_architect_agent(target_file: str, task_id: str = "ARCH-REVIEW-01") -> Ar
             duration_seconds=duration, input_tokens=input_tokens, output_tokens=output_tokens
         ),
     })
-    append_trace(trace_log)
+    append_trace(trace_log, trace_file)
 
     return result
 
