@@ -16,6 +16,7 @@ To improve the world through software
 - Caitlin
 - Daniil
 - Rafael
+- Fatih
 
 ## Working rules
 
