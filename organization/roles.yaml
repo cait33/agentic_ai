@@ -105,10 +105,10 @@ roles:
     title: QA & Test Engineer
     responsibility: pytest, regression testing, agent evaluation, quality evidence
     current_actor_type: human
-    current_actor: TBD
-    target_actor_type: human
-    target_actor: TBD
-    accountable_human: TBD
+    current_actor: Fatih
+    target_actor_type: hybrid
+    target_actor: qa_agent
+    accountable_human: Fatih
     human_approval_required: true
     implementation_status: planned
 
