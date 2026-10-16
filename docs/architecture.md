@@ -14,7 +14,6 @@ flowchart LR
     Human --> API
     Agent1 --> HAG{"Human Approval Gate\n(Review)"}
     HAG --> API
-    API --> WorkItems["Architecture Findings\n& Health Metadata"]
 
     Human --> Cost[Cost analysis]
     Agent1 --> Trace[Local JSONL traces]
