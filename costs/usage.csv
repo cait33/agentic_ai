@@ -8,3 +8,4 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-10-19,WF-DRYRUN-02,agent,software-architect-agent,39.9968,seconds,1.4508,"Workflow df946132: architecture review of src/app/work_items.py; 1 call; 1008 in / 768 out tokens (output truncated -> unparseable)"
 2026-10-19,WF-DRYRUN-02,agent,qa-agent,1.5661,seconds,0.0157,"Workflow df946132: 19 tests passed; 0 LLM calls"
 2026-10-19,WF-DRYRUN-02,human,Fatih,0.25,hours,25.0,"Human gate review of work_items.py after escalation (approved)"
+2026-10-19,WF-DRYRUN-02,human,Fatih,4.0,hours,400.0,"Implementation of workflow, human gate, work item API and tests (AI-assisted); issue #10"
