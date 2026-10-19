@@ -204,8 +204,6 @@ def build_graph(llm: Any | None = None, *, trace_context: dict[str, Any] | None 
     builder.add_node("process_requirements", process_requirements)
     builder.add_edge(START, "read_file")
     builder.add_conditional_edges("read_file", route_after_read, ["process_requirements", END])
-    builder.add_edge("process_requirements", END)
-    builder.add_edge(START, "write_file")
     builder.add_conditional_edges("write_file", route_after_write, ["process_requirements", END])
     builder.add_edge("process_requirements", END)
     return builder.compile()
