@@ -18,7 +18,7 @@ from src.agents.product_owner import (
 )
 from src.models.task import EngineeringTask
 
-BRIEF = "docs/briefs/work-items.md"
+BRIEF = "tests/briefs/work-items.md"
 
 GOOD = {
     "status": "success",
