@@ -27,12 +27,12 @@ Issue: [#10](https://github.com/cait33/agentic_ai/issues/10) · Task: `WF-DRYRUN
 | Architect agent | 1 call, 40 s, 1008 in / 768 out tokens | 1.45 |
 | QA agent | 0 LLM calls, 1.6 s | 0.02 |
 | Human review at gate | 0.25 h | 25.0 |
-| Human implementation (workflow, human gate, API, tests) | 4.0 h | 400.0 |
+| Human implementation (workflow, human gate, API, tests) | 15.0 h | 1500.0 |
 | CI runs | 0 (GitHub Actions not enabled in repo) | 0 |
 | **Agents total** | | **1.47** |
-| **Workflow total (agents + humans)** | | **426.47** |
+| **Workflow total (agents + humans)** | | **1526.47** |
 
-Agent cost is negligible compared to human time (1.47 vs. 425 credits, < 0.4 %). The QA agent calls the LLM only when tests fail, so a green run costs ≈0.02 instead of ≈1.5 credits for an LLM review.
+Agent cost is negligible compared to human time (1.47 vs. 1525 credits, about 0.1 %). The QA agent calls the LLM only when tests fail, so a green run costs ≈0.02 instead of ≈1.5 credits for an LLM review.
 
 ## 5. What do we try differently next time?
 - Raise the output-token budget for reasoning models (or disable thinking) for the architect, so its review is parseable instead of escalating every time.
