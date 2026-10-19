@@ -5,12 +5,12 @@ Issue: [#10](https://github.com/cait33/agentic_ai/issues/10) · Task: `WF-DRYRUN
 ## 1. What was implemented?
 - REST API `/work-items` (create, list, mark done, delete), persisted in PostgreSQL via an idempotent migration (`db/migrations/001_work_items.sql`, `src/app/work_items.py`), 8 API/persistence tests against the real database.
 - Agent workflow `src/agents/workflow.py`: **PO agent → Architect agent → QA agent → human gate**. Hand-over via LangGraph state; all agents receive the shared `EngineeringTask` (`src/models/task.py`).
-- Input: project brief `docs/briefs/work-items.md`; PO output: `docs/requirements/WF-DRYRUN-03/`.
+- Input: project brief `tests/briefs/work-items.md`; PO output: `docs/requirements/WF-DRYRUN-03/`.
 
 ## 2. Which humans and agents were involved?
 | Step | Actor | Artefact |
 |---|---|---|
-| Requirement | Fatih (human) | Issue #10, brief `docs/briefs/work-items.md` |
+| Requirement | Fatih (human) | Issue #10, brief `tests/briefs/work-items.md` |
 | Requirements, user stories, backlog | product-owner-agent | trace `8079d2a1-1e1d-4adb-a249-44f7e9c7de27`, `docs/requirements/WF-DRYRUN-03/` |
 | Implementation | Fatih (human, AI-assisted) | `src/app/work_items.py`, tests |
 | Architecture review | software-architect-agent | trace `605d975d-bc32-4e1e-889c-0b73b7c6bf10` |
