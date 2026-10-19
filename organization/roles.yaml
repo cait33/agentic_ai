@@ -27,13 +27,13 @@ roles:
   - id: product_owner_requirements
     title: Product Owner / Requirements Engineer
     responsibility: Requirements, user stories, acceptance criteria, backlog value
-    current_actor_type: human
+    current_actor_type: hybrid
     current_actor: Francisco
     target_actor_type: agent
     target_actor: po_agent
     accountable_human: Francisco
     human_approval_required: true
-    implementation_status: planned
+    implementation_status: operational
 
   - id: project_manager
     title: Project Manager
@@ -51,7 +51,7 @@ roles:
     responsibility: System architecture, interfaces, ADRs, technical standards
     current_actor_type: hybrid
     current_actor: Daniil
-    target_actor_type: agent
+    target_actor_type: hybrid
     target_actor: software_architect_agent
     accountable_human: Daniil
     human_approval_required: true

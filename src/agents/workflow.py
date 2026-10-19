@@ -1,6 +1,6 @@
 """EventAI agent-to-agent workflow with human gate (Session 2, tasks 4 + 5).
 
-    [Requirements agent (optional)] -> Architect agent -> QA agent -> Human gate
+    [PO agent, if a brief is given] -> Architect agent -> QA agent -> Human gate
 
 * Hand-over happens only through the LangGraph state (no copy & paste).
 * All agents receive the shared EngineeringTask (src/models/task.py) with one
@@ -48,6 +48,7 @@ class WorkflowInput(BaseModel):
     source_file: str = Field(min_length=1, description="File the architect reviews")
     test_paths: list[str] = Field(min_length=1, description="Paths below tests/ for the QA agent")
     reviewer: str = Field(min_length=1, description="Accountable human for the gate")
+    brief_file: str | None = Field(default=None, description="Project brief for the PO agent (optional)")
     workflow_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
 
 
@@ -104,6 +105,23 @@ def qa_step(wf: WorkflowInput, state: dict[str, Any], *, llm: Any = None, trace_
     )
     report = run_qa_agent(task, llm=llm, pytest_runner=pytest_runner, trace_file=trace_file)
     return report.model_dump()
+
+
+def po_step(wf: WorkflowInput, state: dict[str, Any], *, llm: Any = None, trace_file: str | None = None) -> dict[str, Any]:
+    """Product owner agent: turns the project brief into requirements and user stories."""
+    from src.agents.product_owner import run_po_task
+
+    if not wf.brief_file:
+        raise ValueError("PO step needs brief_file")
+    task = EngineeringTask(
+        task_id=wf.task_id,
+        workflow_id=wf.workflow_id,
+        task_type="requirements",
+        description=wf.description,
+        assigned_role="product_owner_requirements",
+        input_files=[wf.brief_file],
+    )
+    return run_po_task(task, llm=llm, trace_file=trace_file).model_dump()
 
 
 def cli_decision(state: dict[str, Any]) -> HumanDecision:
@@ -212,6 +230,8 @@ def run_workflow(
     decisions_dir: str = DEFAULT_DECISIONS_DIR,
 ) -> WorkflowState:
     started = time.perf_counter()
+    if requirements is None and wf.brief_file:
+        requirements = po_step  # PO agent runs first whenever a brief is given
     graph = build_workflow(architect=architect, qa=qa, decide=decide, requirements=requirements)
     state: WorkflowState = graph.invoke({"input": wf.model_dump(), "errors": [], "steps": []}, {"recursion_limit": 20})
 
@@ -247,9 +267,10 @@ def main() -> None:
     p.add_argument("--source", default="src/app/main.py")
     p.add_argument("--tests", nargs="+", default=["tests/agents"])
     p.add_argument("--reviewer", required=True)
+    p.add_argument("--brief", default=None, help="Project brief for the PO agent (optional)")
     a = p.parse_args()
     wf = WorkflowInput(task_id=a.task_id, description=a.description, source_file=a.source,
-                       test_paths=a.tests, reviewer=a.reviewer)
+                       test_paths=a.tests, reviewer=a.reviewer, brief_file=a.brief)
     state = run_workflow(wf)
     print(json.dumps({k: state.get(k) for k in ("steps", "errors", "recommendation", "human_decision")}, indent=2))
 

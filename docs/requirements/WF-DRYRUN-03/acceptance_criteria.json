@@ -1,0 +1,31 @@
+{
+  "US1": [
+    {
+      "description": "Work item must have a non-empty title"
+    },
+    {
+      "description": "Description is optional"
+    }
+  ],
+  "US2": [
+    {
+      "description": "Completion timestamp must be recorded when marked done"
+    }
+  ],
+  "US3": [
+    {
+      "description": "Deletion must be irreversible"
+    },
+    {
+      "description": "Only work items owned by the user can be deleted"
+    }
+  ],
+  "US4": [
+    {
+      "description": "List must include title, description, status, and completion timestamp"
+    },
+    {
+      "description": "List must be sorted by creation time"
+    }
+  ]
+}

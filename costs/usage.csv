@@ -9,3 +9,7 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-10-19,WF-DRYRUN-02,agent,qa-agent,1.5661,seconds,0.0157,"Workflow df946132: 19 tests passed; 0 LLM calls"
 2026-10-19,WF-DRYRUN-02,human,Fatih,0.25,hours,25.0,"Human gate review of work_items.py after escalation (approved)"
 2026-10-19,WF-DRYRUN-02,human,Fatih,15.0,hours,1500.0,"Implementation of workflow, human gate, work item API and tests (AI-assisted); issue #10"
+2026-10-19,WF-DRYRUN-03,agent,product-owner-agent,22.583,seconds,1.2516,"Workflow 08afe4bb: requirements + user stories from docs/briefs/work-items.md; 1 call; 328 in / 480 out tokens"
+2026-10-19,WF-DRYRUN-03,agent,software-architect-agent,43.3263,seconds,1.4841,"Workflow 08afe4bb: review of src/app/work_items.py; 1 call; 1008 in / 768 out tokens (truncated -> unparseable)"
+2026-10-19,WF-DRYRUN-03,agent,qa-agent,1.5711,seconds,0.0157,"Workflow 08afe4bb: 21 tests passed; 0 LLM calls"
+2026-10-19,WF-DRYRUN-03,human,Fatih,0.25,hours,25.0,"Human gate review: PO stories checked (US3 invented criterion rejected), architect escalation, approved"
