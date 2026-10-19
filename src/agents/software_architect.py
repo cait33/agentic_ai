@@ -19,6 +19,7 @@ from langgraph.graph import END, START, StateGraph
 from pydantic import BaseModel, Field, ValidationError
 
 from src.llm.factory import get_chat_model
+from src.models.task import EngineeringTask
 from src.observability.tracing import (
     append_trace,
     estimate_cost_credits,
@@ -183,6 +184,29 @@ def run_architect_agent(
     append_trace(trace_log, trace_file)
 
     return result
+
+
+ARCHITECT_ROLE = "software_architect"
+
+
+def run_architect_task(
+        task: EngineeringTask,
+        *,
+        llm: Any | None = None,
+        trace_file: str | None = None,
+) -> ArchitectureReviewResult:
+    """Shared-task-model entry point: review the first file of an EngineeringTask."""
+    if task.assigned_role != ARCHITECT_ROLE:
+        raise ValueError(f"Architect agent only accepts tasks for role {ARCHITECT_ROLE!r}")
+    if not task.input_files:
+        raise ValueError("Architect task needs a file to review in input_files")
+
+    return run_architect_agent(
+        task.input_files[0],
+        task_id=task.task_id,
+        llm=llm,
+        trace_file=trace_file,
+    )
 
 
 if __name__ == "__main__":

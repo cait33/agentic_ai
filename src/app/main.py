@@ -1,10 +1,12 @@
 from fastapi import FastAPI, HTTPException
 
 from src.app.db import database_health
+from src.app.work_items import router as work_items_router
 from src.app.settings import get_settings
 
 settings = get_settings()
 app = FastAPI(title=settings.app_name, version="0.1.0")
+app.include_router(work_items_router)
 
 
 @app.get("/health")

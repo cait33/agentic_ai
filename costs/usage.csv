@@ -3,3 +3,8 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-10-12,SESSION-01-ORG,human,team,5.0,hours,500.0,"Company definition, roles.yaml, architecture.md, and ADR-001 (5 members x approx. 1h)"
 2026-10-13,SESSION-01-TEST,human,team,5.0,hours,500.0,"Agent testsuite implementation (5 pytest test cases)"
 2026-10-13,SESSION-01-ARCH-REVIEW,agent,software-architect-agent,55.455,seconds,1.7241,"Final verified run with qwen3:4b against src/app/main.py. 255 tokens in, 4112 tokens out"
+2026-10-19,QA-RUN-01,agent,qa-agent,1.5001,seconds,0.015,"QA agent run on tests/agents: 20 passed, verdict approved, 0 LLM calls (no tokens); run_id 912687e4-2140-43ea-a65c-efcfef88b257"
+2026-10-19,QA-RUN-01,human,Fatih,1.0,hours,100.0,"Implementation and review of QA agent and tests"
+2026-10-19,WF-DRYRUN-02,agent,software-architect-agent,39.9968,seconds,1.4508,"Workflow df946132: architecture review of src/app/work_items.py; 1 call; 1008 in / 768 out tokens (output truncated -> unparseable)"
+2026-10-19,WF-DRYRUN-02,agent,qa-agent,1.5661,seconds,0.0157,"Workflow df946132: 19 tests passed; 0 LLM calls"
+2026-10-19,WF-DRYRUN-02,human,Fatih,1.0,hours,25.0,"Human gate review of work_items.py after escalation (approved)"
