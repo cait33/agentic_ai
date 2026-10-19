@@ -41,12 +41,7 @@ class FileChoice(Enum):
     ACCEPTANCE_CRITERIA = "acceptance_criteria"
     BACKLOG = "backlog"
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
-
-
-class Finding(BaseModel):
-    severity: Literal["low", "medium", "high"]
-    description: str
+REPO_ROOT = Path(__file__).resolve().parents[2]
 
 class AcceptanceCriteria(BaseModel):
     description: str
@@ -73,6 +68,7 @@ class POState(TypedDict, total=False):
     file_content: str
     content_to_write: str
     file_to_write: FileChoice
+    written: bool
     result: dict[str, Any]
     error: str
 
@@ -97,10 +93,8 @@ def write_repository_text_file(file_choice: FileChoice, content: str) -> bool:
         requested_path.mkdir()
     requested_file = (requested_path / file_choice.value).resolve()
     requested_file.touch(exist_ok=True)
-    if requested_file.write_text(content) != None:
-        return True
-    else:
-        return False
+    amount_written = requested_file.write_text(content)
+    return amount_written >= 0
 
 
 def _message_text(message: Any) -> str:
@@ -137,7 +131,6 @@ def _parse_result(text: str) -> ProductOwnerResult:
         return ProductOwnerResult(
             status="unparseable",
             summary=text[:1000],
-            findings=[],
         )
 
 
@@ -161,7 +154,7 @@ def build_graph(llm: Any | None = None, *, trace_context: dict[str, Any] | None 
         trace_context["tools"].append("read_repository_text_file")
         try:
             return {
-                "content_to_write": write_repository_text_file(state["file_to_write"])
+                "written": write_repository_text_file(state["file_to_write", "content_to_write"])
             }
         except Exception as exc:
             return {"error": f"{type(exc).__name__}: {exc}"}
@@ -173,11 +166,11 @@ def build_graph(llm: Any | None = None, *, trace_context: dict[str, Any] | None 
         system = SystemMessage(
             content=(
                 "You are an expert Product Owner Agent. Your responsibilities are:\n"
-                "- Create requirements from a provided brief.\n"
-                "- Use the requirements and brief to create user stories.\n"
-                "- Use the brief and user stories to create acceptance criteria.\n"
-                "- Calculate backlog value for each story.\n"
-                "- Validate when and if requirements are met.\n\n"
+                "Create requirements from a provided brief.\n"
+                "Use the requirements and brief to create user stories.\n"
+                "Use the brief and user stories to create acceptance criteria.\n"
+                "Calculate backlog value for each story.\n"
+                "Validate when and if requirements are met.\n\n"
                 "Return ONLY valid JSON with keys: 'status' (success or needs_clarification), "
                 "'summary', 'requirements' (list of objects with id, description, and is_met), "
                 "and 'user_stories' (list of objects with id, description, acceptance_criteria, and backlog_value)."
