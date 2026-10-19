@@ -174,3 +174,30 @@ def test_each_agent_runs_exactly_once(tmp_path) -> None:
 
     assert qa.calls == 1
     assert state["steps"].count("human_gate") == 1
+
+
+def test_brief_file_plugs_in_po_agent_first(tmp_path, monkeypatch) -> None:
+    import src.agents.workflow as workflow_module
+
+    def fake_po(wf, state):
+        assert wf.brief_file == "docs/brief.md"
+        return {"status": "success", "summary": "2 user stories", "requirements": [], "user_stories": []}
+
+    monkeypatch.setattr(workflow_module, "po_step", fake_po)
+    qa = QASpy()
+    state = run_workflow(
+        make_input(brief_file="docs/brief.md"),
+        architect=arch_ok,
+        qa=qa,
+        decide=human(),
+        trace_file=str(tmp_path / "wf.jsonl"),
+        decisions_dir=str(tmp_path / "decisions"),
+    )
+
+    assert state["steps"] == ["requirements", "architecture", "qa", "human_gate"]
+    assert state["requirements"]["status"] == "success"
+
+
+def test_without_brief_po_agent_is_skipped(tmp_path) -> None:
+    state = run(tmp_path)
+    assert "requirements" not in state["steps"]

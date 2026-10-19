@@ -1,0 +1,22 @@
+[
+  {
+    "id": "R1",
+    "description": "Support creation of work items with title and optional description",
+    "is_met": false
+  },
+  {
+    "id": "R2",
+    "description": "Allow marking work items as done with completion timestamp",
+    "is_met": false
+  },
+  {
+    "id": "R3",
+    "description": "Provide delete functionality for work items",
+    "is_met": false
+  },
+  {
+    "id": "R4",
+    "description": "Ensure data persistence using PostgreSQL",
+    "is_met": false
+  }
+]
