@@ -55,7 +55,7 @@ roles:
     target_actor: software_architect_agent
     accountable_human: Daniil
     human_approval_required: true
-    implementation_status: planned
+    implementation_status: operational
 
   - id: backend_api_engineer
     title: Backend / API Engineer
@@ -110,7 +110,7 @@ roles:
     target_actor: qa_agent
     accountable_human: Fatih
     human_approval_required: true
-    implementation_status: planned
+    implementation_status: operational
 
   - id: devops_engineer
     title: DevOps Engineer
