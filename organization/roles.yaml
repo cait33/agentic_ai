@@ -60,35 +60,35 @@ roles:
   - id: backend_api_engineer
     title: Backend / API Engineer
     responsibility: FastAPI services, business logic, API contracts
-    current_actor_type: human
+    current_actor_type: agent
     current_actor: Rafael
     target_actor_type: agent
     target_actor: backend_agent
     accountable_human: Rafael
     human_approval_required: true
-    implementation_status: planned
+    implementation_status: operational
 
   - id: data_rag_engineer
     title: Data & RAG Engineer
     responsibility: PostgreSQL, pgvector, ingestion, chunking, retrieval, embeddings
-    current_actor_type: human
+    current_actor_type: agent
     current_actor: Caitlin
     target_actor_type: agent
     target_actor: data_rag_agent
     accountable_human: Caitlin
     human_approval_required: true
-    implementation_status: planned
+    implementation_status: operational
 
   - id: agent_engineer
     title: Agent Engineer
     responsibility: LangGraph workflows, LangChain integration, agent state and tools
-    current_actor_type: human
+    current_actor_type: agent
     current_actor: Caitlin
     target_actor_type: agent
     target_actor: agent_engineer_agent
     accountable_human: Caitlin
     human_approval_required: true
-    implementation_status: planned
+    implementation_status: operational
 
   - id: integration_engineer
     title: Integration Engineer
@@ -115,13 +115,13 @@ roles:
   - id: devops_engineer
     title: DevOps Engineer
     responsibility: Docker, GitHub Actions, build, deployment and reproducibility
-    current_actor_type: human
+    current_actor_type: agent
     current_actor: Rafael
     target_actor_type: agent
     target_actor: devops_agent
     accountable_human: Rafael
     human_approval_required: true
-    implementation_status: planned
+    implementation_status: operational
 
   - id: ai_safety_security_engineer
     title: AI Safety & Security Engineer
@@ -137,10 +137,10 @@ roles:
   - id: cost_observability_engineer
     title: Cost & Observability Engineer
     responsibility: Traces, runtime, token usage, cost model and cost optimization
-    current_actor_type: human
+    current_actor_type: agent
     current_actor: Francisco
     target_actor_type: agent
     target_actor: cost_agent
     accountable_human: Francisco
     human_approval_required: true
-    implementation_status: planned
+    implementation_status: operational

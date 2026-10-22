@@ -13,3 +13,7 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-10-19,WF-DRYRUN-03,agent,software-architect-agent,43.3263,seconds,1.4841,"Workflow 08afe4bb: review of src/app/work_items.py; 1 call; 1008 in / 768 out tokens (truncated -> unparseable)"
 2026-10-19,WF-DRYRUN-03,agent,qa-agent,1.5711,seconds,0.0157,"Workflow 08afe4bb: 21 tests passed; 0 LLM calls"
 2026-10-19,WF-DRYRUN-03,human,Fatih,0.25,hours,25.0,"Human gate review: PO stories checked (US3 invented criterion rejected), architect escalation, approved"
+2026-10-22,WF-VERIFY-FINAL,agent,product-owner-agent,8.7897,seconds,1.114,"Workflow 89279231: PO requirements extraction with JSON schema (328 in / 489 out tokens)"
+2026-10-22,WF-VERIFY-FINAL,agent,software-architect-agent,5.5218,seconds,1.0827,"Workflow 89279231: Architect review with structured output (984 in / 196 out tokens, approved)"
+2026-10-22,WF-VERIFY-FINAL,agent,qa-agent,3.0022,seconds,0.03,"Workflow 89279231: QA test execution (33 passed, 0 LLM calls)"
+2026-10-22,WF-VERIFY-FINAL,human,Daniil,0.25,hours,25.0,"Human gate sign-off: verified structured PO requirements, architect review, and green QA tests"

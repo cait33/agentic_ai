@@ -28,9 +28,6 @@
     "acceptance_criteria": [
       {
         "description": "Deletion must be irreversible"
-      },
-      {
-        "description": "Only work items owned by the user can be deleted"
       }
     ],
     "backlog_value": 60

@@ -1,0 +1,34 @@
+{
+  "US1": [
+    {
+      "description": "Title is required and cannot be empty"
+    },
+    {
+      "description": "Description is optional"
+    }
+  ],
+  "US2": [
+    {
+      "description": "All work items are returned in the response"
+    },
+    {
+      "description": "Response includes title, description, and status"
+    }
+  ],
+  "US3": [
+    {
+      "description": "Completion time is recorded when marked as done"
+    },
+    {
+      "description": "Work item status updates to 'done'"
+    }
+  ],
+  "US4": [
+    {
+      "description": "Work item is removed from the system"
+    },
+    {
+      "description": "Deletion is confirmed with a response"
+    }
+  ]
+}

@@ -80,11 +80,17 @@ class WorkflowState(TypedDict, total=False):
 def architect_step(wf: WorkflowInput, state: dict[str, Any], *, llm: Any = None, trace_file: str | None = None) -> dict[str, Any]:
     from src.agents.software_architect import run_architect_task
 
+    # Weitergabe des PO-Outputs an den Architekten
+    po_context = ""
+    if "requirements" in state and state["requirements"]:
+        stories = state["requirements"].get("user_stories", [])
+        po_context = f"\n\nContext from Product Owner:\n{json.dumps(stories, indent=2)}"
+
     task = EngineeringTask(
         task_id=wf.task_id,
         workflow_id=wf.workflow_id,
         task_type="architecture_review",
-        description=wf.description,
+        description=wf.description + po_context,
         assigned_role="software_architect",
         input_files=[wf.source_file],
     )
@@ -162,6 +168,12 @@ def _make_decision(state: dict[str, Any], reviewer: str, decision: str, comment:
 def _recommend(state: WorkflowState) -> Decision:
     if state.get("errors"):
         return "escalate_to_human"
+
+    # FEEDBACK-FIX: Wenn der PO-Schritt existiert und fehlt/Fehler hat -> Eskalation
+    req = state.get("requirements", {}).get("status")
+    if req in ("needs_clarification", "unparseable"):
+        return "escalate_to_human"
+
     arch = state.get("architecture", {}).get("status")
     qa = state.get("qa", {}).get("verdict")
     if qa == "escalate_to_human" or arch == "unparseable":
@@ -172,11 +184,11 @@ def _recommend(state: WorkflowState) -> Decision:
 
 
 def build_workflow(
-    *,
-    architect: StepFn,
-    qa: StepFn,
-    decide: DecisionFn,
-    requirements: StepFn | None = None,
+        *,
+        architect: StepFn,
+        qa: StepFn,
+        decide: DecisionFn,
+        requirements: StepFn | None = None,
 ):
     def make_node(name: str, fn: StepFn):
         def node(state: WorkflowState) -> WorkflowState:
@@ -220,14 +232,14 @@ def build_workflow(
 
 
 def run_workflow(
-    wf: WorkflowInput,
-    *,
-    architect: StepFn = architect_step,
-    qa: StepFn = qa_step,
-    decide: DecisionFn = cli_decision,
-    requirements: StepFn | None = None,
-    trace_file: str | None = None,
-    decisions_dir: str = DEFAULT_DECISIONS_DIR,
+        wf: WorkflowInput,
+        *,
+        architect: StepFn = architect_step,
+        qa: StepFn = qa_step,
+        decide: DecisionFn = cli_decision,
+        requirements: StepFn | None = None,
+        trace_file: str | None = None,
+        decisions_dir: str = DEFAULT_DECISIONS_DIR,
 ) -> WorkflowState:
     started = time.perf_counter()
     if requirements is None and wf.brief_file:
