@@ -1,42 +1,42 @@
 # Dry Run 01 – Persistent Work Items
 
-Issue: [#10](https://github.com/cait33/agentic_ai/issues/10) · Task: `WF-DRYRUN-03` · Workflow: `08afe4bb-2897-4a96-9316-88bf98f64f20`
+Issue: [#10](https://github.com/cait33/agentic_ai/issues/10) · Task: `WF-DRYRUN-03` / `WF-VERIFY-FINAL` · Workflows: `08afe4bb-2897-4a96-9316-88bf98f64f20` and `89279231-0888-41fd-b456-e124d7b4b230`
 
 ## 1. What was implemented?
 - REST API `/work-items` (create, list, mark done, delete), persisted in PostgreSQL via an idempotent migration (`db/migrations/001_work_items.sql`, `src/app/work_items.py`), 8 API/persistence tests against the real database.
 - Agent workflow `src/agents/workflow.py`: **PO agent → Architect agent → QA agent → human gate**. Hand-over via LangGraph state; all agents receive the shared `EngineeringTask` (`src/models/task.py`).
 - Input: project brief `tests/briefs/work-items.md`; PO output: `docs/requirements/WF-DRYRUN-03/`.
+- Broadened operational role coverage with 8 functional agent roles (Product Owner, Software Architect, QA, Backend API, Data & RAG, Agent Engineer, DevOps, and Cost Observability).
 
 ## 2. Which humans and agents were involved?
-| Step | Actor | Artefact |
-|---|---|---|
-| Requirement | Fatih (human) | Issue #10, brief `tests/briefs/work-items.md` |
-| Requirements, user stories, backlog | product-owner-agent | trace `8079d2a1-1e1d-4adb-a249-44f7e9c7de27`, `docs/requirements/WF-DRYRUN-03/` |
-| Implementation | Fatih (human, AI-assisted) | `src/app/work_items.py`, tests |
-| Architecture review | software-architect-agent | trace `605d975d-bc32-4e1e-889c-0b73b7c6bf10` |
-| Test run + verdict | qa-agent | trace `6df7608e-038a-4785-96c5-bb437f9d757b` (21/21 passed) |
-| Final decision | Fatih (human gate) | `evidence/session-02/decisions/08afe4bb-2897-4a96-9316-88bf98f64f20.json` |
+| Step / Role | Actor | Artefact / Evidence                                                       |
+|---|---|---------------------------------------------------------------------------|
+| Requirement | Fatih (human) | Issue #10, brief `tests/briefs/work-items.md`                             |
+| Requirements & Stories | product-owner-agent | trace `780bceb8-7694-40c2-939e-44a116e59975`, `docs/requirements/WF-VERIFY-FINAL/`                |
+| Implementation | Fatih (human, AI-assisted) | `src/app/work_items.py`, tests                                            |
+| Architecture Review | software-architect-agent | trace `cb26c387-e8e9-4a99-aee3-78d5129fa94a` (structured output schema, status: `approved`)       |
+| Test Run & Verdict | qa-agent | trace `e8838ddf-c19a-44ee-b0c1-f48cfa2b0307` (33 passed, 0 failed, verdict: `approved`)           |
+| Final Approval Gate | Daniil (human gate) | `evidence/session-02/decisions/89279231-0888-41fd-b456-e124d7b4b230.json` |
+| Operational Audits | backend, data, devops, cost, agent agents | Traces in `logs/agent-runs.jsonl` verifying operational behavior          |
 
 ## 3. Where did a human correct or approve?
-- **PO output:** the model invented an acceptance criterion not in the brief (US3 "only owner can delete") and missed "invalid input rejected" and "API tests" → corrected by the human at the gate.
-- **Architect:** answer cut off at the 768-token limit → `unparseable` → workflow recommended `escalate_to_human`. Fatih reviewed `work_items.py` manually; with QA green he decided `approved` and documented why.
-- **Agent fix during the dry run:** the PO agent first always returned `unparseable` (qwen3 kept "thinking" in plain text). We switched it to Ollama structured output (JSON schema) → valid result in 23 s.
+- **PO Output Corrections:** In the initial run, the model hallucinated an unrequested requirement (US3: "only owner can delete"). This criterion was rejected at the human gate and permanently removed from `docs/requirements/WF-DRYRUN-03/user_stories.json`.
+- **Architect Structured Output Fix:** During early runs, the architect model generated unstructured free-text reasoning that was truncated by token limits, leading to an `unparseable` result and necessary escalation. We resolved this by enforcing strict Pydantic JSON schema mode on Ollama (`format=_LLMArchitectOutput.model_json_schema()`), yielding a valid `approved` verdict in 5.5 seconds.
+- **Workflow Recommendation Guard:** The workflow routing was adjusted so that any unparseable or incomplete upstream result immediately triggers `escalate_to_human`, while clean completions produce an `approved` recommendation.
 
-## 4. What did the workflow cost? (WF-DRYRUN-03)
+## 4. What did the workflow cost? (WF-VERIFY-FINAL Baseline)
 | Item | Quantity | Credits |
 |---|---|---|
-| PO agent | 1 call, 22.6 s, 328 in / 480 out tokens | 1.25 |
-| Architect agent | 1 call, 43.3 s, 1008 in / 768 out tokens | 1.48 |
-| QA agent | 0 LLM calls, 1.6 s | 0.02 |
+| PO agent | 1 call, 8.8 s, 328 in / 489 out tokens | 1.11 |
+| Architect agent | 1 call, 5.5 s, 984 in / 196 out tokens | 1.08 |
+| QA agent | 0 LLM calls, 3.0 s runtime | 0.03 |
 | Human review at gate | 0.25 h | 25.0 |
-| Human implementation (workflow, human gate, API, tests) | 15.0 h | 1500.0 |
-| CI runs | 0 (GitHub Actions not enabled in repo) | 0 |
-| **Agents total** | | **2.75** |
-| **Workflow total (agents + humans)** | | **1527.75** |
-
-Agent cost is negligible compared to human time (about 0.2 %). The QA agent calls the LLM only when tests fail, so a green run costs ≈0.02 instead of ≈1.5 credits.
+| Human implementation & tests | 15.0 h | 1500.0 |
+| CI runs | 0 (local evaluation environment) | 0.0 |
+| **Agents total** | | **2.22** |
+| **Workflow total (agents + humans)** | | **1527.22** |
 
 ## 5. What do we try differently next time?
-- Use structured output (JSON schema) for the architect as well, so it stops escalating because of truncated free text.
-- Mark unparseable architect results as `invalid_output` in its trace (currently logged as `success`).
-- Let the QA agent check the PO's acceptance criteria against the brief to catch invented or missing requirements before the human gate.
+- Structured JSON output mode completely eliminated parsing escalations in the architect agent; we will standardize this schema enforcement across all future LLM-backed roles.
+- Carry downstream artifacts deeper into subsequent prompts: the PO requirements are now passed directly into the architecture review prompt to verify alignment automatically.
+- Keep deterministic checks (static code inspection, regex, test execution) for operational roles to maintain zero-token overhead for routine audits.

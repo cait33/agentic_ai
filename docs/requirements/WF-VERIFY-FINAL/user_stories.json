@@ -1,0 +1,54 @@
+[
+  {
+    "id": "US1",
+    "description": "As a team member I want to create a work item with a title and an optional description so that I can track tasks",
+    "acceptance_criteria": [
+      {
+        "description": "Title is required and cannot be empty"
+      },
+      {
+        "description": "Description is optional"
+      }
+    ],
+    "backlog_value": 70
+  },
+  {
+    "id": "US2",
+    "description": "As a team member I want to list all work items so that I can see the current tasks",
+    "acceptance_criteria": [
+      {
+        "description": "All work items are returned in the response"
+      },
+      {
+        "description": "Response includes title, description, and status"
+      }
+    ],
+    "backlog_value": 60
+  },
+  {
+    "id": "US3",
+    "description": "As a team member I want to mark a work item as done so that I can track completion time",
+    "acceptance_criteria": [
+      {
+        "description": "Completion time is recorded when marked as done"
+      },
+      {
+        "description": "Work item status updates to 'done'"
+      }
+    ],
+    "backlog_value": 75
+  },
+  {
+    "id": "US4",
+    "description": "As a team member I want to delete a work item so that I can remove completed tasks",
+    "acceptance_criteria": [
+      {
+        "description": "Work item is removed from the system"
+      },
+      {
+        "description": "Deletion is confirmed with a response"
+      }
+    ],
+    "backlog_value": 65
+  }
+]
