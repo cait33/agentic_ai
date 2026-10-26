@@ -7,7 +7,7 @@ Stand: 26.10.2026. Kursupdate Session 3 (Infrastruktur, keine Eigenleistung) gem
 | | Repo | Commit |
 |---|---|---|
 | Factory | [cait33/agentic_ai](https://github.com/cait33/agentic_ai) | Code: `3d18a68` (PR #20), Evidenz: `2c622e4` (PR #21) |
-| Produkt | [franciscotbatista99/client-01-website](https://github.com/franciscotbatista99/client-01-website) | Eingabe: `d777b34` (Scaffold, PR #3), Ergebnis: `63be7a6` (Agentenlauf) |
+| Produkt | [franciscotbatista99/client-01-website](https://github.com/franciscotbatista99/client-01-website) | Eingabe: `d777b34` (Scaffold, PR #3), Ergebnis: `63be7a6` (Agentenlauf), Code: `8ec8161` |
 
 - Kunden-Issue: [client-01-website#2](https://github.com/franciscotbatista99/client-01-website/issues/2), Teil-Task AC-04: #1
 - Projektkonfiguration: `projects/website-01.json` (Projekt-ID `website-01`, Produktpfad `../client-01-website`, per `PRODUCT_PATH` überschreibbar, Task `CUST-001`, Schreibbereich `site/`, max. 2 Korrekturschleifen)
@@ -15,12 +15,12 @@ Stand: 26.10.2026. Kursupdate Session 3 (Infrastruktur, keine Eigenleistung) gem
 
 ## Verantwortung
 
-| Bereich | Accountable human |
-|---|---|
-| Auftrag / Requirements | Francisco |
-| Technische Lieferung | Rafael (`backend_api_engineer`) |
-| Prüfung (QA) | Fatih |
-| Freigabe | Fatih |
+| Bereich                         | Accountable human               |
+|---------------------------------|---------------------------------|
+| Auftrag / Requirements          | Francisco / Daniil              |
+| Technische Lieferung            | Rafael (`backend_api_engineer`) |
+| Prüfung (QA & Automated Checks) | Fatih / Daniil                  |
+| Freigabe                        | Fatih                           |
 
 Dokumentiert in Issue #2 (Kommentar). Offene Fragen und Annahmen ebenfalls in Issue #2.
 
@@ -69,10 +69,19 @@ Evidenz: `runs/website-01/ec76867e-cae1-4187-b1b2-5942a48f606a/` (`manifest.json
 | Mensch Review (Fatih) | 0,1 h | 10 |
 | Mensch Nacharbeit (Fatih) | 0,25 h | 25 |
 | Mensch Factory-Entwicklung (Fatih, Task `FACTORY-S3`, nicht im Lieferbudget) | 0,75 h | 75 |
-| Weitere Teammitglieder | TODO: Zeilen in `costs/usage.csv` ergänzen | TODO |
-| **Summe Lieferung CUST-001 (bisher erfasst)** | Agenten 2,74 + Mensch 110 | **112,74** (Teilkosten, Team unvollständig) |
+| Mensch Lieferung (Caitlin) | 0,25 h | 25 |
+| Mensch Product Review (Caitlin) | 0,75 h | 75 |
+| Mensch Factory Tests (Caitlin) | 0,75 h | 75 |
+| Mensch Lieferung (Rafael: GitHub customer issue setup) | 0,25 h | 25 |
+| Mensch Factory Development (Rafael: cross-repo setup & path configuration) | 1,5 h | 150 |
+| Mensch Lieferung (Francisco: cliente-website repository creation) | 0,5 h | 50 |
+| Mensch Factory Development (Francisco: cross-repo connection & integration) | 1,5 h | 150 |
+| Mensch Lieferung: Issue-Definition (AC-04), Produkttests (Daniil) | 0,75 h | 75,0 |
+| Mensch Factory-Entwicklung: EngineeringTask model extension, target_workspace (Daniil) | 0,75 h | 75,0 |
+| Mensch Nacharbeit: Test coverage extension (Daniil) | 1,0 h | 100,0 |
+| **Summe Lieferung CUST-001 (vollständig erfasst)** | Agenten 2,74 + Mensch 435,0 | **437,74** |
 
-Planbudget (Teamplanung; TODO: mit Dozent bestätigen): Lieferung T3 300 Credits, T4 800 Credits (ca. 3 h bzw. 8 h Personenzeit für Inhalte, Produktchecks, Review und Nacharbeit, plus ca. 30 Credits Agentenläufe inkl. Fehlläufe), Reserve T5 400 Credits (CR-01, SR-01, Abnahme). Factory-Entwicklung wird getrennt unter `FACTORY-S3` erfasst. Ist-Werte: `costs/usage.csv`.
+Planbudget (Teamplanung; mit Dozent bestätigt): Lieferung T3 300 Credits, T4 800 Credits (ca. 3 h bzw. 8 h Personenzeit für Inhalte, Produktchecks, Review und Nacharbeit, plus ca. 30 Credits Agentenläufe inkl. Fehlläufe), Reserve T5 400 Credits (CR-01, SR-01, Abnahme). Factory-Entwicklung wird getrennt unter `FACTORY-S3` erfasst. Ist-Werte: `costs/usage.csv`.
 
 Transparenz: Der Factory-Code (Projektkonfiguration, Web-Implementer, Kunden-Workflow, Factory-Test) wurde mit KI-Assistenz (Claude) entworfen und von Fatih integriert, getestet und verantwortet. Die Zeit ist als Factory-Entwicklung erfasst.
 
@@ -99,7 +108,7 @@ As of October 26, 2026. Course update Session 3 (infrastructure, no in-house wor
 |---|---|---|
 | Factory | [cait33/agentic_ai](https://github.com/cait33/agentic_ai) | Code: '3d18a68' (PR #20), Evidence: '2c622e4' (PR #21) |
 | Product | [franciscotbatista99/client-01-website](https://github.com/franciscotbatista99/client-01-website) | Input: 'd777b34' (Scaffold, PR #3), Result: '63be7a6' (Agent Run) |
-| Product | [franciscotbatista99/client-01-website](https://github.com/franciscotbatista99/client-01-website) | Code: '8ec8161'
+| Product | [franciscotbatista99/client-01-website](https://github.com/franciscotbatista99/client-01-website) | Code: '8ec8161' |
 
 - Customer Issue: [client-01-website#2](https://github.com/franciscotbatista99/client-01-website/issues/2), Part-Task AC-04: #1
 - Project configuration: 'projects/website-01.json' (project ID 'website-01', product path '../client-01-website', overwritable via 'PRODUCT_PATH', task 'CUST-001', write area 'site/', max. 2 correction loops)
@@ -109,9 +118,9 @@ As of October 26, 2026. Course update Session 3 (infrastructure, no in-house wor
 
 | Area | Accountable human |
 |---|---|
-| Order / Requirements | Francisco |
+| Order / Requirements | Francisco / Daniil |
 | Technical delivery | Rafael ('backend_api_engineer') |
-| Test (QA) | Fatih |
+| Test (QA) | Fatih / Daniil |
 | Release | Fatih |
 
 Documented in Issue #2 (Commentary). Open questions and assumptions also in Issue #2.
@@ -125,8 +134,6 @@ Documented in Issue #2 (Commentary). Open questions and assumptions also in Issu
 | 'ec76867e-cae1-4187-b1b2-5942a48f606a' | PO → Web Implementer → QA (Product Check) → Human Gate | approved, 0 correction loops |
 
 Evidence: 'runs/website-01/ec76867e-cae1-4187-b1b2-5942a48f606a/' ('manifest.json', 'trace.jsonl', 'requirements/', 'implementation-0.json', 'qa-round-0.json', 'review-0.json')
-
-
 
 - Model: Ollama 'qwen3:4b' (ID '359d7dd4bcda'), temperature 0, JSON mode, reasoning from
 - Agent skills and roles:
@@ -170,9 +177,12 @@ Evidence: 'runs/website-01/ec76867e-cae1-4187-b1b2-5942a48f606a/' ('manifest.jso
 | Human Factory Development (Rafael: cross-repo setup & path configuration) | 1.5 h | 150 |
 | Human Delivery (Francisco: cliente-website repository creation) | 0.5 h | 50 |
 | Human Factory Development (Francisco: cross-repo connection & integration) | 1.5 h | 150 |
-| **Total delivery CUST-001 (recorded so far)** | Agents 2.74 + Human 110 | **112.74** (partial costs, team incomplete) |
+| Human Delivery: Issue definition (AC-04), product tests (Daniil) | 0.75 h | 75.0 |
+| Human Factory Development: EngineeringTask model extension, target_workspace (Daniil / Team) | 0.75 h | 75.0 |
+| Human Rework: Test coverage extension (Daniil / Team) | 1.0 h | 100.0 |
+| **Total delivery CUST-001 (fully recorded)** | Agents 2.74 + Human 435.0 | **437.74** |
 
-Plan budget (team planning; TODO: confirm with lecturer): Delivery T3 300 credits, T4 800 credits (approx. 3 hours or 8 hours of person time for content, product checks, review and rework, plus approx. 30 credits agent runs including missed runs), reserve T5 400 credits (CR-01, SR-01, acceptance). Factory development is recorded separately under 'FACTORY-S3'. Actual values: 'costs/usage.csv'.
+Plan budget (team planning; confirmed with lecturer): Delivery T3 300 credits, T4 800 credits (approx. 3 hours or 8 hours of person time for content, product checks, review and rework, plus approx. 30 credits agent runs including missed runs), reserve T5 400 credits (CR-01, SR-01, acceptance). Factory development is recorded separately under 'FACTORY-S3'. Actual values: 'costs/usage.csv'.
 
 Transparency: The factory code (project configuration, web implementer, customer workflow, factory testing) was designed with AI assistance (Claude) and integrated, tested, and managed by Fatih. Time is recorded as factory development.
 
