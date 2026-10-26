@@ -32,3 +32,6 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-10-26,FACTORY-001,human,Caitlin,0.75,hours,75.0,"[factory_dev] started writing tests for agents in the factory repo"
 2026-10-26,CUST-001,human,Francisco,0.5,hours,50.0,Creation of the cliente-website repository
 2026-10-26,REPO-CONNECT,human,Francisco,1.5,hours,150.0,Assisted establishing cross-repo configuration, target path linkage, and checkout setup
+2026-10-26,CUST-001,human,Daniil,0.75,hours,75.0,"[delivery] issue definition (AC-04), product tests"
+2026-10-26,CUST-001,human,team,0.75,hours,75.0,"[factory_dev] extended EngineeringTask model with target_workspace, project configuration, web-implementer slot engine"
+2026-10-26,CUST-001,human,team,1.0,hours,100.0,"[rework] test coverage expansion"
