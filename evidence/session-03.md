@@ -166,6 +166,8 @@ Evidence: 'runs/website-01/ec76867e-cae1-4187-b1b2-5942a48f606a/' ('manifest.jso
 | Human Delivery (Caitlin) | 0.25 h | 25 |
 | Human Product Review (Caitlin) | 0.75 h | 75 |
 | Human Factory Tests (Caitlin) | 0.75 h | 75 |
+| Human Delivery (Rafael: GitHub customer issue setup) | 0.25 h | 25 |
+| Human Factory Development (Rafael: cross-repo setup & path configuration) | 1.5 h | 150 |
 | **Total delivery CUST-001 (recorded so far)** | Agents 2.74 + Human 110 | **112.74** (partial costs, team incomplete) |
 
 Plan budget (team planning; TODO: confirm with lecturer): Delivery T3 300 credits, T4 800 credits (approx. 3 hours or 8 hours of person time for content, product checks, review and rework, plus approx. 30 credits agent runs including missed runs), reserve T5 400 credits (CR-01, SR-01, acceptance). Factory development is recorded separately under 'FACTORY-S3'. Actual values: 'costs/usage.csv'.
