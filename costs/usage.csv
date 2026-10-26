@@ -27,3 +27,6 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-10-26,FACTORY-S3,human,Fatih,0.75,hours,75.0,"[factory_dev] course update merge, project config, web implementer, customer workflow, factory test (AI-assisted), PR #20/#21"
 2026-10-26,CUST-001,human,Rafael,0.25,hours,25.0,"[delivery] created customer issue in product repo defining AC-01, AC-02, AC-04 scope and roles"
 2026-10-26,FACTORY-S3,human,Rafael,1.5,hours,150.0,"[factory_dev] assisted Francisco with cross-repo configuration, target path linkage, and checkout setup"
+2026-10-26,FACTORY-S3,human,Caitlin,0.25,hours,25.0,"[delivery] created issue in factory repo defining our tasks outside of the customer issue for this session"
+2026-10-26,CUST-001,human,Caitlin,0.75,hours,75.0,"[review] changed the code style (mainly comments and names) of the tests file, readme and index file to remove references to the factory repo"
+2026-10-26,FACTORY-001,human,Caitlin,0.75,hours,75.0,"[factory_dev] started writing tests for agents in the factory repo"

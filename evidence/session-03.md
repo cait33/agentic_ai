@@ -99,6 +99,7 @@ As of October 26, 2026. Course update Session 3 (infrastructure, no in-house wor
 |---|---|---|
 | Factory | [cait33/agentic_ai](https://github.com/cait33/agentic_ai) | Code: '3d18a68' (PR #20), Evidence: '2c622e4' (PR #21) |
 | Product | [franciscotbatista99/client-01-website](https://github.com/franciscotbatista99/client-01-website) | Input: 'd777b34' (Scaffold, PR #3), Result: '63be7a6' (Agent Run) |
+| Product | [franciscotbatista99/client-01-website](https://github.com/franciscotbatista99/client-01-website) | Code: '8ec8161'
 
 - Customer Issue: [client-01-website#2](https://github.com/franciscotbatista99/client-01-website/issues/2), Part-Task AC-04: #1
 - Project configuration: 'projects/website-01.json' (project ID 'website-01', product path '../client-01-website', overwritable via 'PRODUCT_PATH', task 'CUST-001', write area 'site/', max. 2 correction loops)
@@ -162,7 +163,9 @@ Evidence: 'runs/website-01/ec76867e-cae1-4187-b1b2-5942a48f606a/' ('manifest.jso
 | Human Review (Fatih) | 0.1 h | 10 |
 | Human Rework (Fatih) | 0.25 h | 25 |
 | Human Factory Development (Fatih, Task 'FACTORY-S3', not in the delivery budget) | 0.75 h | 75 |
-| Other team members | TODO: Add lines to 'costs/usage.csv' | TODO |
+| Human Delivery (Caitlin) | 0.25 h | 25 |
+| Human Product Review (Caitlin) | 0.75 h | 75 |
+| Human Factory Tests (Caitlin) | 0.75 h | 75 |
 | **Total delivery CUST-001 (recorded so far)** | Agents 2.74 + Human 110 | **112.74** (partial costs, team incomplete) |
 
 Plan budget (team planning; TODO: confirm with lecturer): Delivery T3 300 credits, T4 800 credits (approx. 3 hours or 8 hours of person time for content, product checks, review and rework, plus approx. 30 credits agent runs including missed runs), reserve T5 400 credits (CR-01, SR-01, acceptance). Factory development is recorded separately under 'FACTORY-S3'. Actual values: 'costs/usage.csv'.
