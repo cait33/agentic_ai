@@ -4,11 +4,14 @@ Responsibilities:
 - Inspects project files (Tool).
 - Evaluates architectural design and best practices (LLM).
 - Outputs structured architecture decision drafts or change requests.
-- Emits execution traces for observability.
+- Emits execution traces for observability with task and workflow context.
 """
+
+from __future__ import annotations
 
 import argparse
 import json
+import re
 import time
 import uuid
 from pathlib import Path
@@ -27,6 +30,7 @@ from src.observability.tracing import (
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+ARCHITECT_MAX_OUTPUT_TOKENS = 1536
 
 
 class ArchitectureViolation(BaseModel):
@@ -41,7 +45,32 @@ class ArchitectureReviewResult(BaseModel):
     violations: list[ArchitectureViolation] = Field(default_factory=list)
 
 
+# Schema für Ollama structured output
+class _LLMArchitectOutput(BaseModel):
+    status: Literal["approved", "changes_requested"]
+    architectural_summary: str
+    violations: list[ArchitectureViolation] = Field(default_factory=list)
+
+
+def _prepare_llm(llm: Any) -> Any:
+    """Forces structured JSON output on Ollama to prevent truncated reasoning."""
+    try:
+        from langchain_ollama import ChatOllama
+    except ImportError:  # pragma: no cover
+        return llm
+    if isinstance(llm, ChatOllama):
+        return llm.model_copy(
+            update={
+                "reasoning": False,
+                "format": _LLMArchitectOutput.model_json_schema(),
+                "num_predict": max(llm.num_predict or 0, ARCHITECT_MAX_OUTPUT_TOKENS),
+            }
+        )
+    return llm
+
+
 class ArchitectState(TypedDict, total=False):
+    task: EngineeringTask
     target_file: str
     file_content: str
     result: dict[str, Any]
@@ -71,7 +100,8 @@ def _extract_text(message: Any) -> str:
 
 
 def _parse_llm_json(text: str) -> ArchitectureReviewResult:
-    cleaned = text.strip()
+    # Entfernt evtl. verbliebene Denk-Blöcke
+    cleaned = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
     if cleaned.startswith("```"):
         cleaned = cleaned.strip("`")
         if cleaned.startswith("json"):
@@ -92,13 +122,18 @@ def _parse_llm_json(text: str) -> ArchitectureReviewResult:
 
 
 def build_architect_graph(llm: Any | None = None):
-    llm = llm or get_chat_model()
+    llm = llm if llm is not None else _prepare_llm(get_chat_model())
 
     def inspect_code(state: ArchitectState) -> ArchitectState:
         try:
-            # Tool invocation
-            content = read_workspace_file(state["target_file"])
-            return {"file_content": content}
+            target = state.get("target_file")
+            if not target and state.get("task") and state["task"].input_files:
+                target = state["task"].input_files[0]
+            if not target:
+                raise ValueError("No target file specified in task or state.")
+
+            content = read_workspace_file(target)
+            return {"target_file": target, "file_content": content}
         except Exception as exc:
             return {"error": str(exc)}
 
@@ -108,17 +143,15 @@ def build_architect_graph(llm: Any | None = None):
     def evaluate_architecture(state: ArchitectState) -> ArchitectState:
         system = SystemMessage(
             content=(
-                "You are the Software Architect of EventAI. Evaluate the provided source code "
-                "for architectural integrity, separation of concerns, and hardcoded dependencies. "
-                "Return ONLY valid JSON with keys: 'status' (approved or changes_requested), "
-                "'architectural_summary', and 'violations' (list of objects with 'severity', "
-                "'description', 'recommendation')."
+                "You are the Software Architect of EventAI. Evaluate the source code for architectural integrity, "
+                "separation of concerns, and dependency management. Keep it concise. "
+                "Reply ONLY with a compact valid JSON object matching the requested schema."
             )
         )
         human = HumanMessage(
             content=(
-                f"Perform an architectural review on: {state['target_file']}\n\n"
-                f"SOURCE CODE:\n{state['file_content']}"
+                f"Perform an architectural review on: {state.get('target_file')}\n\n"
+                f"SOURCE CODE:\n{state.get('file_content', '')}\n\n/no_think"
             )
         )
 
@@ -141,23 +174,41 @@ def build_architect_graph(llm: Any | None = None):
 
 
 def run_architect_agent(
-        target_file: str,
+        target: str | EngineeringTask,
         *,
         task_id: str = "ARCH-REVIEW-01",
         llm: Any | None = None,
         trace_file: str | None = None,
 ) -> ArchitectureReviewResult:
+    if isinstance(target, EngineeringTask):
+        task = target
+        target_file = task.input_files[0] if task.input_files else ""
+        actual_task_id = task.task_id
+        workflow_id = task.workflow_id
+    else:
+        target_file = target
+        actual_task_id = task_id
+        task = EngineeringTask(
+            task_id=actual_task_id,
+            task_type="architecture_review",
+            description=f"Architecture review of {target_file}",
+            assigned_role="software_architect",
+            input_files=[target_file] if target_file else [],
+        )
+        workflow_id = task.workflow_id
+
     run_id = str(uuid.uuid4())
     started = time.perf_counter()
 
     graph = build_architect_graph(llm=llm)
-    state = graph.invoke({"target_file": target_file})
+    state = graph.invoke({"task": task, "target_file": target_file})
     duration = time.perf_counter() - started
     model_name = getattr(llm, "model", None) or getattr(llm, "model_name", None) or "qwen3:4b"
 
     trace_log = {
         "run_id": run_id,
-        "task_id": task_id,
+        "workflow_id": workflow_id,
+        "task_id": actual_task_id,
         "agent": "software-architect-agent",
         "model": model_name,
         "tools": ["read_workspace_file"],
@@ -173,8 +224,10 @@ def run_architect_agent(
     input_tokens, output_tokens = raw.pop("_usage", (None, None))
     result = ArchitectureReviewResult.model_validate(raw)
 
+    trace_status = "invalid_output" if result.status == "unparseable" else "success"
+
     trace_log.update({
-        "status": "success",
+        "status": trace_status,
         "input_tokens": input_tokens,
         "output_tokens": output_tokens,
         "estimated_cost_credits": estimate_cost_credits(
@@ -195,15 +248,13 @@ def run_architect_task(
         llm: Any | None = None,
         trace_file: str | None = None,
 ) -> ArchitectureReviewResult:
-    """Shared-task-model entry point: review the first file of an EngineeringTask."""
     if task.assigned_role != ARCHITECT_ROLE:
         raise ValueError(f"Architect agent only accepts tasks for role {ARCHITECT_ROLE!r}")
     if not task.input_files:
         raise ValueError("Architect task needs a file to review in input_files")
 
     return run_architect_agent(
-        task.input_files[0],
-        task_id=task.task_id,
+        task,
         llm=llm,
         trace_file=trace_file,
     )

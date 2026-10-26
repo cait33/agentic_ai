@@ -15,9 +15,6 @@
   "US3": [
     {
       "description": "Deletion must be irreversible"
-    },
-    {
-      "description": "Only work items owned by the user can be deleted"
     }
   ],
   "US4": [
