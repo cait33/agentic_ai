@@ -1,0 +1,22 @@
+[
+  {
+    "id": "R1",
+    "description": "Firmenname und Hauptaussage sind auf der Startansicht auffindbar",
+    "is_met": false
+  },
+  {
+    "id": "R2",
+    "description": "Mindestens eine Leistung mit zugehörigem Pflichttext ist erkennbar (Wartungsplanung)",
+    "is_met": false
+  },
+  {
+    "id": "R3",
+    "description": "Klar benannter Kontaktlink öffnet mailto:kontakt@nordwerk.example",
+    "is_met": false
+  },
+  {
+    "id": "R4",
+    "description": "Übungshinweis ist sichtbar (Fiktives Unternehmen – Lehrprojekt der HAW Hamburg)",
+    "is_met": false
+  }
+]

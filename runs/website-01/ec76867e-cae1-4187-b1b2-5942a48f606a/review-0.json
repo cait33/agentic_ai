@@ -1,0 +1,16 @@
+{
+  "task_id": "CUST-001",
+  "workflow_id": "ec76867e-cae1-4187-b1b2-5942a48f606a",
+  "run_id": "ec76867e-cae1-4187-b1b2-5942a48f606a",
+  "round": 0,
+  "reviewer": "Fatih",
+  "decision": "approved",
+  "comment": "AC-01, AC-04, Wartungsplanung im Browser geprüft, Mailto-Link korrekt, keine erfundenen Inhalte",
+  "visually_checked": true,
+  "reviewed_file": "site/index.html",
+  "reviewed_artifact_sha256": "cf685b7f729055f92552986ca2c103b9c4e085ff1101a2a07f0b64229c6c91cb",
+  "tested_source_commit": "d777b346269507e96a43ddf536dde69326e9b3c6",
+  "agent_recommendation": "approved",
+  "identity_assurance": "self_declared_course_review",
+  "decided_at_utc": "2026-10-26T11:06:53.588131+00:00"
+}

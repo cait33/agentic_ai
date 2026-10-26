@@ -1,0 +1,31 @@
+{
+  "US1": [
+    {
+      "description": "Firmenname 'Nordwerk Industrie-Service' is displayed"
+    },
+    {
+      "description": "Hauptaussage 'Praktische Unterstützung für Ihren technischen Betrieb.' is displayed"
+    }
+  ],
+  "US2": [
+    {
+      "description": "Service 'Wartungsplanung' is displayed"
+    },
+    {
+      "description": "Pflichttext 'Wir strukturieren Wartungsaufgaben und dokumentieren Zuständigkeiten für kleine technische Betriebe.' is displayed"
+    }
+  ],
+  "US3": [
+    {
+      "description": "Link text 'Anfrage stellen' is present"
+    },
+    {
+      "description": "Link opens mailto:kontakt@nordwerk.example"
+    }
+  ],
+  "US4": [
+    {
+      "description": "Text 'Fiktives Unternehmen – Lehrprojekt der HAW Hamburg. Keine realen Angebote oder Kontaktaufnahme.' is displayed"
+    }
+  ]
+}
