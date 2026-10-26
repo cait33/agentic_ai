@@ -162,6 +162,8 @@ Evidence: 'runs/website-01/ec76867e-cae1-4187-b1b2-5942a48f606a/' ('manifest.jso
 | Human Review (Fatih) | 0.1 h | 10 |
 | Human Rework (Fatih) | 0.25 h | 25 |
 | Human Factory Development (Fatih, Task 'FACTORY-S3', not in the delivery budget) | 0.75 h | 75 |
+| Human Delivery (Rafael: GitHub customer issue setup) | 0.25 h | 25 |
+| Human Factory Development (Rafael: cross-repo setup & path configuration) | 1.5 h | 150 |
 | Other team members | TODO: Add lines to 'costs/usage.csv' | TODO |
 | **Total delivery CUST-001 (recorded so far)** | Agents 2.74 + Human 110 | **112.74** (partial costs, team incomplete) |
 
