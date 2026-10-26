@@ -1,0 +1,13 @@
+{
+  "status": "success",
+  "target_file": "site/index.html",
+  "artifact_sha256": "cf685b7f729055f92552986ca2c103b9c4e085ff1101a2a07f0b64229c6c91cb",
+  "slots_written": [
+    "header",
+    "services",
+    "contact",
+    "footer"
+  ],
+  "notes": "All required texts and services are implemented exactly as per the brief. No external resources or modifications added.",
+  "error": null
+}

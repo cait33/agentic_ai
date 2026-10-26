@@ -1,0 +1,65 @@
+{
+  "run_id": "ec76867e-cae1-4187-b1b2-5942a48f606a",
+  "workflow_id": "ec76867e-cae1-4187-b1b2-5942a48f606a",
+  "project_id": "website-01",
+  "customer": "Nordwerk Industrie-Service (fiktiv)",
+  "customer_task_id": "CUST-001",
+  "issue": "https://github.com/franciscotbatista99/client-01-website/issues/2",
+  "product_repo": "https://github.com/franciscotbatista99/client-01-website",
+  "product_path": "/Users/fatih/client-01-website",
+  "factory_input_commit": "3d18a688825208db635a2ee725c6aa52e2d12a3d",
+  "factory_dirty_at_start": true,
+  "product_input_commit": "d777b346269507e96a43ddf536dde69326e9b3c6",
+  "product_dirty_at_start": false,
+  "product_result_commit": "63be7a604e3f89514d9ff8cf07528fd3e80e3d2c",
+  "llm_provider": "ollama",
+  "llm_model": "qwen3:4b",
+  "llm_settings": {
+    "temperature": 0.0,
+    "json_mode": true,
+    "reasoning": false,
+    "max_output_tokens_implementer": 2048
+  },
+  "agents": [
+    "product-owner-agent",
+    "web-implementer-agent",
+    "qa-agent"
+  ],
+  "steps": [
+    "requirements",
+    "implementation",
+    "qa",
+    "human_gate"
+  ],
+  "correction_rounds": 0,
+  "max_correction_rounds": 2,
+  "history": [
+    {
+      "round": 0,
+      "artifact_sha256": "cf685b7f729055f92552986ca2c103b9c4e085ff1101a2a07f0b64229c6c91cb",
+      "qa_verdict": "approved",
+      "tests_passed": 7,
+      "tests_failed": 0
+    }
+  ],
+  "errors": [],
+  "target_file": "site/index.html",
+  "final_artifact_sha256": "cf685b7f729055f92552986ca2c103b9c4e085ff1101a2a07f0b64229c6c91cb",
+  "criteria_product_check": {
+    "AC-01": "passed",
+    "AC-02": "passed",
+    "AC-04": "passed"
+  },
+  "agent_recommendation": "approved",
+  "human_decision": "approved",
+  "reviewer": "Fatih",
+  "decided_at_utc": "2026-10-26T11:06:53.588131+00:00",
+  "agent_calls": 2,
+  "agent_credits": 2.7399,
+  "token_usage_complete": true,
+  "started_at_utc": "2026-10-26T11:03:29.484837+00:00",
+  "duration_seconds_incl_human_wait": 204.1722,
+  "trace_file": "trace.jsonl",
+  "manual_interventions": [],
+  "product_dirty_at_record": false
+}
