@@ -59,7 +59,8 @@ roles:
 
   - id: backend_api_engineer
     title: Backend / API Engineer
-    responsibility: FastAPI services, business logic, API contracts
+#    responsibility: FastAPI services, business logic, API contracts
+    responsibility: FastAPI services, business logic, API contracts, customer product implementation
     current_actor_type: agent
     current_actor: Rafael
     target_actor_type: agent
