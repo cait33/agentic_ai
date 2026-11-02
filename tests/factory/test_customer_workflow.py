@@ -108,7 +108,7 @@ def test_writes_outside_allowed_area_are_rejected(cfg, product, path) -> None:
 
 
 @pytest.mark.parametrize("content", [
-    "<script>alert(1)</script>", '<a href="https://evil.example">x</a>',
+    "<script>alert(1)</script>", '<nav><a href="#kontakt">x</a></nav>', '<a href="https://evil.example">x</a>',
     '<a href="javascript:alert(1)">x</a>', '<p onclick="x()">x</p>', "<!-- /AGENT:header -->",
 ])
 def test_unsafe_slot_content_is_rejected(cfg, content) -> None:
@@ -253,8 +253,8 @@ SKELETON_T4 = """<!doctype html>
 <header><!-- AGENT:header -->
 <h1>Nordwerk Industrie-Service</h1>
 <!-- /AGENT:header -->
-<!-- AGENT:nav -->
-<!-- /AGENT:nav --></header>
+<nav aria-label="Hauptnavigation"><!-- AGENT:nav -->
+<!-- /AGENT:nav --></nav></header>
 <main><section id="leistungen"><!-- AGENT:services -->
 <article class="service"><h3>Wartungsplanung</h3><p>alt</p></article>
 <!-- /AGENT:services --></section>
@@ -272,8 +272,8 @@ SKELETON_T4 = """<!doctype html>
 
 T4_OUTPUT = {
     "status": "success",
-    "nav_html": '<nav aria-label="Hauptnavigation"><a href="#leistungen">Leistungen</a> <a href="#kontakt">Kontakt</a></nav>',
-    "audiences_html": '<ul class="audiences"><li>Kleine Produktionsbetriebe</li><li>Technische Serviceunternehmen</li></ul>',
+    "nav_html": '<ul><li><a href="#leistungen">Leistungen</a></li><li><a href="#kontakt">Kontakt</a></li></ul>',
+    "audiences_html": '<ul><li>Kleine Produktionsbetriebe</li><li>Technische Serviceunternehmen</li></ul>',
     "approach_html": "<p>Ein fester Ansprechpartner, ein gemeinsam vereinbarter Leistungsumfang und nachvollziehbare Ergebnisse.</p>",
     "header_html": "", "services_html": "", "contact_html": "", "footer_html": "", "notes": "",
 }
