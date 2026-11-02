@@ -46,7 +46,7 @@ AC checklist: `docs/acceptance.md` · browser review: `tests/browser_test_s4.md`
 
 ## Factory run
 
-Customer run `37079911-0dab-49e6-a4b9-0cec9c71d06d` (task `CUST-002`), evidence `runs/website-01/37079911…` (PR #29):
+Customer run `37079911-0dab-49e6-a4b9-0cec9c71d06d` (task `CUST-001`; the run manifest records `CUST-002` because the project config used that ID at run time – the team later decided to keep `CUST-001` for the whole customer order, evidence left unchanged), evidence `runs/website-01/37079911…` (PR #29):
 
 | | |
 |---|---|
@@ -58,7 +58,7 @@ Customer run `37079911-0dab-49e6-a4b9-0cec9c71d06d` (task `CUST-002`), evidence 
 | Result | product `cdbcba6` = `rc-1`, artifact sha256 `a7a4bbd4…` |
 | Costs | 2 LLM calls, 3.34 credits, token usage complete |
 
-Factory changes for this run (reused config and workflow): implementer with 7 slots and "empty = unchanged" rule (PR #26, restored after merge conflict #27 in PR #28), release gate and AC mapping from product test names (PR #26), task ID `CUST-002` in `projects/website-01.json`.
+Factory changes for this run (reused config and workflow): implementer with 7 slots and "empty = unchanged" rule (PR #26, restored after merge conflict #27 in PR #28), release gate and AC mapping from product test names (PR #26), task ID `CUST-001` in `projects/website-01.json`.
 Known issue: manifest field `max_output_tokens_implementer` shows 2048 (hard-coded), the actual value is 3072.
 
 
@@ -97,22 +97,22 @@ Budgeted for session4 : 800 credits
 
 | Category | Quantity | Credits |
 | -------- | -------- | ------- |
-| Agents CUST-002 (run 37079911) | 2 LLM calls | 3.34 |
+| Agents CUST-001 (run 37079911) | 2 LLM calls | 3.34 |
 | CI | no runs (Actions disabled) | 0 |
-| Human Delivery CUST-002 (Fatih) | 0.8 h | 80 |
-| Human Delivery CUST-002 (Rafael) | 2.0 h | 200 |
-| Human Delivery CUST-002 (Caitlin) | 0.75 h | 75 |
-| Human Review CUST-002 (Caitlin) | 1.0 h | 100 |
-| Human Delivery/Review CUST-002 (Daniil) | TODO | TODO |
-| Human Delivery/Review CUST-002 (Francisco) | TODO | TODO |
-| **Session delivery CUST-002 (recorded so far)** | Agents 3.34 + Human 455 (+ Daniil, Francisco TODO) | **458.34 + TODO** |
-| **Total delivery CUST-001 + CUST-002** | Session3 437.74 + Session4 458.34 + TODO | **896.08 + TODO** |
+| Human Delivery CUST-001 (Fatih) | 0.8 h | 80 |
+| Human Delivery CUST-001 (Rafael) | 2.0 h | 200 |
+| Human Delivery CUST-001 (Caitlin) | 0.75 h | 75 |
+| Human Review CUST-001 (Caitlin) | 1.0 h | 100 |
+| Human Delivery/Review CUST-001 (Daniil) | TODO | TODO |
+| Human Delivery/Review CUST-001 (Francisco) | TODO | TODO |
+| **Session delivery CUST-001 (recorded so far)** | Agents 3.34 + Human 455 (+ Daniil, Francisco TODO) | **458.34 + TODO** |
+| **Total delivery CUST-001 (S3 + S4)** | Session3 437.74 + Session4 458.34 + TODO | **896.08 + TODO** |
 | Factory development `FACTORY-S4` (separate, not in delivery budget) | agents 1.20 (failure case) + human Fatih 65, Caitlin 100 (+ others TODO) | 166.20 + TODO |
 | R-01 baseline (separate) | agents 2.72 + human 30 (Fatih 25, Daniil 5) | 32.72 |
 | S3 rework on S4 day (`CUST-001`, feedback fixes) | Fatih 0.25 h | 25 |
 
 Plan vs. actual S4 delivery: 800 → TODO (deviation TODO %). Reason for deviation: TODO.
-Cost data corrections on 2026-11-02 (values unchanged, marked "T4-Korrektur" in `notes`): two glued rows split, one duplicate row removed (Caitlin, issues 0.75 h), date format `2026-11-2` → `2026-11-02`, task ID `CUST-001` → `CUST-002` for S4 delivery rows.
+Cost data corrections on 2026-11-02 (values unchanged, marked "T4-Korrektur" in `notes`): two glued rows split, one duplicate row removed (Caitlin, issues 0.75 h), date format `2026-11-2` → `2026-11-02`, S4 rows recorded under the customer task `CUST-001`.
 S3 follow-up: 7 cost rows reassigned after feedback (values unchanged); S3 plan 300 vs. actual 437.74 (+46 %) kept as recorded.
 
 

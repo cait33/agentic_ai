@@ -1,7 +1,7 @@
-# CUST-002 – Nordwerk Industrie-Service: release candidate (Session 4)
+# CUST-001 – Nordwerk Industrie-Service: release candidate (Session 4)
 
 Source: Nordwerk client brief v1.0 (23 October 2026), `task sheets/session-03-05/Client_Brief_Nordwerk_en.md` (DE: `Kundenbriefing_Nordwerk_de.md`).
-Previous task: CUST-001 (Session 3, run `ec76867e`, brief version in Factory commit `3d18a68`).
+Previous delivery of CUST-001: Session 3 ( run `ec76867e`, brief version in Factory commit `3d18a68`).
 Fictional company. Static website, a single page with anchors. Website language: German.
 Accountable Product Owner: Francisco.
 

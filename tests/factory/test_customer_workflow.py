@@ -84,7 +84,7 @@ def impl_task(workflow_id: str = "WF-T") -> EngineeringTask:
 def test_shipped_project_config_is_valid(product) -> None:
     cfg = load_project("projects/website-01.json", product_path=product)
     assert cfg.project_id == "website-01"
-    assert cfg.task_id == "CUST-002"
+    assert cfg.task_id == "CUST-001"
     assert cfg.product_path == product.resolve()
     assert cfg.max_correction_rounds <= 2
 
