@@ -1,0 +1,18 @@
+{
+  "US1": [
+    {
+      "description": "Health endpoint returns LLM provider and model details"
+    },
+    {
+      "description": "Endpoint returns status 'ok' when LLM configuration is valid"
+    }
+  ],
+  "US2": [
+    {
+      "description": "Database health endpoint returns 503 status code on database failure"
+    },
+    {
+      "description": "Error message includes the exception type and message"
+    }
+  ]
+}
