@@ -364,3 +364,37 @@ def test_criteria_status_uses_product_test_names(cfg, product) -> None:
     assert status["AC-01"] == "passed"
     assert status["AC-04"] == "failed"
     assert status["AC-06"] == "no_test"
+
+
+# Verify-only mode (controlled failure case, manual changes) ------------------------------
+def test_verify_only_red_check_is_not_released_and_no_agent_writes(cfg, product, tmp_path) -> None:
+    index = product / "site" / "index.html"
+    index.write_text(SKELETON_T4.replace("kontakt@nordwerk.example", "kontakt@nordwerk.exmaple"), encoding="utf-8")
+    before = index.read_text(encoding="utf-8")
+    never = lambda *a, **k: (_ for _ in ()).throw(AssertionError("agent must not run in verify-only"))
+    state, run_dir = cw.run_customer_workflow(cfg, "Fatih", po=never, implement=never, qa=make_qa("changes_requested"),
+                                              decide=decider("approved"), factory_root=tmp_path / "factory",
+                                              verify_only=True)
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    assert state["steps"] == ["qa", "human_gate"]
+    assert index.read_text(encoding="utf-8") == before  # nothing was written
+    assert manifest["mode"] == "verify_only" and manifest["agents"] == ["qa-agent"]
+    assert manifest["release_status"] == "not_released"
+    assert any("product check not green" in b for b in manifest["release_blockers"])
+
+
+def test_verify_only_green_check_after_fix_is_released(cfg, product, tmp_path) -> None:
+    (product / "site" / "index.html").write_text(SKELETON_T4, encoding="utf-8")
+    state, run_dir = cw.run_customer_workflow(cfg, "Fatih", po=fake_po, implement=make_impl(FakeLLM("{}")),
+                                              qa=make_qa("approved"), decide=decider("approved"),
+                                              factory_root=tmp_path / "factory", verify_only=True)
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    assert manifest["release_status"] == "released"
+    assert manifest["final_artifact_sha256"] == manifest["history"][0]["artifact_sha256"]
+
+
+def test_verify_only_never_loops_back_to_implementer(cfg, product, tmp_path) -> None:
+    state, _ = cw.run_customer_workflow(cfg, "Fatih", po=fake_po, implement=make_impl(FakeLLM("{}")),
+                                        qa=make_qa("changes_requested"), decide=decider("changes_requested"),
+                                        factory_root=tmp_path / "factory", verify_only=True)
+    assert "implementation" not in state["steps"] and state["steps"].count("human_gate") == 1

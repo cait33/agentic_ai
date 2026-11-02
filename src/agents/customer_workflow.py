@@ -17,6 +17,8 @@
 
 Run:
     python -m src.agents.customer_workflow --project projects/website-01.json --reviewer Fatih
+Verify an existing product state without any agent writing (manual change, failure case):
+    python -m src.agents.customer_workflow --verify-only --project projects/website-01.json --reviewer Fatih
 After reviewing and committing the product change:
     python -m src.agents.customer_workflow --record-result RUN_ID --project projects/website-01.json
 """
@@ -41,6 +43,7 @@ from src.models.task import EngineeringTask
 from src.observability.tracing import append_trace
 
 Decision = Literal["approved", "changes_requested", "escalate_to_human"]
+IMPL_OK = ("success", "existing")  # "existing" = verify-only run, no agent wrote the product
 AC_TESTS = {f"AC-{n:02d}": f"ac{n:02d}" for n in range(1, 9)}
 _AC_TEST_RE = re.compile(r"def (test_(ac\d{2})\w*)")
 
@@ -192,7 +195,7 @@ def release_blockers(cfg: ProjectConfig, state: dict[str, Any]) -> list[str]:
     if state.get("errors"):
         blockers.append("agent errors: " + "; ".join(state["errors"]))
     impl = state.get("implementation", {})
-    if impl.get("status") != "success":
+    if impl.get("status") not in IMPL_OK:
         blockers.append(f"implementation status: {impl.get('status')}")
     qa = state.get("qa", {})
     if qa.get("verdict") != "approved":
@@ -261,7 +264,7 @@ def recommend(state: CustomerState, max_rounds: int) -> Decision:
         return "escalate_to_human"
     if state.get("requirements", {}).get("status") in ("needs_clarification", "unparseable"):
         return "escalate_to_human"
-    if state.get("implementation", {}).get("status") != "success":
+    if state.get("implementation", {}).get("status") not in IMPL_OK:
         return "escalate_to_human"
     verdict = state.get("qa", {}).get("verdict")
     if verdict == "approved":
@@ -280,7 +283,7 @@ def _dump(path: Path, data: Any) -> None:
 # Graph
 # --------------------------------------------------------------------------- #
 def build_graph(cfg: ProjectConfig, ctx: RunContext, *, po: PoFn, implement: ImplFn, qa: QaFn, decide: DecideFn,
-                input_commit: str | None):
+                input_commit: str | None, verify_only: bool = False):
     run_dir = Path(ctx.run_dir)
     max_rounds = cfg.max_correction_rounds
 
@@ -339,7 +342,7 @@ def build_graph(cfg: ProjectConfig, ctx: RunContext, *, po: PoFn, implement: Imp
         return "qa"
 
     def after_qa(state: CustomerState) -> str:
-        if state.get("errors"):
+        if state.get("errors") or verify_only:
             return "human_gate"
         if state["qa"].get("verdict") == "changes_requested" and state.get("round", 0) < max_rounds:
             return "correct_after_qa"
@@ -347,7 +350,7 @@ def build_graph(cfg: ProjectConfig, ctx: RunContext, *, po: PoFn, implement: Imp
 
     def after_gate(state: CustomerState) -> str:
         last = state["decisions"][-1]
-        if last["decision"] == "changes_requested" and last["round"] < state.get("round", 0):
+        if not verify_only and last["decision"] == "changes_requested" and last["round"] < state.get("round", 0):
             return "implementation"
         return END
 
@@ -357,7 +360,7 @@ def build_graph(cfg: ProjectConfig, ctx: RunContext, *, po: PoFn, implement: Imp
     g.add_node("qa", quality)
     g.add_node("correct_after_qa", correct_after_qa)
     g.add_node("human_gate", human_gate)
-    g.add_edge(START, "requirements")
+    g.add_edge(START, "qa" if verify_only else "requirements")
     g.add_conditional_edges("requirements", after("implementation"), ["implementation", "human_gate"])
     g.add_conditional_edges("implementation", after_implementation, ["qa", "human_gate"])
     g.add_conditional_edges("qa", after_qa, ["correct_after_qa", "human_gate"])
@@ -375,6 +378,7 @@ def run_customer_workflow(
     qa: QaFn = qa_step,
     decide: DecideFn = cli_decision,
     factory_root: Path = FACTORY_ROOT,
+    verify_only: bool = False,
 ) -> tuple[CustomerState, Path]:
     run_id = str(uuid.uuid4())
     run_dir = factory_root / cfg.runs_dir / run_id
@@ -389,9 +393,14 @@ def run_customer_workflow(
     started = time.perf_counter()
 
     graph = build_graph(cfg, ctx, po=po, implement=implement, qa=qa, decide=decide,
-                        input_commit=product_git["commit"])
-    state: CustomerState = graph.invoke({"round": 0, "errors": [], "steps": [], "history": [], "decisions": []},
-                                        {"recursion_limit": 40})
+                        input_commit=product_git["commit"], verify_only=verify_only)
+    initial: CustomerState = {"round": 0, "errors": [], "steps": [], "history": [], "decisions": []}
+    if verify_only:  # no agent writes: the existing file is the artifact under review
+        initial["implementation"] = {"status": "existing", "target_file": cfg.target_file,
+                                     "artifact_sha256": _current_sha(cfg),
+                                     "notes": "verify-only run: product state not written by an agent"}
+        _dump(run_dir / "implementation-0.json", initial["implementation"])
+    state: CustomerState = graph.invoke(initial, {"recursion_limit": 40})
     duration = round(time.perf_counter() - started, 4)
 
     final = state["decisions"][-1] if state.get("decisions") else {}
@@ -416,7 +425,8 @@ def run_customer_workflow(
         "llm_model": settings.llm_model,
         "llm_settings": {"temperature": settings.llm_temperature, "json_mode": True, "reasoning": False,
                          "max_output_tokens_implementer": 2048},
-        "agents": ["product-owner-agent", "web-implementer-agent", "qa-agent"],
+        "mode": "verify_only" if verify_only else "full",
+        "agents": ["qa-agent"] if verify_only else ["product-owner-agent", "web-implementer-agent", "qa-agent"],
         "steps": state.get("steps", []),
         "correction_rounds": state.get("round", 0),
         "max_correction_rounds": cfg.max_correction_rounds,
@@ -469,6 +479,8 @@ def main() -> None:
     p.add_argument("--reviewer", help="Accountable human for the gate")
     p.add_argument("--record-result", metavar="RUN_ID", help="Link the product result commit to a finished run")
     p.add_argument("--note", default=None, help="Manual intervention note (with --record-result)")
+    p.add_argument("--verify-only", action="store_true",
+                   help="Skip PO + implementer: product check + human gate on the existing product state")
     a = p.parse_args()
     cfg = load_project(a.project, product_path=a.product_path)
     if a.record_result:
@@ -476,7 +488,7 @@ def main() -> None:
         return
     if not a.reviewer:
         p.error("--reviewer is required")
-    state, run_dir = run_customer_workflow(cfg, a.reviewer)
+    state, run_dir = run_customer_workflow(cfg, a.reviewer, verify_only=a.verify_only)
     final = state["decisions"][-1] if state.get("decisions") else {}
     print(json.dumps({**{k: state.get(k) for k in ("steps", "errors", "recommendation", "round")},
                       "release_status": final.get("release_status", "not_released"),
