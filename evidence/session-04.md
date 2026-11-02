@@ -37,7 +37,7 @@ Merged without a second review (time pressure): Factory PR #26, #30, product PR 
 
 Factory (https://github.com/cait33/agentic_ai):
 From commit cd68ac4 (https://github.com/cait33/agentic_ai/commit/cd68ac4680b62ae0c54f3e421eb47b9841ea2c67)
-to commit __ (__)
+to commit 8f67b0f (https://github.com/cait33/agentic_ai/commit/8f67b0f34e13faef60b851959500c4ca3affc2f3)
 Client01 (https://github.com/franciscotbatista99/client-01-website):
 From commit ce6074a (https://github.com/franciscotbatista99/client-01-website/commit/ce6074ab25b3fe8488d112b4fef73cbfbf1b1cef)
 to commit d14e681 (https://github.com/franciscotbatista99/client-01-website/commit/d14e681c142d91895116581f55e105aa278abce0)
@@ -100,20 +100,18 @@ Known issue: manifest field `max_output_tokens_implementer` shows 2048 (hard-cod
 | Agents CUST-001 (run 37079911) | 2 LLM calls | 3.34 |
 | CI | no runs (Actions disabled) | 0.00 |
 | Human Delivery CUST-001 (Fatih) | 0.80 h | 80 |
+| S3 rework on S4 day (`CUST-001`, feedback fixes) | Fatih 0.25 h | 25 |
 | Human Delivery CUST-001 (Rafael) | 2.0 h | 200 |
 | Human Delivery CUST-001 (Caitlin) | 2.75 h | 275 |
-| Human Review CUST-001 (Caitlin) | 1.0 h | 100 |
 | Human Delivery CUST-001 (Daniil: semantic sections, IDs, AGENT markers) | 0.75 h | 75.0 |
 | Human Delivery CUST-001 (Daniil: CSS navigation, focus outlines, 375 px mobile) | 0.75 h | 75.0 |
 | Human Delivery CUST-001 (Francisco) | 1.25 h | 125 |
 | Human Review CUST-001 (Francisco) | 0.25 h | 25 |
 | Human Review CUST-001 (Francisco) | 0.1 h | 10 |
 | Human Delivery CUST-001 R-01 (Francisco) | 0.5 h | 50 |
-| **Session delivery CUST-001 (recorded so far)** | Agents 3.34 + Human 455 (+ Daniil, Francisco TODO) | **458.34 + TODO** |
-| **Total delivery CUST-001 (S3 + S4)** | Session3 437.74 + Session4 458.34 + TODO | **896.08 + TODO** |
-| Factory development `FACTORY-S4` (separate, not in delivery budget) | agents 1.20 (failure case) + human Fatih 65, Caitlin 100 (+ others TODO) | 166.20 + TODO |
-| R-01 baseline (separate) | agents 2.72 + human 30 (Fatih 25, Daniil 5) | 32.72 |
-| S3 rework on S4 day (`CUST-001`, feedback fixes) | Fatih 0.25 h | 25 |
+| **Factory development FACTORY-S4** | agents 1.20 (failure case) + human Fatih 65, Caitlin 100 | 166.20 |
+| **Session delivery CUST-001** | Agents 3.34 + Human 750 | **753.34** |
+| **Total delivery CUST-001 (S3 + S4)** | s3 437.74 + s4 753.34 | **1191.08** |
 
 Budget for s4 : 800 credits
 Plan vs. actual S4 delivery: 800 → TODO (deviation TODO %).
