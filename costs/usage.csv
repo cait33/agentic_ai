@@ -35,3 +35,7 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-10-26,CUST-001,human,Daniil,0.75,hours,75.0,"[delivery] issue definition (AC-04), product tests"
 2026-10-26,FACTORY-S3,human,Daniil,0.75,hours,75.0,"[factory_dev] extended EngineeringTask model with target_workspace, project configuration, web-implementer slot engine | T4-Korrektur: Zuordnung berichtigt, Menge/Credits unverändert"
 2026-10-26,CUST-001,human,Daniil,1.0,hours,100.0,"[rework] test coverage expansion | T4-Korrektur: Zuordnung berichtigt, Menge/Credits unverändert"
+2026-11-02,CUST-002,human,Francisco,1.25,hours,125.0,"[delivery] updated S4 brief docs/customer-01/brief.md (N-01–N-09, AC-01–AC-08, slot markup contract) | reviewed by Francisco"
+2026-11-02,R-01,human,Francisco,0.5,hours,50.0,"[factory_dev] helped prepare the R-01 reference task | baseline for S5"
+2026-11-02,CUST-002,human,Francisco,0.25,hours,25.0,"[review] manual browser review of rc-1 at 375/1280 px, keyboard and focus | template tests/browser_test_s4.md"
+2026-11-02,CUST-002,human,Francisco,0.1,hours,10.0,"[review] human gate run 37079911 (CUST-002) | approved artifact a7a4bbd4, released as rc-1"

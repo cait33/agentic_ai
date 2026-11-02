@@ -14,7 +14,7 @@ Deliver an independently runnable release candidate meeting AC-01–AC-08. The F
 | Daniil    | Empty AGENT markers for nav, audiences, approach                                       |
 | Daniil    | Create the CSS for navigation, focus and 375 px                                        |
 | Francisco | Update S4 brief docs/customer-01/brief.md                                              |
-| Francisco | Review                                                                                 |
+| Francisco | Helping Preparing R-01                                                                 |
 | Francisco | Manually review the website and fill out the template                                  |
 | Rafael    | Prepare R-01: separate checkout ~/client-01-website-r01                                |
 | Rafael    | Own config projects/website-01-r01.json                                                |
