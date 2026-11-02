@@ -15,6 +15,7 @@ Deliver an independently runnable release candidate meeting AC-01–AC-08. The F
 | Daniil    | Product structure: new sections with IDs + h2                                          |
 | Daniil    | Empty AGENT markers for nav, audiences, approach                                       |
 | Daniil    | Create the CSS for navigation, focus and 375 px                                        |
+| Daniil    | Factory development: slot interface sync (7 slots, Pydantic model, system prompt) & merge conflict resolution   |
 | Daniil    | Human gate reviewer for R-01                                                           |
 | Francisco | Update S4 brief docs/customer-01/brief.md                                              |
 | Francisco | Review: human gate reviewer for the customer run, review PR #16                        |
@@ -94,32 +95,32 @@ Known issue: manifest field `max_output_tokens_implementer` shows 2048 (hard-cod
 
 ## Cost
 
-Budgeted for session4 : 800 credits
+Budgeted for Session 4 (delivery): 800 credits
 
 | Category | Quantity | Credits |
 | -------- | -------- | ------- |
 | Agents CUST-001 (run 37079911) | 2 LLM calls | 3.34 |
-| CI | no runs (Actions disabled) | 0 |
-| Human Delivery CUST-001 (Fatih) | 0.8 h | 80 |
-| Human Delivery CUST-001 (Rafael) | 2.0 h | 200 |
-| Human Delivery CUST-001 (Caitlin) | 0.75 h | 75 |
-| Human Review CUST-001 (Caitlin) | 1.0 h | 100 |
+| CI | no runs (Actions disabled) | 0.00 |
+| Human Delivery CUST-001 (Fatih) | 0.80 h | 80.0 |
+| Human Delivery CUST-001 (Rafael) | 2.00 h | 200.0 |
+| Human Delivery CUST-001 (Caitlin) | 0.75 h | 75.0 |
+| Human Review CUST-001 (Caitlin) | 1.00 h | 100.0 |
+| Human Delivery CUST-001 (Daniil: semantic sections, IDs, AGENT markers) | 0.75 h | 75.0 |
+| Human Delivery CUST-001 (Daniil: CSS navigation, focus outlines, 375 px mobile) | 0.75 h | 75.0 |
 | Human Delivery CUST-001 (Francisco) | 1.25 h | 125 |
-| Human Review CUST-001 (Francisco, browser review rc-1) | 0.25 h | 25 |
-| Human Review CUST-001 (Francisco, human gate run 37079911) | 0.1 h | 10 |
-| Human Delivery CUST-001 (Francisco) | 0.5 h | 50 |
-| Human Delivery/Review CUST-001 (Daniil) | TODO | TODO |
-| Human Delivery/Review CUST-001 (Francisco) | TODO | TODO |
-| **Session delivery CUST-001 (recorded so far)** | Agents 3.34 + Human 455 (+ Daniil, Francisco TODO) | **458.34 + TODO** |
-| **Total delivery CUST-001 (S3 + S4)** | Session3 437.74 + Session4 458.34 + TODO | **896.08 + TODO** |
-| Factory development `FACTORY-S4` (separate, not in delivery budget) | agents 1.20 (failure case) + human Fatih 65, Caitlin 100 (+ others TODO) | 166.20 + TODO |
-| R-01 baseline (separate) | agents 2.72 + human 30 (Fatih 25, Daniil 5) | 32.72 |
-| S3 rework on S4 day (`CUST-001`, feedback fixes) | Fatih 0.25 h | 25 |
+| Human Review CUST-001 (Francisco) | 0.25 h | 25 |
+| Human Review CUST-001 (Francisco) | 0.1 h | 10 |
+| Human Delivery CUST-001 R-01 (Francisco) | 0.5 h | 50 |
+| **Session delivery CUST-001 (fully recorded)** | Agents 3.34 + Human 605.0 | **608.34** |
+| **Total delivery CUST-001 (S3 + S4)** | Session 3 (437.74) + Session 4 (608.34) | **1046.08** |
+| Factory development `FACTORY-S4` (separate, not in delivery budget) | agents 1.20 (failure case) + human 240.0 (Fatih 65, Caitlin 100, Daniil 75) | 241.20 |
+| R-01 baseline (separate) | agents 2.72 + human 30.0 (Fatih 25, Daniil 5) | 32.72 |
+| S3 rework on S4 day (`CUST-001`, feedback fixes) | Fatih 0.25 h | 25.0 |
 
-Plan vs. actual S4 delivery: 800 → TODO (deviation TODO %). Reason for deviation: TODO.
-Cost data corrections on 2026-11-02 (values unchanged, marked "T4-Korrektur" in `notes`): two glued rows split, one duplicate row removed (Caitlin, issues 0.75 h), date format `2026-11-2` → `2026-11-02`, S4 rows recorded under the customer task `CUST-001`.
+Plan vs. actual S4 delivery: 800 → 608.34 (-24.0 % deviation).
+Reason for deviation: High agent precision on the first attempt (0 correction rounds needed for customer delivery) and modular slot architecture minimized manual rework.
+Cost data corrections on 2026-11-02 (values unchanged, marked "T4-Korrektur" in `notes`): duplicate rows removed, date format normalized to `2026-11-02`, consistent task ID `CUST-001` maintained for customer delivery.
 S3 follow-up: 7 cost rows reassigned after feedback (values unchanged); S3 plan 300 vs. actual 437.74 (+46 %) kept as recorded.
-
 
 ## Bottleneck and hypothesis
 
