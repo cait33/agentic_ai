@@ -15,9 +15,11 @@ Deliver an independently runnable release candidate meeting AC-01–AC-08. The F
 | Daniil    | Product structure: new sections with IDs + h2                                          |
 | Daniil    | Empty AGENT markers for nav, audiences, approach                                       |
 | Daniil    | Create the CSS for navigation, focus and 375 px                                        |
+| Daniil    | Factory development: slot interface sync (7 slots, Pydantic model, system prompt) & merge conflict resolution   |
 | Daniil    | Human gate reviewer for R-01                                                           |
 | Francisco | Update S4 brief docs/customer-01/brief.md                                              |
 | Francisco | Review: human gate reviewer for the customer run, review PR #16                        |
+| Francisco | Helping Preparing R-01                                                                 |
 | Francisco | Manually review the website and fill out the template                                  |
 | Rafael    | Prepare R-01: separate checkout ~/client-01-website-r01                                |
 | Rafael    | Own config projects/website-01-r01.json                                                |
@@ -96,12 +98,17 @@ Known issue: manifest field `max_output_tokens_implementer` shows 2048 (hard-cod
 | Category | Quantity | Credits |
 | -------- | -------- | ------- |
 | Agents CUST-001 (run 37079911) | 2 LLM calls | 3.34 |
-| CI | no runs (Actions disabled) | 0 |
-| Human Delivery CUST-001 (Fatih) | 0.8 h | 80 |
+| CI | no runs (Actions disabled) | 0.00 |
+| Human Delivery CUST-001 (Fatih) | 0.80 h | 80 |
+| Human Delivery CUST-001 (Rafael) | 2.0 h | 200 |
 | Human Delivery CUST-001 (Caitlin) | 2.75 h | 275 |
 | Human Review CUST-001 (Caitlin) | 1.0 h | 100 |
-| Human Delivery/Review CUST-001 (Daniil) | TODO | TODO |
-| Human Delivery/Review CUST-001 (Francisco) | TODO | TODO |
+| Human Delivery CUST-001 (Daniil: semantic sections, IDs, AGENT markers) | 0.75 h | 75.0 |
+| Human Delivery CUST-001 (Daniil: CSS navigation, focus outlines, 375 px mobile) | 0.75 h | 75.0 |
+| Human Delivery CUST-001 (Francisco) | 1.25 h | 125 |
+| Human Review CUST-001 (Francisco) | 0.25 h | 25 |
+| Human Review CUST-001 (Francisco) | 0.1 h | 10 |
+| Human Delivery CUST-001 R-01 (Francisco) | 0.5 h | 50 |
 | **Session delivery CUST-001 (recorded so far)** | Agents 3.34 + Human 455 (+ Daniil, Francisco TODO) | **458.34 + TODO** |
 | **Total delivery CUST-001 (S3 + S4)** | Session3 437.74 + Session4 458.34 + TODO | **896.08 + TODO** |
 | Factory development `FACTORY-S4` (separate, not in delivery budget) | agents 1.20 (failure case) + human Fatih 65, Caitlin 100 (+ others TODO) | 166.20 + TODO |
