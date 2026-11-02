@@ -11,6 +11,8 @@ Tools:   read_product_file   - reads a file of the product checkout
 Guards:  - path must stay inside product checkout AND allowed_write_paths
          - unknown slots, <script>, event handlers, javascript: and external URLs are rejected
          - unparseable LLM output writes nothing (status "unparseable")
+         - only slots that have markers in the target file are written; an empty slot
+           value in the LLM output means "leave unchanged" (never wipes existing content)
 Trace:   one JSONL record per run (run_id, workflow_id, task_id, agent, role, model,
          tools, calls, tokens, duration, artifact hash, credits)
 """
@@ -36,8 +38,8 @@ from src.observability.tracing import append_trace, estimate_cost_credits, usage
 
 AGENT_NAME = "web-implementer-agent"
 ROLE = "backend_api_engineer"
-SLOTS = ("header", "services", "contact", "footer")
-MAX_OUTPUT_TOKENS = 2048
+SLOTS = ("nav", "header", "services", "audiences", "approach", "contact", "footer")
+MAX_OUTPUT_TOKENS = 3072
 _SLOT_RE = re.compile(r"(<!-- AGENT:(\w+) -->)(.*?)(<!-- /AGENT:\2 -->)", re.DOTALL)
 _FORBIDDEN = [
     (re.compile(r"<\s*script", re.I), "<script> is not allowed"),
@@ -55,8 +57,11 @@ class ImplementerOutput(BaseModel):
     """What the LLM must return (also used as Ollama JSON schema)."""
 
     status: Literal["success", "needs_clarification"]
+    nav_html: str = ""
     header_html: str = ""
     services_html: str = ""
+    audiences_html: str = ""
+    approach_html: str = ""
     contact_html: str = ""
     footer_html: str = ""
     notes: str = ""
@@ -67,6 +72,7 @@ class ImplementationResult(BaseModel):
     target_file: str
     artifact_sha256: str | None = None
     slots_written: list[str] = Field(default_factory=list)
+    slots_unchanged: list[str] = Field(default_factory=list)
     notes: str = ""
     error: str | None = None
 
@@ -127,20 +133,28 @@ def write_product_slots(cfg: ProjectConfig, relative_path: str, slots: dict[str,
 # LLM
 # --------------------------------------------------------------------------- #
 SYSTEM_PROMPT = (
-    "You are the web implementer of a software factory. You fill four HTML slots of a static, "
+    "You are the web implementer of a software factory. You fill HTML slots of a static, "
     "German-language company website. Use the REQUIRED TEXTS exactly, character by character "
     "(including punctuation and the en dash). Do not invent services, customers, logos, "
     "certifications, numbers or promises. No <script>, no inline styles, no event handlers, "
     "no external URLs, no images.\n"
-    "Use exactly this markup:\n"
+    "Use exactly this markup per slot:\n"
+    "- nav_html: <nav aria-label=\"Hauptnavigation\"><a href=\"#leistungen\">Leistungen</a> "
+    "<a href=\"#zielgruppen\">Zielgruppen</a> <a href=\"#arbeitsweise\">Arbeitsweise</a> "
+    "<a href=\"#kontakt\">Kontakt</a></nav>\n"
     "- header_html: <h1>COMPANY NAME</h1> followed by <p class=\"claim\">MAIN CLAIM</p>\n"
-    "- services_html: one <article class=\"service\"><h3>SERVICE NAME</h3><p>SERVICE TEXT</p></article> per service in scope\n"
+    "- services_html: one <article class=\"service\"><h3>SERVICE NAME</h3><p>SERVICE TEXT</p></article> "
+    "per service in scope\n"
+    "- audiences_html: <ul class=\"audiences\"><li>TARGET GROUP</li>...</ul> with each target group\n"
+    "- approach_html: <p>WORKING METHOD TEXT</p>\n"
     "- contact_html: <p>short neutral German sentence</p> and "
     "<a class=\"contact-link\" href=\"MAILTO TARGET\">LINK TEXT</a>\n"
     "- footer_html: <p class=\"notice\">EXERCISE NOTICE</p>\n"
-    "Reply ONLY with one JSON object: "
-    '{"status": "success", "header_html": "...", "services_html": "...", '
-    '"contact_html": "...", "footer_html": "...", "notes": "..."}. '
+    "Only fill slots listed under AVAILABLE SLOTS. If a slot needs no change, return an empty string "
+    "for it (it stays as it is). If you change a slot, return its COMPLETE new content, keeping every "
+    "existing item that is still required.\n"
+    "Reply ONLY with one JSON object with the keys status, nav_html, header_html, services_html, "
+    "audiences_html, approach_html, contact_html, footer_html, notes. "
     "If the brief is not a website brief, return status \"needs_clarification\" with the reason in notes."
 )
 
@@ -181,6 +195,7 @@ def build_messages(brief: str, stories: list[dict[str, Any]], slots: dict[str, s
     parts = [
         "CUSTOMER BRIEF (contains the REQUIRED TEXTS and the scope of today):\n" + brief,
         "USER STORIES FROM PRODUCT OWNER (structured handover):\n" + json.dumps(stories, ensure_ascii=False, indent=1),
+        "AVAILABLE SLOTS: " + ", ".join(slots),
         "CURRENT SLOT CONTENT:\n" + json.dumps(slots, ensure_ascii=False, indent=1),
     ]
     if feedback:
@@ -228,9 +243,9 @@ def run_implementer(
         brief = (FACTORY_ROOT / task.input_files[0]).read_text(encoding="utf-8")
         ctx["tools"].append("read_product_file")
         slots_before = current_slots(read_product_file(cfg, cfg.target_file))
-        missing = [s for s in SLOTS if s not in slots_before]
-        if missing:
-            raise ValueError(f"Target file lacks AGENT markers for: {missing}")
+        slots_before = {name: slots_before[name] for name in SLOTS if name in slots_before}
+        if not slots_before:
+            raise ValueError(f"Target file has no AGENT markers for any of: {list(SLOTS)}")
 
         model = _prepare_llm(llm or get_chat_model(reasoning=False, json_mode=True))
         ctx["calls"] += 1
@@ -244,12 +259,17 @@ def run_implementer(
         elif output.status == "needs_clarification":
             result = ImplementationResult(status="needs_clarification", target_file=cfg.target_file, notes=output.notes)
         else:
-            slots = {name: getattr(output, f"{name}_html") for name in SLOTS}
+            proposed = {name: getattr(output, f"{name}_html").strip() for name in slots_before}
+            slots = {name: html for name, html in proposed.items() if html}
+            unchanged = [name for name in slots_before if name not in slots]
             try:
+                if not slots:
+                    raise ValueError("LLM output changes no slot")
                 ctx["tools"].append("write_product_slots")
                 digest = write_product_slots(cfg, cfg.target_file, slots)
                 result = ImplementationResult(status="success", target_file=cfg.target_file,
-                                              artifact_sha256=digest, slots_written=list(slots), notes=output.notes)
+                                              artifact_sha256=digest, slots_written=list(slots),
+                                              slots_unchanged=unchanged, notes=output.notes)
             except (ValueError, PermissionError) as exc:
                 result = ImplementationResult(status="rejected", target_file=cfg.target_file, error=str(exc))
 
