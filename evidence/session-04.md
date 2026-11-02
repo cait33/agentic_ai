@@ -104,6 +104,10 @@ Budgeted for session4 : 800 credits
 | Human Delivery CUST-001 (Rafael) | 2.0 h | 200 |
 | Human Delivery CUST-001 (Caitlin) | 0.75 h | 75 |
 | Human Review CUST-001 (Caitlin) | 1.0 h | 100 |
+| Human Delivery CUST-001 (Francisco) | 1.25 h | 125 |
+| Human Review CUST-001 (Francisco, browser review rc-1) | 0.25 h | 25 |
+| Human Review CUST-001 (Francisco, human gate run 37079911) | 0.1 h | 10 |
+| Human Delivery CUST-001 (Francisco) | 0.5 h | 50 |
 | Human Delivery/Review CUST-001 (Daniil) | TODO | TODO |
 | Human Delivery/Review CUST-001 (Francisco) | TODO | TODO |
 | **Session delivery CUST-001 (recorded so far)** | Agents 3.34 + Human 455 (+ Daniil, Francisco TODO) | **458.34 + TODO** |
