@@ -1,0 +1,18 @@
+{
+  "US1": [
+    {
+      "description": "Card 'Projektkoordination' with exact text exists"
+    },
+    {
+      "description": "All existing service cards remain unchanged"
+    }
+  ],
+  "US2": [
+    {
+      "description": "All existing content, contact targets and navigation remain unchanged"
+    },
+    {
+      "description": "Human gate decision recorded and review time measured"
+    }
+  ]
+}
