@@ -41,3 +41,30 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-11-2,CUST-001,human,Daniil,0.75,hours,75.0,"[delivery] restored AGENT markers (repeatability fix), added semantic sections with IDs (#leistungen, #zielgruppen, #arbeitsweise, #kontakt) and empty slots for nav, audiences, approach"
 2026-11-2,CUST-001,human,Daniil,0.75,hours,75.0,"[delivery] implemented CSS for site navigation, focus-visible keyboard outlines (AC-07), and responsive layout for 375px mobile viewport (AC-06)"
 2026-11-2,FACTORY-S4,human,Daniil,0.75,hours,75.0,"[factory_dev] expanded web_implementer interface to 7 slots, updated Pydantic schema and system prompt for nav/audiences/approach, resolved merge conflict"
+2026-11-02,CUST-002,human,Rafael,2.0,hours,200.0,"[delivery] R-01 project coordination setup, cross-repo JSON configuration and tests (AC-08) | T4-Korrektur: Task-ID CUST-002 (S4-Lieferung), Datumsformat; Menge/Credits unverändert"
+2026-11-02,CUST-002,human,Caitlin,0.75,hours,75.0,"[delivery] created issues in customer repo for each criteria for the website, splitting each criteria into smaller acceptance criterias to be completed/checked | T4-Korrektur: Task-ID CUST-002 (S4-Lieferung), Datumsformat; Menge/Credits unverändert"
+2026-11-02,CUST-002,human,Caitlin,1.0,hours,100.0,"[review] created a document that sets out how to manually test the website against the specified criteria, to be filled out by the reviewer | T4-Korrektur: Task-ID CUST-002 (S4-Lieferung), Datumsformat; Menge/Credits unverändert"
+2026-11-02,FACTORY-S4,human,Caitlin,1.0,hours,100.0,"[factory_dev] created the session-04.md file to collect evidence of our session, structured it and filled in our tasks and commits from the repository"
+2026-11-02,CUST-002,agent,product-owner-agent,62.8545,seconds,1.7014,"[agent] run 37079911: S4 brief -> user stories (2256 in / 694 out tokens, qwen3:4b)"
+2026-11-02,CUST-002,agent,web-implementer-agent,53.7389,seconds,1.6259,"[agent] run 37079911: wrote slots nav, services, audiences (3414 in / 505 out tokens, qwen3:4b)"
+2026-11-02,CUST-002,agent,qa-agent,1.1613,seconds,0.0116,"[agent] run 37079911: product check 23 passed, 0 LLM calls"
+2026-11-02,FACTORY-S4,agent,qa-agent,18.2019,seconds,1.1977,"[agent] failure case run 536b4d37: 2 failed, LLM failure analysis (437 in / 174 out tokens)"
+2026-11-02,FACTORY-S4,agent,qa-agent,0.5715,seconds,0.0057,"[agent] failure case run 41cd73ed: 23 passed after fix, 0 LLM calls"
+2026-11-02,R-01,agent,product-owner-agent,25.9081,seconds,1.287,[agent] R-01 baseline run 3ba82f0f: user stories (659 in / 368 out tokens)
+2026-11-02,R-01,agent,web-implementer-agent,36.821,seconds,1.4205,[agent] R-01 baseline run 3ba82f0f: services slot with 4th card (1580 in / 518 out tokens)
+2026-11-02,R-01,agent,qa-agent,0.8362,seconds,0.0084,"[agent] R-01 baseline run 3ba82f0f: 25 passed, 0 LLM calls"
+2026-11-02,CUST-002,ci,github-actions,0,runs,0,[ci] no CI run (Actions disabled)
+2026-11-02,CUST-002,human,Fatih,0.25,hours,25.0,"[delivery] S4 planning: task sheet review, team task split"
+2026-11-02,CUST-001,human,Fatih,0.25,hours,25.0,"[rework] S3 feedback: reconcile cost categories, store reproducible factory test result (PR #24)"
+2026-11-02,CUST-002,human,Fatih,0.1,hours,10.0,[delivery] slot contract and task split shared with team
+2026-11-02,FACTORY-S4,human,Fatih,0.25,hours,25.0,"[factory_dev] implementer 7 slots, release gate, AC mapping, factory tests (PR #26, AI-assisted)"
+2026-11-02,CUST-002,human,Fatih,0.1,hours,10.0,[delivery] product checks for 3 check families (product PR #10)
+2026-11-02,FACTORY-S4,human,Fatih,0.15,hours,15.0,"[factory_dev] repair implementer after merge #27, align nav/audiences with S4 brief (PR #28 + product PR #15)"
+2026-11-02,CUST-002,human,Fatih,0.15,hours,15.0,"[delivery] ran S4 customer workflow 37079911 (23/23 checks, released), review PR #16"
+2026-11-02,CUST-002,human,Fatih,0.1,hours,10.0,"[delivery] merged review PR #16, record-result + evidence PR #29, tag rc-1"
+2026-11-02,FACTORY-S4,human,Fatih,0.1,hours,10.0,[factory_dev] verify-only mode + fault-case config (PR #30)
+2026-11-02,FACTORY-S4,human,Fatih,0.15,hours,15.0,"[factory_dev] controlled failure case on rc-1 copy: run 536b4d37 not_released, run 41cd73ed released after fix"
+2026-11-02,R-01,human,Fatih,0.1,hours,10.0,"[delivery] R-01 setup fix (config + verbatim brief, PR #32), R-01 checkout from rc-1 + test_r01"
+2026-11-02,R-01,human,Fatih,0.15,hours,15.0,"[delivery] R-01 baseline run 3ba82f0f operated, result branch r01-baseline, evidence PR #33"
+2026-11-02,R-01,human,Daniil,0.05,hours,5.0,"[review] human gate R-01 run 3ba82f0f (13:25-13:27 local), approved"
+2026-11-02,CUST-002,human,Fatih,0.1,hours,10.0,"[delivery] fresh checkout of rc-1 (AC-08): 23 passed, page loads, no factory/LLM/DB (13:36)"
