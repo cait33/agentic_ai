@@ -1,0 +1,56 @@
+{
+  "run_id": "f90fdc00-7958-406f-8893-576e9bbc6a63",
+  "workflow_id": "f90fdc00-7958-406f-8893-576e9bbc6a63",
+  "project_id": "website-01",
+  "customer": "Nordwerk Industrie-Service (fiktiv)",
+  "customer_task_id": "CUST-001",
+  "issue": "https://github.com/franciscotbatista99/client-01-website/issues/2",
+  "product_repo": "https://github.com/franciscotbatista99/client-01-website",
+  "product_path": "C:\\Users\\Utilizador\\client-01-website",
+  "factory_input_commit": "2c622e4c80c000d7bceb3e2455326849a42cb2f5",
+  "factory_dirty_at_start": true,
+  "product_input_commit": "63be7a604e3f89514d9ff8cf07528fd3e80e3d2c",
+  "product_dirty_at_start": false,
+  "product_result_commit": null,
+  "llm_provider": "ollama",
+  "llm_model": "qwen3:4b",
+  "llm_settings": {
+    "temperature": 0.0,
+    "json_mode": true,
+    "reasoning": false,
+    "max_output_tokens_implementer": 2048
+  },
+  "agents": [
+    "product-owner-agent",
+    "web-implementer-agent",
+    "qa-agent"
+  ],
+  "steps": [
+    "requirements",
+    "human_gate"
+  ],
+  "correction_rounds": 0,
+  "max_correction_rounds": 2,
+  "history": [],
+  "errors": [
+    "requirements: ConnectError: [WinError 10061] Nenhuma ligação pôde ser feita porque o computador de destino\r\nas recusou ativamente"
+  ],
+  "target_file": "site/index.html",
+  "final_artifact_sha256": null,
+  "criteria_product_check": {
+    "AC-01": "not_checked",
+    "AC-02": "not_checked",
+    "AC-04": "not_checked"
+  },
+  "agent_recommendation": "escalate_to_human",
+  "human_decision": "approved",
+  "reviewer": "Rafael",
+  "decided_at_utc": "2026-10-26T11:46:30.948759+00:00",
+  "agent_calls": 1,
+  "agent_credits": 1.0468,
+  "token_usage_complete": false,
+  "started_at_utc": "2026-10-26T11:45:53.811458+00:00",
+  "duration_seconds_incl_human_wait": 37.1394,
+  "trace_file": "trace.jsonl",
+  "manual_interventions": []
+}
