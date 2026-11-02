@@ -1,0 +1,6 @@
+{
+  "status": "existing",
+  "target_file": "site/index.html",
+  "artifact_sha256": "a7a4bbd43f1e8f2763f38ff9f7e75506e66e3a5b02d3f23c9cdd290cd60d4867",
+  "notes": "verify-only run: product state not written by an agent"
+}

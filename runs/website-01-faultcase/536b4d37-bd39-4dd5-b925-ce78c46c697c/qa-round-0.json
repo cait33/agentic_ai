@@ -1,0 +1,31 @@
+{
+  "task_id": "CUST-001-FAULT",
+  "verdict": "changes_requested",
+  "summary": "2 tests failed in the product check for CUST-001-FAULT",
+  "findings": [
+    {
+      "severity": "high",
+      "test": "test_ac04_contact_link_targets_mailto",
+      "description": "Assertion failed: Contact link does not target mailto:kontakt@nordwerk.example as expected. Actual link targets are not matching the expected MAILTO format."
+    },
+    {
+      "severity": "high",
+      "test": "test_ac:04_no_other_mail_targets",
+      "description": "Assertion failed: Unexpected mail targets found. The test detected an extra mail target: mailto:kontakt@nordwerk.exmaple (note: typo in domain name 'exmaple' instead of 'example')."
+    }
+  ],
+  "test_run": {
+    "exit_code": 1,
+    "passed": 21,
+    "failed": 2,
+    "errors": 0,
+    "skipped": 0,
+    "failed_tests": [
+      "tests/test_site.py::test_ac04_contact_link_targets_mailto",
+      "tests/test_site.py::test_ac04_no_other_mail_targets"
+    ],
+    "timed_out": false,
+    "output_tail": "..........FF...........                                                  [100%]\n=================================== FAILURES ===================================\n____________________ test_ac04_contact_link_targets_mailto _____________________\ntests/test_site.py:185: in test_ac04_contact_link_targets_mailto\n    assert all(l[\"href\"] == MAILTO for l in matches), f\"Kontaktlink muss auf {MAILTO} zeigen\"\nE   AssertionError: Kontaktlink muss auf mailto:kontakt@nordwerk.example zeigen\nE   assert False\nE    +  where False = all(<generator object test_ac04_contact_link_targets_mailto.<locals>.<genexpr> at 0x103808ba0>)\n_______________________ test_ac04_no_other_mail_targets ________________________\ntests/test_site.py:190: in test_ac04_no_other_mail_targets\n    assert not others, f\"Unerwartete Mailziele: {others}\"\nE   AssertionError: Unerwartete Mailziele: {'mailto:kontakt@nordwerk.exmaple'}\nE   assert not {'mailto:kontakt@nordwerk.exmaple'}\n=========================== short test summary info ============================\nFAILED tests/test_site.py::test_ac04_contact_link_targets_mailto - AssertionE...\nFAILED tests/test_site.py::test_ac04_no_other_mail_targets - AssertionError: ...\n2 failed, 21 passed in 0.05s\n"
+  },
+  "requires_human_approval": true
+}
