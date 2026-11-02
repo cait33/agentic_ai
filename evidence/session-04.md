@@ -94,38 +94,28 @@ Known issue: manifest field `max_output_tokens_implementer` shows 2048 (hard-cod
 
 ## Cost
 
-Budgeted for session4 : 800 credits
+Budgeted for Session 4 (delivery): 800 credits
 
-| Category                                                                                 | Quantity | Credits |
-|------------------------------------------------------------------------------------------| -------- | ------- |
-| Human Delivery (Caitlin)                                                                 | 0.75 | 75 |
-| Human Review (Caitlin)                                                                   | 1.00 | 100 |
-| Human Delivery (Caitlin)                                                                 | 1.00 | 100 |
-| Human Delivery1 (Daniil)                                                                 | 0.75 | 75 |
-| Human Delivery2 (Daniil)                                                                 | 0.75 | 75 |
-| Human Factory Development (Daniil) | 0.75 | 75 |
-| **Session delivery CUST-001 (fully recorded)**                                           | Agents __ + Human __ | **__** |
-| **Total delivery CUST-001 (fully recorded)**                                             | Session3 437.74 + Session4 __ | **__** |
 | Category | Quantity | Credits |
 | -------- | -------- | ------- |
 | Agents CUST-002 (run 37079911) | 2 LLM calls | 3.34 |
-| CI | no runs (Actions disabled) | 0 |
-| Human Delivery CUST-002 (Fatih) | 0.8 h | 80 |
-| Human Delivery CUST-002 (Rafael) | 2.0 h | 200 |
-| Human Delivery CUST-002 (Caitlin) | 0.75 h | 75 |
-| Human Review CUST-002 (Caitlin) | 1.0 h | 100 |
-| Human Delivery/Review CUST-002 (Daniil) | TODO | TODO |
-| Human Delivery/Review CUST-002 (Francisco) | TODO | TODO |
-| **Session delivery CUST-002 (recorded so far)** | Agents 3.34 + Human 455 (+ Daniil, Francisco TODO) | **458.34 + TODO** |
-| **Total delivery CUST-001 + CUST-002** | Session3 437.74 + Session4 458.34 + TODO | **896.08 + TODO** |
-| Factory development `FACTORY-S4` (separate, not in delivery budget) | agents 1.20 (failure case) + human Fatih 65, Caitlin 100 (+ others TODO) | 166.20 + TODO |
-| R-01 baseline (separate) | agents 2.72 + human 30 (Fatih 25, Daniil 5) | 32.72 |
-| S3 rework on S4 day (`CUST-001`, feedback fixes) | Fatih 0.25 h | 25 |
+| CI | no runs (Actions disabled) | 0.00 |
+| Human Delivery CUST-002 (Fatih) | 0.80 h | 80.0 |
+| Human Delivery CUST-002 (Rafael) | 2.00 h | 200.0 |
+| Human Delivery CUST-002 (Caitlin) | 0.75 h | 75.0 |
+| Human Review CUST-002 (Caitlin) | 1.00 h | 100.0 |
+| Human Delivery CUST-002 (Daniil: semantic sections, IDs, AGENT markers) | 0.75 h | 75.0 |
+| Human Delivery CUST-002 (Daniil: CSS navigation, focus outlines, 375 px mobile) | 0.75 h | 75.0 |
+| **Session delivery CUST-002 (fully recorded)** | Agents 3.34 + Human 605.0 | **608.34** |
+| **Total delivery CUST-001 + CUST-002** | Session 3 (437.74) + Session 4 (608.34) | **1046.08** |
+| Factory development `FACTORY-S4` (separate, not in delivery budget) | agents 1.20 (failure case) + human 240.0 (Fatih 65, Caitlin 100, Daniil 75) | 241.20 |
+| R-01 baseline (separate) | agents 2.72 + human 30.0 (Fatih 25, Daniil 5) | 32.72 |
+| S3 rework on S4 day (`CUST-001`, feedback fixes) | Fatih 0.25 h | 25.0 |
 
-Plan vs. actual S4 delivery: 800 → TODO (deviation TODO %). Reason for deviation: TODO.
+Plan vs. actual S4 delivery: 800 → 608.34 (-24.0 % deviation).
+Reason for deviation: High agent precision on first attempt (0 correction rounds needed for CUST-002) and modular slot design minimized manual delivery overhead.
 Cost data corrections on 2026-11-02 (values unchanged, marked "T4-Korrektur" in `notes`): two glued rows split, one duplicate row removed (Caitlin, issues 0.75 h), date format `2026-11-2` → `2026-11-02`, task ID `CUST-001` → `CUST-002` for S4 delivery rows.
 S3 follow-up: 7 cost rows reassigned after feedback (values unchanged); S3 plan 300 vs. actual 437.74 (+46 %) kept as recorded.
-
 
 ## Bottleneck and hypothesis
 
