@@ -35,10 +35,10 @@ Merged without a second review (time pressure): Factory PR #26, #30, product PR 
 
 Factory (https://github.com/cait33/agentic_ai):
 From commit cd68ac4 (https://github.com/cait33/agentic_ai/commit/cd68ac4680b62ae0c54f3e421eb47b9841ea2c67)
-to commit TODO (final main hash after this file and the costs are merged)
+to commit __ (__)
 Client01 (https://github.com/franciscotbatista99/client-01-website):
 From commit ce6074a (https://github.com/franciscotbatista99/client-01-website/commit/ce6074ab25b3fe8488d112b4fef73cbfbf1b1cef)
-to commit d14e681 (https://github.com/franciscotbatista99/client-01-website/commit/d14e681)
+to commit d14e681 (https://github.com/franciscotbatista99/client-01-website/commit/d14e681c142d91895116581f55e105aa278abce0)
 
 Release candidate: tag `rc-1` → commit `cdbcba6` (merge of review PR #16).
 AC checklist: `docs/acceptance.md` · browser review: `tests/browser_test_s4.md` (product repo).
@@ -93,15 +93,12 @@ Known issue: manifest field `max_output_tokens_implementer` shows 2048 (hard-cod
 
 ## Cost
 
-Budgeted for session4 : 800 credits
-
 | Category | Quantity | Credits |
 | -------- | -------- | ------- |
 | Agents CUST-001 (run 37079911) | 2 LLM calls | 3.34 |
 | CI | no runs (Actions disabled) | 0 |
 | Human Delivery CUST-001 (Fatih) | 0.8 h | 80 |
-| Human Delivery CUST-001 (Rafael) | 2.0 h | 200 |
-| Human Delivery CUST-001 (Caitlin) | 0.75 h | 75 |
+| Human Delivery CUST-001 (Caitlin) | 2.75 h | 275 |
 | Human Review CUST-001 (Caitlin) | 1.0 h | 100 |
 | Human Delivery/Review CUST-001 (Daniil) | TODO | TODO |
 | Human Delivery/Review CUST-001 (Francisco) | TODO | TODO |
@@ -111,9 +108,9 @@ Budgeted for session4 : 800 credits
 | R-01 baseline (separate) | agents 2.72 + human 30 (Fatih 25, Daniil 5) | 32.72 |
 | S3 rework on S4 day (`CUST-001`, feedback fixes) | Fatih 0.25 h | 25 |
 
-Plan vs. actual S4 delivery: 800 → TODO (deviation TODO %). Reason for deviation: TODO.
-Cost data corrections on 2026-11-02 (values unchanged, marked "T4-Korrektur" in `notes`): two glued rows split, one duplicate row removed (Caitlin, issues 0.75 h), date format `2026-11-2` → `2026-11-02`, S4 rows recorded under the customer task `CUST-001`.
-S3 follow-up: 7 cost rows reassigned after feedback (values unchanged); S3 plan 300 vs. actual 437.74 (+46 %) kept as recorded.
+Budget for s4 : 800 credits
+Plan vs. actual S4 delivery: 800 → TODO (deviation TODO %).
+Reason for deviation: TODO.
 
 
 ## Bottleneck and hypothesis

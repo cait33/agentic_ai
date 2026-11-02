@@ -182,6 +182,8 @@ Evidence: 'runs/website-01/ec76867e-cae1-4187-b1b2-5942a48f606a/' ('manifest.jso
 
 Plan budget (team planning; confirmed with lecturer): Delivery T3 300 credits, T4 800 credits (approx. 3 hours or 8 hours of person time for content, product checks, review and rework, plus approx. 30 credits agent runs including missed runs), reserve T5 400 credits (CR-01, SR-01, acceptance). Factory development is recorded separately under 'FACTORY-S3'. Actual values: 'costs/usage.csv'.
 
+This deviation was due to an underestimate in the cost, we are now aware of what our usual credit usage is and will adjust our future budgets accordingly.
+
 Transparency: The factory code (project configuration, web implementer, customer workflow, factory testing) was designed with AI assistance (Claude) and integrated, tested, and managed by Fatih. Time is recorded as factory development.
 
 ## Bottleneck and hypothesis
