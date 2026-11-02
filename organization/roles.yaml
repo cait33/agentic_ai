@@ -59,7 +59,6 @@ roles:
 
   - id: backend_api_engineer
     title: Backend / API Engineer
-#    responsibility: FastAPI services, business logic, API contracts
     responsibility: FastAPI services, business logic, API contracts, customer product implementation
     current_actor_type: agent
     current_actor: Rafael
@@ -84,10 +83,10 @@ roles:
     title: Agent Engineer
     responsibility: LangGraph workflows, LangChain integration, agent state and tools
     current_actor_type: agent
-    current_actor: Caitlin
+    current_actor: Fatih
     target_actor_type: agent
     target_actor: agent_engineer_agent
-    accountable_human: Caitlin
+    accountable_human: Fatih
     human_approval_required: true
     implementation_status: operational
 
