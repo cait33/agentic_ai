@@ -1,5 +1,13 @@
 {
+  "project_id": "website-01-r01",
+  "customer": "Nordwerk Industrie-Service (fiktiv) - Referenzaufgabe R-01, nicht Teil der Lieferung",
+  "product_repo": "https://github.com/franciscotbatista99/client-01-website",
   "product_path": "~/client-01-website-r01",
+  "task_id": "R-01",
+  "brief": "docs/customer-01/r01.md",
+  "target_file": "site/index.html",
+  "allowed_write_paths": ["site/"],
+  "product_test_paths": ["tests"],
   "runs_dir": "runs/website-01-r01",
-  "task_id": "R-01"
+  "max_correction_rounds": 2
 }
