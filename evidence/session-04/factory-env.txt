@@ -1,0 +1,21 @@
+Python 3.12.5
+Darwin arm64
+cd68ac4680b62ae0c54f3e421eb47b9841ea2c67
+fastapi==0.141.1
+langchain==1.3.18
+langchain-core==1.6.10
+langchain-ollama==1.1.0
+langchain-openai==1.6.0
+langchain-postgres==0.0.17
+langchain-protocol==0.0.19
+langgraph==1.2.11
+langgraph-checkpoint==4.3.0
+langgraph-prebuilt==1.1.0
+langgraph-sdk==0.4.7
+psycopg==3.3.4
+psycopg-binary==3.3.4
+psycopg-pool==3.3.3
+pydantic==2.13.5
+pydantic-settings==2.15.0
+pydantic_core==2.46.5
+pytest==9.1.1
