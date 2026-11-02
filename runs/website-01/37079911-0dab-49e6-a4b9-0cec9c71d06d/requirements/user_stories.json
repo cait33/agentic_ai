@@ -1,0 +1,54 @@
+[
+  {
+    "id": "US1",
+    "description": "As a Nordwerk client I want to see the company name and main statement in the header so that I can identify the business quickly",
+    "acceptance_criteria": [
+      {
+        "description": "Company name 'Nordwerk Industrie-Service' and main statement 'Praktische Unterstützung für Ihren technischen Betrieb.' are visible within the first viewport"
+      },
+      {
+        "description": "No additional content blocks or navigation elements interfere with the header visibility"
+      }
+    ],
+    "backlog_value": 80
+  },
+  {
+    "id": "US2",
+    "description": "As a client I want all three services with their descriptions to be clearly listed so that I can understand the services offered",
+    "acceptance_criteria": [
+      {
+        "description": "Three services: 'Wartungsplanung', 'Ersatzteilkoordination', and 'Betriebsdokumentation' with their respective descriptions are present"
+      },
+      {
+        "description": "Service descriptions match the exact required content N-03, N-04, N-05 without any modifications"
+      }
+    ],
+    "backlog_value": 75
+  },
+  {
+    "id": "US3",
+    "description": "As a client I want to see the target groups and working approach section so that I can understand who the services are for and how they work",
+    "acceptance_criteria": [
+      {
+        "description": "Target groups: 'Kleine Produktionsbetriebe' and 'Technische Serviceunternehmen' are listed"
+      },
+      {
+        "description": "Working approach description: 'Ein fester Ansprechpartner, ein gemeinsam vereinbarter Leistungsumfang und nachvollziehbare Ergebnisse.' is present"
+      }
+    ],
+    "backlog_value": 70
+  },
+  {
+    "id": "US4",
+    "description": "As a client I want a contact link that allows me to send an email request and see the course notice so that I can understand the project's nature",
+    "acceptance_criteria": [
+      {
+        "description": "Contact link text 'Anfrage stellen' targets mailto:kontakt@nordwerk.example"
+      },
+      {
+        "description": "Course notice 'Fiktives Unternehmen – Lehrprojekt der HAW Hamburg. Keine realen Angebote oder Kontaktaufnahme.' is visible in the footer"
+      }
+    ],
+    "backlog_value": 85
+  }
+]

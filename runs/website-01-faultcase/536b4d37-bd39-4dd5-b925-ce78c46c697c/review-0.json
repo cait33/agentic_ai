@@ -1,0 +1,22 @@
+{
+  "task_id": "CUST-001-FAULT",
+  "workflow_id": "536b4d37-bd39-4dd5-b925-ce78c46c697c",
+  "run_id": "536b4d37-bd39-4dd5-b925-ce78c46c697c",
+  "round": 0,
+  "reviewer": "Fatih",
+  "decision": "escalate_to_human",
+  "comment": "wrong contact address (exmaple instead of example)",
+  "visually_checked": true,
+  "reviewed_file": "site/index.html",
+  "reviewed_artifact_sha256": "87197b62c5b3935617c3a1b64f85028d7eb6a0199fadf331ce7f466cfcefda12",
+  "tested_source_commit": "cdbcba62affa591f6974383c3065e45d4fb514b0",
+  "agent_recommendation": "escalate_to_human",
+  "current_artifact_sha256": "87197b62c5b3935617c3a1b64f85028d7eb6a0199fadf331ce7f466cfcefda12",
+  "release_status": "not_released",
+  "release_blockers": [
+    "human decision: escalate_to_human",
+    "product check not green: verdict=changes_requested, failed=2, errors=0, tests=['tests/test_site.py::test_ac04_contact_link_targets_mailto', 'tests/test_site.py::test_ac04_no_other_mail_targets']"
+  ],
+  "identity_assurance": "self_declared_course_review",
+  "decided_at_utc": "2026-11-02T12:07:15.783730+00:00"
+}

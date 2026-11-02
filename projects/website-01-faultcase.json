@@ -1,0 +1,14 @@
+{
+  "project_id": "website-01-faultcase",
+  "customer": "Nordwerk Industrie-Service (fiktiv) - isolierte Testkopie fuer den kontrollierten Fehlerfall T4",
+  "product_repo": "https://github.com/franciscotbatista99/client-01-website",
+  "product_path": "../client-01-website-faultcase",
+  "task_id": "CUST-001-FAULT",
+  "issue": "https://github.com/franciscotbatista99/client-01-website/issues/2",
+  "brief": "docs/customer-01/brief.md",
+  "target_file": "site/index.html",
+  "allowed_write_paths": ["site/"],
+  "product_test_paths": ["tests"],
+  "runs_dir": "runs/website-01-faultcase",
+  "max_correction_rounds": 0
+}

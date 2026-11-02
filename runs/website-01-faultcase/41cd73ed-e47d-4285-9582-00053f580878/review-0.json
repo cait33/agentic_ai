@@ -1,0 +1,19 @@
+{
+  "task_id": "CUST-001-FAULT",
+  "workflow_id": "41cd73ed-e47d-4285-9582-00053f580878",
+  "run_id": "41cd73ed-e47d-4285-9582-00053f580878",
+  "round": 0,
+  "reviewer": "Fatih",
+  "decision": "approved",
+  "comment": "fixed the mistake (contact address)",
+  "visually_checked": true,
+  "reviewed_file": "site/index.html",
+  "reviewed_artifact_sha256": "a7a4bbd43f1e8f2763f38ff9f7e75506e66e3a5b02d3f23c9cdd290cd60d4867",
+  "tested_source_commit": "cdbcba62affa591f6974383c3065e45d4fb514b0",
+  "agent_recommendation": "approved",
+  "current_artifact_sha256": "a7a4bbd43f1e8f2763f38ff9f7e75506e66e3a5b02d3f23c9cdd290cd60d4867",
+  "release_status": "released",
+  "release_blockers": [],
+  "identity_assurance": "self_declared_course_review",
+  "decided_at_utc": "2026-11-02T12:08:48.302780+00:00"
+}

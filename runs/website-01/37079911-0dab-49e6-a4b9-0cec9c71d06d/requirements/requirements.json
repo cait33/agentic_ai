@@ -1,0 +1,22 @@
+[
+  {
+    "id": "R1",
+    "description": "Static single-page website in German with exact content blocks N-01 to N-09",
+    "is_met": false
+  },
+  {
+    "id": "R2",
+    "description": "Header with company name and main statement visible on initial view",
+    "is_met": false
+  },
+  {
+    "id": "R3",
+    "description": "Services section with three services and their descriptions",
+    "is_met": false
+  },
+  {
+    "id": "R4",
+    "description": "Contact link targets mailto:kontakt@nordwerk.example with course notice visible",
+    "is_met": false
+  }
+]

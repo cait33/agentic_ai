@@ -1,0 +1,13 @@
+{
+  "status": "success",
+  "target_file": "site/index.html",
+  "artifact_sha256": "2768c984f66eed26cb682026eba03ab598257b77973a5cccd81a91f56a27f87d",
+  "slots_written": [
+    "header",
+    "services",
+    "contact",
+    "footer"
+  ],
+  "notes": "All required texts and structures are implemented exactly as per the customer brief and user stories. No invented content, no external resources, no scripts or styles.",
+  "error": null
+}

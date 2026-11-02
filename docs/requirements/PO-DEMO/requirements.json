@@ -1,0 +1,12 @@
+[
+  {
+    "id": "R1",
+    "description": "Application must have a health endpoint that returns LLM provider and model details",
+    "is_met": false
+  },
+  {
+    "id": "R2",
+    "description": "Database health endpoint must handle exceptions without crashing the application",
+    "is_met": false
+  }
+]

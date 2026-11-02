@@ -1,0 +1,51 @@
+[
+  {
+    "id": "US1",
+    "description": "As a user I want to see the company name and main message on the homepage so that I can quickly understand the service offering",
+    "acceptance_criteria": [
+      {
+        "description": "Firmenname 'Nordwerk Industrie-Service' is displayed"
+      },
+      {
+        "description": "Hauptaussage 'Praktische Unterstützung für Ihren technischen Betrieb.' is displayed"
+      }
+    ],
+    "backlog_value": 80
+  },
+  {
+    "id": "US2",
+    "description": "As a user I want to see at least one service with its mandatory text on the homepage so that I can understand the service details",
+    "acceptance_criteria": [
+      {
+        "description": "Service 'Wartungsplanung' is displayed"
+      },
+      {
+        "description": "Pflichttext 'Wir strukturieren Wartungsaufgaben und dokumentieren Zuständigkeiten für kleine technische Betriebe.' is displayed"
+      }
+    ],
+    "backlog_value": 75
+  },
+  {
+    "id": "US3",
+    "description": "As a user I want to have a contact link that opens mailto:kontakt@nordwerk.example so that I can easily contact the company",
+    "acceptance_criteria": [
+      {
+        "description": "Link text 'Anfrage stellen' is present"
+      },
+      {
+        "description": "Link opens mailto:kontakt@nordwerk.example"
+      }
+    ],
+    "backlog_value": 85
+  },
+  {
+    "id": "US4",
+    "description": "As a user I want to see the exercise note that it's a fictitious company for educational purposes so that I understand the context",
+    "acceptance_criteria": [
+      {
+        "description": "Text 'Fiktives Unternehmen – Lehrprojekt der HAW Hamburg. Keine realen Angebote oder Kontaktaufnahme.' is displayed"
+      }
+    ],
+    "backlog_value": 70
+  }
+]

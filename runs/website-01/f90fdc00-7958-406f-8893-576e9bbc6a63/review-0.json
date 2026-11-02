@@ -1,0 +1,16 @@
+{
+  "task_id": "CUST-001",
+  "workflow_id": "f90fdc00-7958-406f-8893-576e9bbc6a63",
+  "run_id": "f90fdc00-7958-406f-8893-576e9bbc6a63",
+  "round": 0,
+  "reviewer": "Rafael",
+  "decision": "approved",
+  "comment": "sehr gut",
+  "visually_checked": true,
+  "reviewed_file": "site/index.html",
+  "reviewed_artifact_sha256": null,
+  "tested_source_commit": "63be7a604e3f89514d9ff8cf07528fd3e80e3d2c",
+  "agent_recommendation": "escalate_to_human",
+  "identity_assurance": "self_declared_course_review",
+  "decided_at_utc": "2026-10-26T11:46:30.948759+00:00"
+}

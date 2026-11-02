@@ -1,0 +1,68 @@
+{
+  "run_id": "41cd73ed-e47d-4285-9582-00053f580878",
+  "workflow_id": "41cd73ed-e47d-4285-9582-00053f580878",
+  "project_id": "website-01-faultcase",
+  "customer": "Nordwerk Industrie-Service (fiktiv) - isolierte Testkopie fuer den kontrollierten Fehlerfall T4",
+  "customer_task_id": "CUST-001-FAULT",
+  "issue": "https://github.com/franciscotbatista99/client-01-website/issues/2",
+  "product_repo": "https://github.com/franciscotbatista99/client-01-website",
+  "product_path": "/Users/fatih/client-01-website-faultcase",
+  "factory_input_commit": "979b108356a64f76b4650392e043ba9581c1dd64",
+  "factory_dirty_at_start": true,
+  "product_input_commit": "cdbcba62affa591f6974383c3065e45d4fb514b0",
+  "product_dirty_at_start": false,
+  "product_result_commit": null,
+  "llm_provider": "ollama",
+  "llm_model": "qwen3:4b",
+  "llm_settings": {
+    "temperature": 0.0,
+    "json_mode": true,
+    "reasoning": false,
+    "max_output_tokens_implementer": 2048
+  },
+  "mode": "verify_only",
+  "agents": [
+    "qa-agent"
+  ],
+  "steps": [
+    "qa",
+    "human_gate"
+  ],
+  "correction_rounds": 0,
+  "max_correction_rounds": 0,
+  "history": [
+    {
+      "round": 0,
+      "artifact_sha256": "a7a4bbd43f1e8f2763f38ff9f7e75506e66e3a5b02d3f23c9cdd290cd60d4867",
+      "qa_verdict": "approved",
+      "tests_passed": 23,
+      "tests_failed": 0
+    }
+  ],
+  "errors": [],
+  "target_file": "site/index.html",
+  "final_artifact_sha256": "a7a4bbd43f1e8f2763f38ff9f7e75506e66e3a5b02d3f23c9cdd290cd60d4867",
+  "criteria_product_check": {
+    "AC-01": "passed",
+    "AC-02": "passed",
+    "AC-03": "passed",
+    "AC-04": "passed",
+    "AC-05": "passed",
+    "AC-06": "passed",
+    "AC-07": "passed",
+    "AC-08": "passed"
+  },
+  "release_status": "released",
+  "release_blockers": [],
+  "agent_recommendation": "approved",
+  "human_decision": "approved",
+  "reviewer": "Fatih",
+  "decided_at_utc": "2026-11-02T12:08:48.302780+00:00",
+  "agent_calls": 0,
+  "agent_credits": 0.0057,
+  "token_usage_complete": true,
+  "started_at_utc": "2026-11-02T12:08:06.315992+00:00",
+  "duration_seconds_incl_human_wait": 41.9992,
+  "trace_file": "trace.jsonl",
+  "manual_interventions": []
+}

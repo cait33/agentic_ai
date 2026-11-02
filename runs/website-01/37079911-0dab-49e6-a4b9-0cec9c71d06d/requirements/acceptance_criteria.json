@@ -1,0 +1,34 @@
+{
+  "US1": [
+    {
+      "description": "Company name 'Nordwerk Industrie-Service' and main statement 'Praktische Unterstützung für Ihren technischen Betrieb.' are visible within the first viewport"
+    },
+    {
+      "description": "No additional content blocks or navigation elements interfere with the header visibility"
+    }
+  ],
+  "US2": [
+    {
+      "description": "Three services: 'Wartungsplanung', 'Ersatzteilkoordination', and 'Betriebsdokumentation' with their respective descriptions are present"
+    },
+    {
+      "description": "Service descriptions match the exact required content N-03, N-04, N-05 without any modifications"
+    }
+  ],
+  "US3": [
+    {
+      "description": "Target groups: 'Kleine Produktionsbetriebe' and 'Technische Serviceunternehmen' are listed"
+    },
+    {
+      "description": "Working approach description: 'Ein fester Ansprechpartner, ein gemeinsam vereinbarter Leistungsumfang und nachvollziehbare Ergebnisse.' is present"
+    }
+  ],
+  "US4": [
+    {
+      "description": "Contact link text 'Anfrage stellen' targets mailto:kontakt@nordwerk.example"
+    },
+    {
+      "description": "Course notice 'Fiktives Unternehmen – Lehrprojekt der HAW Hamburg. Keine realen Angebote oder Kontaktaufnahme.' is visible in the footer"
+    }
+  ]
+}

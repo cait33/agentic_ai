@@ -1,0 +1,28 @@
+[
+  {
+    "id": "US1",
+    "description": "As a developer I want to verify LLM configuration through the health endpoint so that I can ensure the application uses the correct model",
+    "acceptance_criteria": [
+      {
+        "description": "Health endpoint returns LLM provider and model details"
+      },
+      {
+        "description": "Endpoint returns status 'ok' when LLM configuration is valid"
+      }
+    ],
+    "backlog_value": 80
+  },
+  {
+    "id": "US2",
+    "description": "As a developer I want the database health endpoint to report database unavailability without crashing the application so that the system can continue running",
+    "acceptance_criteria": [
+      {
+        "description": "Database health endpoint returns 503 status code on database failure"
+      },
+      {
+        "description": "Error message includes the exception type and message"
+      }
+    ],
+    "backlog_value": 75
+  }
+]
