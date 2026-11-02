@@ -1,0 +1,73 @@
+{
+  "run_id": "3ba82f0f-41aa-413a-8776-9707f96ad117",
+  "workflow_id": "3ba82f0f-41aa-413a-8776-9707f96ad117",
+  "project_id": "website-01-r01",
+  "customer": "Nordwerk Industrie-Service (fiktiv) - Referenzaufgabe R-01, nicht Teil der Lieferung",
+  "customer_task_id": "R-01",
+  "issue": null,
+  "product_repo": "https://github.com/franciscotbatista99/client-01-website",
+  "product_path": "/Users/fatih/client-01-website-r01",
+  "factory_input_commit": "01017ae4e1c78fbf4499d80b3bc5a9bf19b171d0",
+  "factory_dirty_at_start": true,
+  "product_input_commit": "66339b6e088895c6d78a441ce255b882e0bdd1fb",
+  "product_dirty_at_start": false,
+  "product_result_commit": "97305f3001b761611c744e93957e2ad5485376c0",
+  "llm_provider": "ollama",
+  "llm_model": "qwen3:4b",
+  "llm_settings": {
+    "temperature": 0.0,
+    "json_mode": true,
+    "reasoning": false,
+    "max_output_tokens_implementer": 2048
+  },
+  "mode": "full",
+  "agents": [
+    "product-owner-agent",
+    "web-implementer-agent",
+    "qa-agent"
+  ],
+  "steps": [
+    "requirements",
+    "implementation",
+    "qa",
+    "human_gate"
+  ],
+  "correction_rounds": 0,
+  "max_correction_rounds": 2,
+  "history": [
+    {
+      "round": 0,
+      "artifact_sha256": "ce03f07291fcc09aec9eb89e4a1376b8a9bb1c904b6c7753e58af066e1a31bca",
+      "qa_verdict": "approved",
+      "tests_passed": 25,
+      "tests_failed": 0
+    }
+  ],
+  "errors": [],
+  "target_file": "site/index.html",
+  "final_artifact_sha256": "ce03f07291fcc09aec9eb89e4a1376b8a9bb1c904b6c7753e58af066e1a31bca",
+  "criteria_product_check": {
+    "AC-01": "passed",
+    "AC-02": "passed",
+    "AC-03": "passed",
+    "AC-04": "passed",
+    "AC-05": "passed",
+    "AC-06": "passed",
+    "AC-07": "passed",
+    "AC-08": "passed"
+  },
+  "release_status": "released",
+  "release_blockers": [],
+  "agent_recommendation": "approved",
+  "human_decision": "approved",
+  "reviewer": "Daniil",
+  "decided_at_utc": "2026-11-02T12:27:50.688131+00:00",
+  "agent_calls": 2,
+  "agent_credits": 2.7159,
+  "token_usage_complete": true,
+  "started_at_utc": "2026-11-02T12:24:14.334955+00:00",
+  "duration_seconds_incl_human_wait": 216.3737,
+  "trace_file": "trace.jsonl",
+  "manual_interventions": [],
+  "product_dirty_at_record": false
+}
