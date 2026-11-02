@@ -1,0 +1,71 @@
+{
+  "run_id": "536b4d37-bd39-4dd5-b925-ce78c46c697c",
+  "workflow_id": "536b4d37-bd39-4dd5-b925-ce78c46c697c",
+  "project_id": "website-01-faultcase",
+  "customer": "Nordwerk Industrie-Service (fiktiv) - isolierte Testkopie fuer den kontrollierten Fehlerfall T4",
+  "customer_task_id": "CUST-001-FAULT",
+  "issue": "https://github.com/franciscotbatista99/client-01-website/issues/2",
+  "product_repo": "https://github.com/franciscotbatista99/client-01-website",
+  "product_path": "/Users/fatih/client-01-website-faultcase",
+  "factory_input_commit": "979b108356a64f76b4650392e043ba9581c1dd64",
+  "factory_dirty_at_start": true,
+  "product_input_commit": "cdbcba62affa591f6974383c3065e45d4fb514b0",
+  "product_dirty_at_start": true,
+  "product_result_commit": null,
+  "llm_provider": "ollama",
+  "llm_model": "qwen3:4b",
+  "llm_settings": {
+    "temperature": 0.0,
+    "json_mode": true,
+    "reasoning": false,
+    "max_output_tokens_implementer": 2048
+  },
+  "mode": "verify_only",
+  "agents": [
+    "qa-agent"
+  ],
+  "steps": [
+    "qa",
+    "human_gate"
+  ],
+  "correction_rounds": 0,
+  "max_correction_rounds": 0,
+  "history": [
+    {
+      "round": 0,
+      "artifact_sha256": "87197b62c5b3935617c3a1b64f85028d7eb6a0199fadf331ce7f466cfcefda12",
+      "qa_verdict": "changes_requested",
+      "tests_passed": 21,
+      "tests_failed": 2
+    }
+  ],
+  "errors": [],
+  "target_file": "site/index.html",
+  "final_artifact_sha256": "87197b62c5b3935617c3a1b64f85028d7eb6a0199fadf331ce7f466cfcefda12",
+  "criteria_product_check": {
+    "AC-01": "passed",
+    "AC-02": "passed",
+    "AC-03": "passed",
+    "AC-04": "failed",
+    "AC-05": "passed",
+    "AC-06": "passed",
+    "AC-07": "passed",
+    "AC-08": "passed"
+  },
+  "release_status": "not_released",
+  "release_blockers": [
+    "human decision: escalate_to_human",
+    "product check not green: verdict=changes_requested, failed=2, errors=0, tests=['tests/test_site.py::test_ac04_contact_link_targets_mailto', 'tests/test_site.py::test_ac04_no_other_mail_targets']"
+  ],
+  "agent_recommendation": "escalate_to_human",
+  "human_decision": "escalate_to_human",
+  "reviewer": "Fatih",
+  "decided_at_utc": "2026-11-02T12:07:15.783730+00:00",
+  "agent_calls": 1,
+  "agent_credits": 1.1977,
+  "token_usage_complete": true,
+  "started_at_utc": "2026-11-02T12:05:31.034438+00:00",
+  "duration_seconds_incl_human_wait": 104.7654,
+  "trace_file": "trace.jsonl",
+  "manual_interventions": []
+}
