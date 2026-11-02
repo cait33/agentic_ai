@@ -67,7 +67,7 @@ Section order in `<main>`: `leistungen`, `zielgruppen`, `arbeitsweise`, `kontakt
 
 Rules for the agent:
 
-- Return all slots in full on every run; keep the content from Session 3 unchanged.
+- Change only the slots that need new content; leave all other slots as they are. Content from Session 3 stays unchanged.
 - All visible website text is German; do not translate anything into English.
 - Exactly one `<h1>` (in the `header` slot); `<h3>` only for the three service names; no `<h2>` inside slots.
 - Only the classes `claim`, `service`, `contact-link`, `notice`.
