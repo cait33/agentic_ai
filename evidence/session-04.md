@@ -89,7 +89,7 @@ Known issue: manifest field `max_output_tokens_implementer` shows 2048 (hard-cod
 | Check quality | 25/25 green, 0 correction rounds, failed attempts: none |
 | Agent time | 63.6 s (PO 25.9 s, implementer 36.8 s, QA 0.8 s) |
 | Review / rework | Daniil 13:25–13:27 local (≈ 2 min) / 0 min |
-| Known costs | agents 2.72 credits; human 30 credits (Fatih 25, Daniil 5) |
+| Known costs | agents 2.72 credits; human 80.0 credits (Fatih 25, Daniil 5, Francisco 50) |
 | Repeats | none (time) – one complete baseline run as required |
 
 
@@ -105,18 +105,20 @@ Known issue: manifest field `max_output_tokens_implementer` shows 2048 (hard-cod
 | Human Delivery CUST-001 (Caitlin) | 2.75 h | 275 |
 | Human Delivery CUST-001 (Daniil: semantic sections, IDs, AGENT markers) | 0.75 h | 75.0 |
 | Human Delivery CUST-001 (Daniil: CSS navigation, focus outlines, 375 px mobile) | 0.75 h | 75.0 |
-| Human Delivery CUST-001 (Francisco) | 1.25 h | 125 |
-| Human Review CUST-001 (Francisco) | 0.25 h | 25 |
-| Human Review CUST-001 (Francisco) | 0.1 h | 10 |
-| Human Delivery CUST-001 R-01 (Francisco) | 0.5 h | 50 |
-| **Factory development FACTORY-S4** | agents 1.20 (failure case) + human Fatih 65, Caitlin 100 | 166.20 |
-| **Session delivery CUST-001** | Agents 3.34 + Human 750 | **753.34** |
-| **Total delivery CUST-001 (S3 + S4)** | s3 437.74 + s4 753.34 | **1191.08** |
+| Human Delivery CUST-001 (Francisco: updated S4 brief docs/customer-01/brief.md) | 1.25 h | 125.0 |
+| Human Review CUST-001 (Francisco: manual browser review 375/1280 px, focus) | 0.25 h | 25.0 |
+| Human Review CUST-001 (Francisco: human gate run 37079911 approval) | 0.10 h | 10.0 |
+| **Session delivery CUST-001 (fully recorded)** | Agents 3.34 + Human 765.0 | **768.34** |
+| **Total delivery CUST-001 (S3 + S4)** | Session 3 (437.74) + Session 4 (768.34) | **1206.08** |
+| Factory development `FACTORY-S4` (separate, not in delivery budget) | agents 1.20 (failure case) + human 240.0 (Fatih 65, Caitlin 100, Daniil 75) | 241.20 |
+| S3 rework on S4 day (`CUST-001`, feedback fixes) | Fatih 0.25 h | 25.0 |
+| R-01 baseline (separate) | agents 2.72 + human 80.0 (Fatih 25, Daniil 5, Francisco 50) | 82.72 |
 
 Budget for s4 : 800 credits
-Plan vs. actual S4 delivery: 800 → TODO (deviation TODO %).
-Reason for deviation: TODO.
+Plan vs. actual S4 delivery: 800 → 768.34.
+Reason for staying within budget: High agent precision on the first attempt (0 correction rounds needed for customer delivery) and modular slot architecture kept delivery within the planned 800 credits budget.
 
+S3 follow-up: 7 cost rows reassigned after feedback (values unchanged); S3 plan 300 vs. actual 437.74 (+46 %) kept as recorded; reason for being over budget recorded.
 
 ## Bottleneck and hypothesis
 
