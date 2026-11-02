@@ -9,6 +9,9 @@
 * Implementer may only write inside cfg.allowed_write_paths of the product checkout.
 * QA runs the product's own tests inside the product checkout.
 * A human decides about a concrete artifact hash; an agent "approved" is a recommendation only.
+* Release gate: a state counts as released ONLY if the human approved it, the product check
+  is green and the artifact on disk still has the hash that QA tested. Otherwise
+  release_status = "not_released" with explicit blockers (also if a human typed "approved").
 * Evidence per run: runs/<project>/<run_id>/ (manifest.json, trace.jsonl, requirements/,
   implementation-N.json, qa-round-N.json, review-N.json). Nothing shared is overwritten.
 
@@ -22,6 +25,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import time
 import uuid
 from datetime import datetime, timezone
@@ -37,7 +41,8 @@ from src.models.task import EngineeringTask
 from src.observability.tracing import append_trace
 
 Decision = Literal["approved", "changes_requested", "escalate_to_human"]
-AC_TESTS = {"AC-01": "ac01", "AC-02": "ac02", "AC-04": "ac04"}
+AC_TESTS = {f"AC-{n:02d}": f"ac{n:02d}" for n in range(1, 9)}
+_AC_TEST_RE = re.compile(r"def (test_(ac\d{2})\w*)")
 
 
 class RunContext(BaseModel):
@@ -62,6 +67,9 @@ class HumanDecision(BaseModel):
     reviewed_artifact_sha256: str | None
     tested_source_commit: str | None
     agent_recommendation: Decision
+    current_artifact_sha256: str | None = None
+    release_status: Literal["released", "not_released"] = "not_released"
+    release_blockers: list[str] = Field(default_factory=list)
     identity_assurance: str = "self_declared_course_review"
     decided_at_utc: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
@@ -136,12 +144,16 @@ def cli_decision(cfg: ProjectConfig, ctx: RunContext, state: dict[str, Any]) -> 
     if qa:
         run = qa.get("test_run", {})
         print(f"QA: {qa.get('verdict')} - {run.get('passed')} passed / {run.get('failed')} failed - {qa.get('summary')}")
+    blockers = release_blockers(cfg, state)
+    if blockers:
+        print("RELEASE BLOCKERS (Stand kann NICHT freigegeben werden): " + "; ".join(blockers))
     print(f"\nBitte im Browser prüfen:  python3 -m http.server 8000 --directory {cfg.product_path / 'site'}")
     print("-> http://localhost:8000  (Inhalte N-01/N-02/N-03, Link 'Anfrage stellen', Übungshinweis)")
     checked = input("Inhalte und Kontaktlink im Browser geprüft? [j/n]: ").strip().lower() == "j"
     choice = ""
-    while choice not in {"approved", "changes_requested", "escalate_to_human"}:
-        choice = input("Decision [approved / changes_requested / escalate_to_human]: ").strip()
+    allowed = {"changes_requested", "escalate_to_human"} | (set() if blockers else {"approved"})
+    while choice not in allowed:
+        choice = input(f"Decision [{' / '.join(sorted(allowed))}]: ").strip()
     comment = ""
     while choice != "approved" and not comment:
         comment = input("Begründung (Pflicht bei Ablehnung/Eskalation): ").strip()
@@ -152,13 +164,45 @@ def cli_decision(cfg: ProjectConfig, ctx: RunContext, state: dict[str, Any]) -> 
 
 def make_decision(cfg: ProjectConfig, ctx: RunContext, state: dict[str, Any], decision: str,
                   comment: str = "", *, visually_checked: bool = False) -> HumanDecision:
+    blockers = release_blockers(cfg, state)
+    if decision != "approved":
+        blockers = [f"human decision: {decision}", *blockers]
     return HumanDecision(
         task_id=ctx.task_id, workflow_id=ctx.workflow_id, run_id=ctx.run_id,
         round=state.get("round", 0), reviewer=ctx.reviewer, decision=decision, comment=comment,
         visually_checked=visually_checked, reviewed_file=cfg.target_file,
         reviewed_artifact_sha256=state.get("implementation", {}).get("artifact_sha256"),
         tested_source_commit=state.get("_input_commit"), agent_recommendation=state["recommendation"],
+        current_artifact_sha256=_current_sha(cfg),
+        release_status="released" if not blockers else "not_released",
+        release_blockers=blockers,
     )
+
+
+def _current_sha(cfg: ProjectConfig) -> str | None:
+    from src.agents.web_implementer import sha256_file
+
+    path = cfg.product_path / cfg.target_file
+    return sha256_file(path) if path.is_file() else None
+
+
+def release_blockers(cfg: ProjectConfig, state: dict[str, Any]) -> list[str]:
+    """Reasons why the current state must not be released (empty list = releasable)."""
+    blockers: list[str] = []
+    if state.get("errors"):
+        blockers.append("agent errors: " + "; ".join(state["errors"]))
+    impl = state.get("implementation", {})
+    if impl.get("status") != "success":
+        blockers.append(f"implementation status: {impl.get('status')}")
+    qa = state.get("qa", {})
+    if qa.get("verdict") != "approved":
+        run = qa.get("test_run", {})
+        blockers.append(f"product check not green: verdict={qa.get('verdict')}, failed={run.get('failed')}, "
+                        f"errors={run.get('errors')}, tests={run.get('failed_tests', [])}")
+    current = _current_sha(cfg)
+    if impl.get("artifact_sha256") and current != impl.get("artifact_sha256"):
+        blockers.append("artifact changed after implementation/QA (hash mismatch)")
+    return blockers
 
 
 # --------------------------------------------------------------------------- #
@@ -175,14 +219,41 @@ def qa_feedback(qa: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
-def criteria_status(qa: dict[str, Any] | None) -> dict[str, str]:
-    """Map AC ids to the product check result (automated evidence only, not acceptance)."""
+def product_ac_tests(cfg: ProjectConfig) -> dict[str, list[str]]:
+    """AC id -> product test function names (by naming convention test_acNN_*)."""
+    found: dict[str, list[str]] = {}
+    for rel in cfg.product_test_paths:
+        root = cfg.product_path / rel
+        files = [root] if root.is_file() else sorted(root.rglob("test_*.py"))
+        for file in files:
+            for name, key in _AC_TEST_RE.findall(file.read_text(encoding="utf-8")):
+                found.setdefault(key, []).append(name)
+    return found
+
+
+def criteria_status(qa: dict[str, Any] | None, ac_tests: dict[str, list[str]] | None = None) -> dict[str, str]:
+    """Map AC ids to the product check result (automated evidence only, not acceptance).
+
+    passed     = AC has product tests and none of them failed in a completed run
+    failed     = at least one test of this AC failed
+    no_test    = no automated product test for this AC (needs manual review evidence)
+    not_checked/unknown = QA did not run / run incomplete
+    """
+    ac_tests = ac_tests or {}
     if not qa:
         return {ac: "not_checked" for ac in AC_TESTS}
-    failed = " ".join(qa.get("test_run", {}).get("failed_tests", []))
-    green = qa.get("verdict") == "approved"
-    return {ac: ("failed" if key in failed else "passed" if green or qa.get("test_run", {}).get("passed") else "unknown")
-            for ac, key in AC_TESTS.items()}
+    run = qa.get("test_run", {})
+    failed = " ".join(run.get("failed_tests", []))
+    complete = not run.get("timed_out") and run.get("errors", 0) == 0
+    out = {}
+    for ac, key in AC_TESTS.items():
+        if not ac_tests.get(key):
+            out[ac] = "no_test"
+        elif any(name in failed for name in ac_tests[key]):
+            out[ac] = "failed"
+        else:
+            out[ac] = "passed" if complete else "unknown"
+    return out
 
 
 def recommend(state: CustomerState, max_rounds: int) -> Decision:
@@ -353,7 +424,9 @@ def run_customer_workflow(
         "errors": state.get("errors", []),
         "target_file": cfg.target_file,
         "final_artifact_sha256": state.get("implementation", {}).get("artifact_sha256"),
-        "criteria_product_check": criteria_status(state.get("qa")),
+        "criteria_product_check": criteria_status(state.get("qa"), product_ac_tests(cfg)),
+        "release_status": final.get("release_status", "not_released"),
+        "release_blockers": final.get("release_blockers", ["no human decision"]),
         "agent_recommendation": state.get("recommendation"),
         "human_decision": final.get("decision"),
         "reviewer": final.get("reviewer"),
@@ -404,7 +477,10 @@ def main() -> None:
     if not a.reviewer:
         p.error("--reviewer is required")
     state, run_dir = run_customer_workflow(cfg, a.reviewer)
-    print(json.dumps({k: state.get(k) for k in ("steps", "errors", "recommendation", "round")}, indent=2))
+    final = state["decisions"][-1] if state.get("decisions") else {}
+    print(json.dumps({**{k: state.get(k) for k in ("steps", "errors", "recommendation", "round")},
+                      "release_status": final.get("release_status", "not_released"),
+                      "release_blockers": final.get("release_blockers", [])}, indent=2, ensure_ascii=False))
     print(f"Evidence: {run_dir}")
 
 
