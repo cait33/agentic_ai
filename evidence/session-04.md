@@ -48,9 +48,9 @@ Budgeted for session4 : 800 credits
 
 | Category | Quantity | Credits |
 | -------- | -------- | ------- |
+| Human Delivery (Rafael) | 2 | 200 |
 | **Session delivery CUST-001 (fully recorded)** | Agents __ + Human __ | **__** |
 | **Total delivery CUST-001 (fully recorded)** | Session3 437.74 + Session4 __ | **__** |
-
 
 ## Bottleneck and hypothesis
 
