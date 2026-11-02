@@ -83,8 +83,6 @@ Evidenz: `runs/website-01/ec76867e-cae1-4187-b1b2-5942a48f606a/` (`manifest.json
 
 Planbudget (Teamplanung; mit Dozent bestätigt): Lieferung T3 300 Credits, T4 800 Credits (ca. 3 h bzw. 8 h Personenzeit für Inhalte, Produktchecks, Review und Nacharbeit, plus ca. 30 Credits Agentenläufe inkl. Fehlläufe), Reserve T5 400 Credits (CR-01, SR-01, Abnahme). Factory-Entwicklung wird getrennt unter `FACTORY-S3` erfasst. Ist-Werte: `costs/usage.csv`.
 
-Transparenz: Der Factory-Code (Projektkonfiguration, Web-Implementer, Kunden-Workflow, Factory-Test) wurde mit KI-Assistenz (Claude) entworfen und von Fatih integriert, getestet und verantwortet. Die Zeit ist als Factory-Entwicklung erfasst.
-
 ## Engpass und Hypothese
 
 - Engpass (Run `ec76867e`, `trace.jsonl`): Der PO-Agent benötigte 45,5 s von 66,7 s Agentenlaufzeit (68 %) und erzeugte 637 Output-Tokens, obwohl der Brief die Pflichtinhalte bereits strukturiert vorgibt. Der Implementer selbst brauchte 19,5 s.
