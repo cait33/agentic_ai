@@ -36,8 +36,7 @@ from src.observability.tracing import append_trace, estimate_cost_credits, usage
 
 AGENT_NAME = "web-implementer-agent"
 ROLE = "backend_api_engineer"
-SLOTS = ("header", "services", "contact", "footer")
-MAX_OUTPUT_TOKENS = 2048
+SLOTS = ("header", "navigation", "services", "audiences", "approach", "contact", "footer")
 _SLOT_RE = re.compile(r"(<!-- AGENT:(\w+) -->)(.*?)(<!-- /AGENT:\2 -->)", re.DOTALL)
 _FORBIDDEN = [
     (re.compile(r"<\s*script", re.I), "<script> is not allowed"),
@@ -56,7 +55,10 @@ class ImplementerOutput(BaseModel):
 
     status: Literal["success", "needs_clarification"]
     header_html: str = ""
+    navigation_html: str = ""
     services_html: str = ""
+    audiences_html: str = ""
+    approach_html: str = ""
     contact_html: str = ""
     footer_html: str = ""
     notes: str = ""
@@ -127,20 +129,23 @@ def write_product_slots(cfg: ProjectConfig, relative_path: str, slots: dict[str,
 # LLM
 # --------------------------------------------------------------------------- #
 SYSTEM_PROMPT = (
-    "You are the web implementer of a software factory. You fill four HTML slots of a static, "
+    "You are the web implementer of a software factory. You fill seven HTML slots of a static, "
     "German-language company website. Use the REQUIRED TEXTS exactly, character by character "
     "(including punctuation and the en dash). Do not invent services, customers, logos, "
     "certifications, numbers or promises. No <script>, no inline styles, no event handlers, "
     "no external URLs, no images.\n"
     "Use exactly this markup:\n"
     "- header_html: <h1>COMPANY NAME</h1> followed by <p class=\"claim\">MAIN CLAIM</p>\n"
-    "- services_html: one <article class=\"service\"><h3>SERVICE NAME</h3><p>SERVICE TEXT</p></article> per service in scope\n"
+    "- navigation_html: <nav aria-label=\"Hauptnavigation\" class=\"site-nav\"><ul><li><a href=\"#leistungen\">Leistungen</a></li><li><a href=\"#zielgruppen\">Zielgruppen</a></li><li><a href=\"#arbeitsweise\">Arbeitsweise</a></li><li><a href=\"#kontakt\">Kontakt</a></li></ul></nav>\n"
+    "- services_html: one or more <article class=\"service\"><h3>SERVICE NAME</h3><p>SERVICE TEXT</p></article> for all services in scope (e.g. Wartungsplanung, Ersatzteilkoordination, Betriebsdokumentation)\n"
+    "- audiences_html: <p>TARGET GROUPS TEXT from brief</p>\n"
+    "- approach_html: <p>APPROACH / WORKING METHOD TEXT from brief</p>\n"
     "- contact_html: <p>short neutral German sentence</p> and "
     "<a class=\"contact-link\" href=\"MAILTO TARGET\">LINK TEXT</a>\n"
     "- footer_html: <p class=\"notice\">EXERCISE NOTICE</p>\n"
     "Reply ONLY with one JSON object: "
-    '{"status": "success", "header_html": "...", "services_html": "...", '
-    '"contact_html": "...", "footer_html": "...", "notes": "..."}. '
+    '{"status": "success", "header_html": "...", "navigation_html": "...", "services_html": "...", '
+    '"audiences_html": "...", "approach_html": "...", "contact_html": "...", "footer_html": "...", "notes": "..."}. '
     "If the brief is not a website brief, return status \"needs_clarification\" with the reason in notes."
 )
 
