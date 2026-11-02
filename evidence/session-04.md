@@ -89,7 +89,7 @@ Known issue: manifest field `max_output_tokens_implementer` shows 2048 (hard-cod
 | Check quality | 25/25 green, 0 correction rounds, failed attempts: none |
 | Agent time | 63.6 s (PO 25.9 s, implementer 36.8 s, QA 0.8 s) |
 | Review / rework | Daniil 13:25–13:27 local (≈ 2 min) / 0 min |
-| Known costs | agents 2.72 credits; human 30 credits (Fatih 25, Daniil 5) |
+| Known costs | agents 2.72 credits; human 80.0 credits (Fatih 25, Daniil 5, Francisco 50) |
 | Repeats | none (time) – one complete baseline run as required |
 
 
@@ -107,21 +107,19 @@ Budgeted for Session 4 (delivery): 800 credits
 | Human Review CUST-001 (Caitlin) | 1.00 h | 100.0 |
 | Human Delivery CUST-001 (Daniil: semantic sections, IDs, AGENT markers) | 0.75 h | 75.0 |
 | Human Delivery CUST-001 (Daniil: CSS navigation, focus outlines, 375 px mobile) | 0.75 h | 75.0 |
-| Human Delivery CUST-001 (Francisco) | 1.25 h | 125 |
-| Human Review CUST-001 (Francisco) | 0.25 h | 25 |
-| Human Review CUST-001 (Francisco) | 0.1 h | 10 |
-| Human Delivery CUST-001 R-01 (Francisco) | 0.5 h | 50 |
-| **Session delivery CUST-001 (fully recorded)** | Agents 3.34 + Human 605.0 | **608.34** |
-| **Total delivery CUST-001 (S3 + S4)** | Session 3 (437.74) + Session 4 (608.34) | **1046.08** |
+| Human Delivery CUST-001 (Francisco: updated S4 brief docs/customer-01/brief.md) | 1.25 h | 125.0 |
+| Human Review CUST-001 (Francisco: manual browser review 375/1280 px, focus) | 0.25 h | 25.0 |
+| Human Review CUST-001 (Francisco: human gate run 37079911 approval) | 0.10 h | 10.0 |
+| **Session delivery CUST-001 (fully recorded)** | Agents 3.34 + Human 765.0 | **768.34** |
+| **Total delivery CUST-001 (S3 + S4)** | Session 3 (437.74) + Session 4 (768.34) | **1206.08** |
 | Factory development `FACTORY-S4` (separate, not in delivery budget) | agents 1.20 (failure case) + human 240.0 (Fatih 65, Caitlin 100, Daniil 75) | 241.20 |
-| R-01 baseline (separate) | agents 2.72 + human 30.0 (Fatih 25, Daniil 5) | 32.72 |
+| R-01 baseline (separate) | agents 2.72 + human 80.0 (Fatih 25, Daniil 5, Francisco 50) | 82.72 |
 | S3 rework on S4 day (`CUST-001`, feedback fixes) | Fatih 0.25 h | 25.0 |
 
-Plan vs. actual S4 delivery: 800 → 608.34 (-24.0 % deviation).
-Reason for deviation: High agent precision on the first attempt (0 correction rounds needed for customer delivery) and modular slot architecture minimized manual rework.
+Plan vs. actual S4 delivery: 800 → 768.34 (-4.0 % deviation).
+Reason for deviation: High agent precision on the first attempt (0 correction rounds needed for customer delivery) and modular slot architecture kept delivery within the planned 800 credits budget.
 Cost data corrections on 2026-11-02 (values unchanged, marked "T4-Korrektur" in `notes`): duplicate rows removed, date format normalized to `2026-11-02`, consistent task ID `CUST-001` maintained for customer delivery.
 S3 follow-up: 7 cost rows reassigned after feedback (values unchanged); S3 plan 300 vs. actual 437.74 (+46 %) kept as recorded.
-
 ## Bottleneck and hypothesis
 
 - Bottleneck: the PO agent dominates agent runtime although the brief already specifies the content verbatim – S3 run `ec76867e` 45.5 s of 66.7 s (68 %), S4 run `37079911` 62.9 s of 117.8 s (53 %), R-01 run `3ba82f0f` 25.9 s of 63.6 s (41 %).
