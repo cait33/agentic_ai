@@ -49,6 +49,9 @@ Budgeted for session4 : 800 credits
 | Category | Quantity | Credits |
 | -------- | -------- | ------- |
 | Human Delivery (Rafael) | 2 | 200 |
+| Human Delivery (Caitlin) | 0.75 | 75 |
+| Human Review (Caitlin) | 1.00 | 100 |
+| Human Delivery (Caitlin) | 1.00 | 100 |
 | **Session delivery CUST-001 (fully recorded)** | Agents __ + Human __ | **__** |
 | **Total delivery CUST-001 (fully recorded)** | Session3 437.74 + Session4 __ | **__** |
 

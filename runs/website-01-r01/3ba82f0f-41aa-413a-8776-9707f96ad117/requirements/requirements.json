@@ -1,0 +1,22 @@
+[
+  {
+    "id": "R1",
+    "description": "Add 'Projektkoordination' card with exact German text to services section",
+    "is_met": false
+  },
+  {
+    "id": "R2",
+    "description": "Maintain existing service cards verbatim",
+    "is_met": false
+  },
+  {
+    "id": "R3",
+    "description": "Ensure no changes to navigation, headers, or other sections",
+    "is_met": false
+  },
+  {
+    "id": "R4",
+    "description": "Verify human gate decision and review time metrics",
+    "is_met": false
+  }
+]
