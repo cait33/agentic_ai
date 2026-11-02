@@ -4,6 +4,7 @@
   "product_repo": "https://github.com/franciscotbatista99/client-01-website",
   "product_path": "~/client-01-website-r01",
   "task_id": "R-01",
+  "issue": null,
   "brief": "docs/customer-01/r01.md",
   "target_file": "site/index.html",
   "allowed_write_paths": ["site/"],
