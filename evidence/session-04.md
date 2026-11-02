@@ -13,6 +13,7 @@ Deliver an independently runnable release candidate meeting AC-01–AC-08. The F
 | Daniil    | Product structure: new sections with IDs + h2                                          |
 | Daniil    | Empty AGENT markers for nav, audiences, approach                                       |
 | Daniil    | Create the CSS for navigation, focus and 375 px                                        |
+| Daniil    | Factory development: slot interface sync (7 slots, Pydantic model, system prompt) & merge conflict resolution   |
 | Francisco | Update S4 brief docs/customer-01/brief.md                                              |
 | Francisco | Review                                                                                 |
 | Francisco | Manually review the website and fill out the template                                  |
@@ -46,13 +47,16 @@ to commit __ (__)
 
 Budgeted for session4 : 800 credits
 
-| Category | Quantity | Credits |
-| -------- | -------- | ------- |
-| Human Delivery (Caitlin) | 0.75 | 75 |
-| Human Review (Caitlin) | 1.00 | 100 |
-| Human Delivery (Caitlin) | 1.00 | 100 |
-| **Session delivery CUST-001 (fully recorded)** | Agents __ + Human __ | **__** |
-| **Total delivery CUST-001 (fully recorded)** | Session3 437.74 + Session4 __ | **__** |
+| Category                                                                                 | Quantity | Credits |
+|------------------------------------------------------------------------------------------| -------- | ------- |
+| Human Delivery (Caitlin)                                                                 | 0.75 | 75 |
+| Human Review (Caitlin)                                                                   | 1.00 | 100 |
+| Human Delivery (Caitlin)                                                                 | 1.00 | 100 |
+| Human Delivery1 (Daniil)                                                                 | 0.75 | 75 |
+| Human Delivery2 (Daniil)                                                                 | 0.75 | 75 |
+| Human Factory Development (Daniil) | 0.75 | 75 |
+| **Session delivery CUST-001 (fully recorded)**                                           | Agents __ + Human __ | **__** |
+| **Total delivery CUST-001 (fully recorded)**                                             | Session3 437.74 + Session4 __ | **__** |
 
 
 ## Bottleneck and hypothesis
