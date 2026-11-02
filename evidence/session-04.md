@@ -88,7 +88,7 @@ Known issue: manifest field `max_output_tokens_implementer` shows 2048 (hard-cod
 | Agent time | 63.6 s (PO 25.9 s, implementer 36.8 s, QA 0.8 s) |
 | Review / rework | Daniil 13:25–13:27 local (≈ 2 min) / 0 min |
 | Known costs | agents 2.72 credits; human 30 credits (Fatih 25, Daniil 5) |
-| Repeats | TODO (run IDs, or "none – time") |
+| Repeats | none (time) – one complete baseline run as required |
 
 
 ## Cost
