@@ -2,18 +2,15 @@
 
 Deliver customer change CR-01 from the versioned baseline `rc-1` with the same Factory, answer security enquiry SR-01 with sources, evaluate one Factory change (F-NEW) against the S4 baseline on R-01, and hand over a release accepted against AC-01–AC-10.
 
-> TODO markers = still open at the time of writing; remove before the final commit.
-
-
 ## Tasks/Responsibilities
 
 | Person    | Tasks |
 | --------- | ----- |
 | Fatih     | Task 3: F-NEW (PO output reuse, `src/factory/po_cache.py`, 6 Factory tests, PR #40) |
 | Fatih     | Task 3: R-01 with F-NEW on fresh checkouts of R-BASE (runs `e9902441`, `c97a41cc`), comparison + decision (PR #41) |
-| Fatih     | Task 4: start/test instructions + maintenance note (product README), AC-01–AC-10 checklist, final regression, `session-05.md`, costs |
+| Fatih     | Task 4: start/test instructions + maintenance note (product README, PR #20), CR-01 checks for the German page `tests/test_cr01_de.py` (4), AC-01–AC-10 checklist (PR #22), final regression (`--verify-only` run `2fb2d0dd`), fresh checkout, browser review, technical approval, tag `v1.0`, `session-05.md`, costs |
 | Daniil    | Task 3: human gate reviewer for both F-NEW R-01 runs |
-| Daniil    | Task 1 (CR-01): TODO |
+| Daniil    | Task 1 (CR-01): implementer + briefs + configs for the English view (Factory PR #43), Factory runs DE + EN, product change (product PR #21) |
 | Francisco | Task 1 (CR-01): English page skeleton `site/en.html` (`lang="en"`, own title, sections, empty AGENT slots for the Factory) |
 | Francisco | Task 1 (CR-01): product checks `tests/test_cr01_en.py` for the English page (17 checks; 10 failed / 30 passed on the empty skeleton, as expected before the Factory run) |
 | Francisco | Task 1 (CR-01): helped with the CR-01 brief `docs/customer-01/cr01-en.md` and project config `projects/website-01-cr01-en.json` |
@@ -22,49 +19,48 @@ Deliver customer change CR-01 from the versioned baseline `rc-1` with the same F
 | Caitlin   | Task 2: research and co wrote php vulnerabilities answer |
 
 Only the existing roles (`organization/roles.yaml`) were used; no new agents or roles.
-Merged without a second review (time pressure): Factory PR #40. TODO: further PRs.
+Merged without a second review (time pressure): Factory PR #40 (Fatih), Factory PR #43 and product PR #21 (both self-merged by Daniil). Pushed directly to `main` without PR: product `b81446a` (`en.html` skeleton + `test_cr01_en.py`, Francisco), product `725a267` (SR-01 response, Caitlin/Rafael), Factory cost/evidence updates by Francisco, Caitlin, Rafael.
 
 
 ## Repositories and commits
 
 Factory (https://github.com/cait33/agentic_ai):
 From commit 5bfec75 (https://github.com/cait33/agentic_ai/commit/5bfec755f4195446c5a2dadb6ff6c3d420845083)
-to commit TODO (final S5 commit)
+to the merge commit of the final S5 evidence PR (`main` at 15:00)
 Client01 (https://github.com/franciscotbatista99/client-01-website):
 From commit d14e681 (https://github.com/franciscotbatista99/client-01-website/commit/d14e681c142d91895116581f55e105aa278abce0) (= `rc-1` `cdbcba6` + acceptance docs)
-to commit TODO
+to commit f1575ad (https://github.com/franciscotbatista99/client-01-website/commit/f1575ad7c802e7fbcff7d9cab23ea999fd532015)
 
-Release: tag `TODO (e.g. v1.0)` → commit `TODO`.
-Handover: product `README.md` (start, tests, maintenance) · AC checklist `docs/acceptance.md` · browser review `TODO`.
+Release: tag `v1.0` → commit `f1575ad` (merge of acceptance PR #22).
+Handover: product `README.md` (start, tests, maintenance) · AC checklist `docs/acceptance.md` · browser review recorded in `docs/acceptance.md` (Fatih, 13:55–13:57 local).
 
 Three separate states (not mixed):
-- (a) Nordwerk customer release: `main` / tag `TODO`
+- (a) Nordwerk customer release: `main` / tag `v1.0`
 - (b) isolated R-01 experiment: branches `r01-baseline`, `r01-fnew-run1`, `r01-fnew-run2` (not merged, not part of the delivery)
 - (c) intentionally faulty test copy from S4: `projects/website-01-faultcase.json` (never in the delivery)
 
 
 ## 1. Customer change CR-01
 
-TODO (Francisco/Daniil):
-- Change issue + impact analysis: `TODO #`
-- Brief / configs: `docs/customer-01/cr01.md`, `projects/TODO`
-- Factory change for CR-01 (e.g. language of the implementer prompt): PR `TODO`
+- Change issue + impact analysis: issues by Caitlin in the product repo (CR-01 task and acceptance criteria for both views)
+- Briefs: `docs/customer-01/brief-cr01.md`, `brief-cr01-de.md`, `brief-cr01-en.md`; configs `projects/website-01-cr01-de.json` (target `site/index.html`), `projects/website-01-cr01-en.json` (target `site/en.html`), task ID `CR-01`
+- Factory change for CR-01: Factory PR #43 (Daniil) – implementer prompt with German and English navigation (language switch "English"/"Deutsch"); no new agents or roles
+- Manual product work (not by the agent): English page skeleton with empty AGENT slots (`b81446a`, Francisco)
 
 | | DE view `site/index.html` | EN view `site/en.html` |
 |---|---|---|
-| Run | `TODO` | `TODO` |
-| Inputs | product `TODO`, factory `TODO` | product `TODO`, factory `TODO` |
-| Agent-created diff / review PR | `TODO` | `TODO` |
-| Product check | `TODO`/`TODO` | `TODO`/`TODO` |
-| Correction rounds | TODO | TODO |
-| Human gate (name, UTC) | TODO | TODO |
-| Result commit / artifact sha256 | `TODO` | `TODO` |
+| Run | `TODO (Daniil)` | `TODO (Daniil)` |
+| Inputs | product `TODO`, factory `c6cc9fa` | product `TODO`, factory `c6cc9fa` |
+| Agent-created diff / review PR | product PR #21 (`75452ea`) | product PR #21 (`75452ea`) |
+| Product check | `test_site.py` 23/23 | `test_cr01_en.py` 17/17 |
+| Correction rounds | TODO (Daniil) | TODO (Daniil) |
+| Human gate (name, time) | TODO (Daniil) | TODO (Daniil) |
 | Agent costs | TODO credits | TODO credits |
 
-New automated checks: `TODO` (EN required content, `lang="en"`, title, language switch, "Technische Einkaufsabteilungen" on DE).
-Regression AC-01–AC-08: `TODO` passed on the final state.
-Browser review 375/1280 px + keyboard, both views: `TODO` (by TODO).
-Manual product work (not by the agent): TODO.
+New automated checks: `tests/test_cr01_en.py` (17: required EN content, `lang="en"`, title, language switch, contact, no invented content; Francisco) and `tests/test_cr01_de.py` (4: "Technische Einkaufsabteilungen", existing target groups kept, language switch "English"; Fatih, verified red on a manipulated copy).
+Regression AC-01–AC-08: 23/23 on the final state; all product checks 44/44 on `v1.0`.
+Browser review 375/1280 px + keyboard, both views, language switch both directions: Fatih, 13:55–13:57 local, no findings except the cosmetic defect below.
+Known defect (cosmetic, open): on `en.html` each service description repeats the service name and "Request information" appears as text and as link.
 
 
 ## 2. Security enquiry SR-01
@@ -72,8 +68,8 @@ Manual product work (not by the agent): TODO.
 - Customer response (PHP vulnerabilities)
 - Component inventory (runtime + build/test, version/reference or "not used")
 - Sources + access date
-- Above is in `docs\phpSecurityConsiderations.md` in the product repo
-- Prepared by and fact checked by: Rafael and Caitlin
+- Above is in `docs/phpSecurityConsiderations.md` in the product repo (`725a267`)
+- Prepared by and fact checked by: Rafael and Caitlin (no independent second check; recorded in `docs/acceptance.md`)
 
 
 ## 3. Factory experiment: F-BASE vs. F-NEW on R-01
@@ -109,55 +105,57 @@ Known issue (unchanged since S4): manifest field `max_output_tokens_implementer`
 
 ## 4. Acceptance and handover
 
+Full checklist: product `docs/acceptance.md` (PR #22, part of `v1.0`). Handover: product `README.md` (start, tests, maintenance note; PR #20).
+
 | AC | Automated check | Manual evidence | Result |
 |---|---|---|---|
-| AC-01 Company name + main statement | `test_ac01_*` | TODO | TODO |
-| AC-02 Three services with text | `test_ac02_*` | – | TODO |
-| AC-03 Target groups (incl. "Technische Einkaufsabteilungen"), approach, no invented promises | `test_ac03_*` + TODO | TODO | TODO |
-| AC-04 Contact link + course notice | `test_ac04_*` | TODO | TODO |
-| AC-05 Navigation, internal links, local assets | `test_ac05_*` | TODO | TODO |
-| AC-06 No overflow 375/1280 px | `test_ac06_*` (heuristic) | browser review TODO | TODO |
-| AC-07 Title, lang, headings, focus | `test_ac07_*` | browser review TODO | TODO |
-| AC-08 Fresh checkout without Factory | `test_ac08_*` | fresh checkout TODO | TODO |
-| AC-09 CR-01 met, German content/nav/contact still work | TODO | browser review both views TODO | TODO |
-| AC-10 Component inventory, SR-01 response, recorded customer acceptance | – | TODO | TODO |
+| AC-01 Company name + main statement | `test_ac01_*`, `test_cr01_en_*` | browser review | pass |
+| AC-02 Three services with text | `test_ac02_*` | – | pass |
+| AC-03 Target groups (incl. "Technische Einkaufsabteilungen"), approach, no invented promises | `test_ac03_*`, `test_cr01_de_*`, `test_cr01_en_only_required_texts` | browser review | pass |
+| AC-04 Contact link + course notice | `test_ac04_*`, `test_cr01_en_contact_*`, `test_cr01_en_notice_*` | contact links usable in both views | pass |
+| AC-05 Navigation, internal links, local assets | `test_ac05_*`, `test_cr01_en_internal_*`, `test_cr01_en_local_*` | nav + language switch DE ↔ EN | pass |
+| AC-06 No overflow 375/1280 px | `test_ac06_*` (heuristic), `test_cr01_en_viewport_*` | browser review both views | pass |
+| AC-07 Title, lang, headings, focus | `test_ac07_*`, `test_cr01_en_language_and_title` | keyboard/focus both views | pass |
+| AC-08 Fresh checkout without Factory | `test_ac08_*` | fresh clone `3fa2424`, 13:55 local: 40 passed, both pages load, no Factory/LLM/DB | pass |
+| AC-09 CR-01 met, German content/nav/contact still work | `test_cr01_en.py` 17, `test_cr01_de.py` 4, regression 23 | browser review both views | pass (cosmetic defect open) |
+| AC-10 Component inventory, SR-01 response, recorded customer acceptance | – | `docs/phpSecurityConsiderations.md`; acceptance below | pass |
 
-Final regression on the release state: product `python3 -m pytest tests -q` → TODO passed; Factory `tests/factory` → TODO passed (`evidence/session-05/factory-pytest.txt`); `--verify-only` run `TODO` → `TODO`.
+Final regression on the release state: product `python -m pytest tests -q` → 44 passed on `v1.0`; Factory `tests/factory` → 41 passed (`evidence/session-05/factory-pytest.txt`); `--verify-only` run `2fb2d0dd-e75f-45b9-b0cc-2c8512b34212` on product `3fa2424` → 40 passed / 0 failed, approved by Fatih, `release_status: released`, artifact sha256 `33373692…` (raw data `runs/website-01/2fb2d0dd…`).
 
-- **Technical approval (team):** TODO name, TODO UTC, release `TODO`
-- **Customer acceptance (instructor):** TODO – accepted / accepted with outstanding defects (list) / pending. Not self-declared by the team.
-- Outstanding defects / open tasks: TODO
+- **Technical approval (team):** Fatih, 2026-11-09 14:05 local, release `v1.0` → `f1575ad`
+- **Customer acceptance (instructor, Prof. Clemen):** accepted, 2026-11-09 ≈ 13:40 local, as communicated to the team; the decision was given on the state presented then, before product PR #21 was merged (13:47). Not self-declared.
+- Outstanding defects / open tasks: cosmetic duplicate texts on `en.html`; SR-01 had no independent fact check; known manifest issue `max_output_tokens_implementer` (2048 shown, 3072 used).
 
 
 ## Cost
 
-CI: no GitHub Actions runs in S5 (Actions disabled) – TODO confirm.
+Task IDs in S5: `CR-01`, `SR-01` and `CUST-001` (acceptance/handover) together form the customer delivery for Nordwerk in S5; Caitlin's SR-01 row is recorded as `CUST-01` (typo, counted as SR-01). `R-01` and `FACTORY-S5` are separate.
+CI: no GitHub Actions runs in S5 (Actions disabled).
 
 | Category | Quantity | Credits |
 | -------- | -------- | ------- |
-| Agents CR-01 (`CUST-001`, runs TODO) | TODO LLM calls | TODO |
-| Human delivery CR-01 (`CUST-001`) | TODO | TODO |
-| Human review CR-01 (gate, browser review) | TODO | TODO |
-| SR-01 (`CUST-001`, response + inventory, fact check) | TODO | TODO |
-| Human delivery acceptance/handover (`CUST-001`) | TODO | TODO |
-| Customer delivery (`CUST-001`): created issues describing CR-01 | Caitlin 0.25 h | 25 |
-| Customer delivery (`SR-01`): php vulnerabilities answer | Caitlin 2.00 h | 200 |
-| **Session delivery CUST-001 (S5)** | TODO | **TODO** |
+| Agents CR-01 (runs DE + EN, Daniil) | TODO (Daniil) LLM calls | TODO |
+| Human delivery CR-01: EN skeleton, EN checks, brief/config help (Francisco) | 0.9 h | 90.00 |
+| Human delivery CR-01: issues for CR-01 (Caitlin, recorded as `CUST-001`) | 0.25 h | 25.00 |
+| Human delivery CR-01: briefs, implementer, runs, product change (Daniil) | TODO | TODO |
+| Human delivery SR-01: response + inventory (Rafael 2.0 h, Caitlin 2.0 h) | 4.0 h | 400.00 |
+| Human delivery acceptance/handover `CUST-001` (Fatih: README, DE checks, regression, fresh checkout, browser review, checklist, tag, evidence) | 1.0 h | 100.00 |
+| Agent: final `--verify-only` run `2fb2d0dd` (QA, 0 LLM calls) | 1 run | 0.01 |
+| **Session delivery S5 (CR-01 + SR-01 + CUST-001)** | without Daniil's CR-01 rows | **615.01 + TODO** |
 | Factory development `FACTORY-S5` (one-off, separate): F-NEW | Fatih 0.1 h | 10.00 |
-| Rework (`FACTORY-S5`): updated cost total, merged in repository changes | Caitlin 0.15 h | 15.00 |
-| Factory development `FACTORY-S5`: CR-01 language adaptation | TODO | TODO |
+| Rework (`FACTORY-S5`): S4 feedback, updated cost total | Caitlin 0.15 h | 15.00 |
+| Factory development `FACTORY-S5`: implementer for the English view (PR #43) | TODO (Daniil) | TODO |
 | R-01 F-NEW runs, operational (separate) | agents 2.74 + 1.34 = 4.08; human Fatih 0.25 h (25), Daniil review 0.03 h (3) | 32.08 |
 
 ### Totals S3–S5 (from `costs/usage.csv`)
 
 | | S3 (26.10.) | S4 (02.11.) | S5 (09.11.) | Total |
 |---|---:|---:|---:|---:|
-| Customer delivery `CUST-001` | 437.74 | 793.34¹ | TODO | TODO |
-| Factory development | 550.00 (`FACTORY-S3`) | 241.20 (`FACTORY-S4`) | TODO (`FACTORY-S5`) | TODO |
+| Customer delivery Nordwerk | 437.74 | 793.34¹ | 615.01 + TODO | TODO |
+| Factory development | 550.00 (`FACTORY-S3`) | 241.20 (`FACTORY-S4`) | 25.00 + TODO (`FACTORY-S5`) | TODO |
 | R-01 (baseline / experiment) | – | 82.72 | 32.08 | 114.80 |
 
 ¹ incl. 25.0 S3 rework on the S4 day (see `session-04.md`).
-Budget S5: TODO · plan vs. actual: TODO · reason: TODO.
 
 Recompute from the CSV:
 ```
@@ -168,5 +166,5 @@ python3 -c "import csv,collections as c;d=c.defaultdict(float);[d.__setitem__((r
 ## Three transferable lessons
 
 1. **Measure the bottleneck before optimising, and isolate one variable.** The S4 traces showed the PO agent at 41–68 % of agent time; changing only the PO step (model, settings, task fixed, fresh R-BASE clones) made the effect attributable: −1 LLM call, −51 % credits, identical artifact hash.
-2. TODO (e.g. from CR-01: what the slot contract / automated checks made easy or hard for a change request)
-3. TODO (e.g. from SR-01 or acceptance: separating known facts, assumptions and customer decisions; technical approval ≠ customer acceptance)
+2. **A versioned skeleton plus a slot contract makes a change request deliverable with the same Factory.** The English view only needed an HTML skeleton with empty AGENT markers, new checks and an extended implementer prompt – no new agents. What the contract did not cover (prompt still saying "German-language", unused `en_*` fields, no check for the new German content) was only found in review; next time write the checks for *all* changed views before the run.
+3. **Keep authoring, checking and approving separate – and in that order.** Several changes reached `main` without a second reviewer (direct pushes, self-merged PRs), SR-01 was fact-checked by its own authors, and the customer accepted before the final change was merged. The release is still traceable because every state has a commit, a check result and a named approver, but the next delivery should plan a non-author review before merge and present the final tagged state for acceptance.
