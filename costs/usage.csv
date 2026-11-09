@@ -94,3 +94,5 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-11-09,CR-01,agent,qa-agent,1.6979,seconds,0.0170,"[agent] CR-01-DE run cf17b507: 23 passed, 0 failed, 0 LLM calls"
 2026-11-09,CR-01,human,Daniil,0.25,hours,25.0,"[review] human gate CR-01 runs 3d6a20c0 (EN, approved 12:20 UTC) and cf17b507 (DE, approved 12:35 UTC), browser review 375/1280px"
 2026-11-09,CUST-001,human,Daniil,0.4,hours,40.0,"[delivery] AC-01-AC-10 verification, browser review, handover and session-05 documentation"
+2026-11-09,CUST-001,human,Fatih,1.0,hours,100.0,"[delivery] S5 acceptance/handover: README (product PR #20), CR-01 DE checks test_cr01_de.py, AC-01..10 checklist (PR #22), final regression, fresh checkout, browser review 375/1280 both views, technical approval, tag v1.0, session-05 evidence"
+2026-11-09,CUST-001,agent,qa-agent,0.5367,seconds,0.0054,"[agent] final verify-only run 2fb2d0dd on product 3fa2424: 40 passed, 0 LLM calls"

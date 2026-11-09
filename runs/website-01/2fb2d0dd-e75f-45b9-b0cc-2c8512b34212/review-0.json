@@ -1,0 +1,19 @@
+{
+  "task_id": "CUST-001",
+  "workflow_id": "2fb2d0dd-e75f-45b9-b0cc-2c8512b34212",
+  "run_id": "2fb2d0dd-e75f-45b9-b0cc-2c8512b34212",
+  "round": 0,
+  "reviewer": "Fatih",
+  "decision": "approved",
+  "comment": "",
+  "visually_checked": true,
+  "reviewed_file": "site/index.html",
+  "reviewed_artifact_sha256": "3337369261d1d5f6036ba7ecd7faa444b0a76af199d884a831da136396b422a0",
+  "tested_source_commit": "3fa24241022db984faccb5e66d0de1811045ef4d",
+  "agent_recommendation": "approved",
+  "current_artifact_sha256": "3337369261d1d5f6036ba7ecd7faa444b0a76af199d884a831da136396b422a0",
+  "release_status": "released",
+  "release_blockers": [],
+  "identity_assurance": "self_declared_course_review",
+  "decided_at_utc": "2026-11-09T12:58:11.207435+00:00"
+}
