@@ -108,14 +108,14 @@ Known issue: manifest field `max_output_tokens_implementer` shows 2048 (hard-cod
 | Human Delivery CUST-001 (Francisco: updated S4 brief docs/customer-01/brief.md) | 1.25 h | 125.0 |
 | Human Review CUST-001 (Francisco: manual browser review 375/1280 px, focus) | 0.25 h | 25.0 |
 | Human Review CUST-001 (Francisco: human gate run 37079911 approval) | 0.10 h | 10.0 |
-| **Session delivery CUST-001 (fully recorded)** | Agents 3.34 + Human 765.0 | **768.34** |
+| **Session delivery CUST-001 (fully recorded)** | Agents 3.34 + Human 765.0 | **793.34** |
 | **Total delivery CUST-001 (S3 + S4)** | Session 3 (437.74) + Session 4 (768.34) | **1206.08** |
 | Factory development `FACTORY-S4` (separate, not in delivery budget) | agents 1.20 (failure case) + human 240.0 (Fatih 65, Caitlin 100, Daniil 75) | 241.20 |
 | S3 rework on S4 day (`CUST-001`, feedback fixes) | Fatih 0.25 h | 25.0 |
 | R-01 baseline (separate) | agents 2.72 + human 80.0 (Fatih 25, Daniil 5, Francisco 50) | 82.72 |
 
 Budget for s4 : 800 credits
-Plan vs. actual S4 delivery: 800 → 768.34.
+Plan vs. actual S4 delivery: 800 → 793.34.
 Reason for staying within budget: High agent precision on the first attempt (0 correction rounds needed for customer delivery) and modular slot architecture kept delivery within the planned 800 credits budget.
 
 S3 follow-up: 7 cost rows reassigned after feedback (values unchanged); S3 plan 300 vs. actual 437.74 (+46 %) kept as recorded; reason for being over budget recorded.
