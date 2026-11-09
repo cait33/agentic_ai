@@ -81,3 +81,4 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-11-09,CR-01,human,Francisco,0.2,hours,20.0,"[delivery] English page skeleton site/en.html: lang=en, own title, sections and empty AGENT slots for the Factory"
 2026-11-09,CR-01,human,Francisco,0.5,hours,50.0,"[delivery] product checks tests/test_cr01_en.py for the English page (17 checks; 10 failed / 30 passed on empty skeleton as expected)"
 2026-11-09,CR-01,human,Francisco,0.2,hours,20.0,"[delivery] helped write CR-01 brief docs/customer-01/cr01-en.md and project config projects/website-01-cr01-en.json"
+2026-11-09,SR-01,human,Rafael,2.0,hours,200.0,"[delivery] S5 security enquiry response: reviewed ENISA statement, defined component inventory, and drafted SR-01 document"

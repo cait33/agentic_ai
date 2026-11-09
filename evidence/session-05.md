@@ -17,7 +17,8 @@ Deliver customer change CR-01 from the versioned baseline `rc-1` with the same F
 | Francisco | Task 1 (CR-01): English page skeleton `site/en.html` (`lang="en"`, own title, sections, empty AGENT slots for the Factory) |
 | Francisco | Task 1 (CR-01): product checks `tests/test_cr01_en.py` for the English page (17 checks; 10 failed / 30 passed on the empty skeleton, as expected before the Factory run) |
 | Francisco | Task 1 (CR-01): helped with the CR-01 brief `docs/customer-01/cr01-en.md` and project config `projects/website-01-cr01-en.json` |
-| Rafael    | Task 2 (SR-01): TODO |
+| Rafael    | Task 2 (SR-01): reviewed ENISA statement, defined component inventory, and drafted SR-01 document |
+| Rafael    | Task 2 (SR-01): Extracted local environment versions (Python 3.14.6, pytest 9.1.1) and created the component inventory |
 | Caitlin   | Task 2 (SR-01): TODO |
 
 Only the existing roles (`organization/roles.yaml`) were used; no new agents or roles.
