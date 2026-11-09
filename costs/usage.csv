@@ -78,3 +78,6 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-11-09,R-01,agent,qa-agent,0.6588,seconds,0.0066,"[agent] R-01 F-NEW run 2 c97a41cc: 25 passed, 0 LLM calls"
 2026-11-09,R-01,human,Fatih,0.25,hours,25.0,"[delivery] R-01 F-NEW runs e9902441 + c97a41cc operated on fresh checkouts of 66339b6, record-result, comparison + evidence PR #41"
 2026-11-09,R-01,human,Daniil,0.03,hours,3.0,"[review] human gate R-01 F-NEW runs e9902441 (54 s) + c97a41cc (59 s), both approved"
+2026-11-09,CR-01,human,Francisco,0.2,hours,20.0,"[delivery] English page skeleton site/en.html: lang=en, own title, sections and empty AGENT slots for the Factory"
+2026-11-09,CR-01,human,Francisco,0.5,hours,50.0,"[delivery] product checks tests/test_cr01_en.py for the English page (17 checks; 10 failed / 30 passed on empty skeleton as expected)"
+2026-11-09,CR-01,human,Francisco,0.2,hours,20.0,"[delivery] helped write CR-01 brief docs/customer-01/cr01-en.md and project config projects/website-01-cr01-en.json"
