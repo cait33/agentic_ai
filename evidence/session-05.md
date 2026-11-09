@@ -17,9 +17,14 @@ Deliver customer change CR-01 from the versioned baseline `rc-1` with the same F
 | Francisco | Task 1 (CR-01): English page skeleton `site/en.html` (`lang="en"`, own title, sections, empty AGENT slots for the Factory) |
 | Francisco | Task 1 (CR-01): product checks `tests/test_cr01_en.py` for the English page (17 checks; 10 failed / 30 passed on the empty skeleton, as expected before the Factory run) |
 | Francisco | Task 1 (CR-01): helped with the CR-01 brief `docs/customer-01/cr01-en.md` and project config `projects/website-01-cr01-en.json` |
+<<<<<<< HEAD
 | Rafael    | Task 2 (SR-01): reviewed ENISA statement, defined component inventory, and drafted SR-01 document |
 | Rafael    | Task 2 (SR-01): Extracted local environment versions (Python 3.14.6, pytest 9.1.1) and created the component inventory |
 | Caitlin   | Task 2 (SR-01): TODO |
+=======
+| Rafael    | Task 2 (SR-01): TODO |
+| Caitlin   | Task 2: research and co wrote php vulnerabilities answer |
+>>>>>>> 611431c283cbe51c5e52db2e7f27bc5466e508c6
 
 Only the existing roles (`organization/roles.yaml`) were used; no new agents or roles.
 Merged without a second review (time pressure): Factory PR #40. TODO: further PRs.
@@ -69,11 +74,11 @@ Manual product work (not by the agent): TODO.
 
 ## 2. Security enquiry SR-01
 
-TODO (Francisco/Rafael/Caitlin):
-- Customer response (≈ 1 page): `TODO path` in the product repo
-- Component inventory (runtime + build/test, version/reference or "not used"): `TODO path`
-- Sources + access date: ENISA joint statement 21.10.2026, PHP 2026 security releases (https://www.php.net/archive/2026.php), accessed TODO
-- Prepared by: TODO (agent/human) · fact check + approval by: TODO, TODO UTC
+- Customer response (PHP vulnerabilities)
+- Component inventory (runtime + build/test, version/reference or "not used")
+- Sources + access date
+- Above is in `docs\phpSecurityConsiderations.md` in the product repo
+- Prepared by and fact checked by: Rafael and Caitlin
 
 
 ## 3. Factory experiment: F-BASE vs. F-NEW on R-01
@@ -140,8 +145,11 @@ CI: no GitHub Actions runs in S5 (Actions disabled) – TODO confirm.
 | Human review CR-01 (gate, browser review) | TODO | TODO |
 | SR-01 (`CUST-001`, response + inventory, fact check) | TODO | TODO |
 | Human delivery acceptance/handover (`CUST-001`) | TODO | TODO |
+| Customer delivery (`CUST-001`): created issues describing CR-01 | Caitlin 0.25 h | 25 |
+| Customer delivery (`SR-01`): php vulnerabilities answer | Caitlin 2.00 h | 200 |
 | **Session delivery CUST-001 (S5)** | TODO | **TODO** |
 | Factory development `FACTORY-S5` (one-off, separate): F-NEW | Fatih 0.1 h | 10.00 |
+| Rework (`FACTORY-S5`): updated cost total, merged in repository changes | Caitlin 0.15 h | 15.00 |
 | Factory development `FACTORY-S5`: CR-01 language adaptation | TODO | TODO |
 | R-01 F-NEW runs, operational (separate) | agents 2.74 + 1.34 = 4.08; human Fatih 0.25 h (25), Daniil review 0.03 h (3) | 32.08 |
 

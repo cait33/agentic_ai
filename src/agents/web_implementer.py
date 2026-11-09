@@ -38,7 +38,8 @@ from src.observability.tracing import append_trace, estimate_cost_credits, usage
 
 AGENT_NAME = "web-implementer-agent"
 ROLE = "backend_api_engineer"
-SLOTS = ("nav", "header", "services", "audiences", "approach", "contact", "footer")
+SLOTS = ("nav", "header", "services", "audiences", "approach", "contact", "footer",
+         "en_nav", "en_header", "en_services", "en_audiences", "en_contact", "en_footer")
 MAX_OUTPUT_TOKENS = 3072
 _SLOT_RE = re.compile(r"(<!-- AGENT:(\w+) -->)(.*?)(<!-- /AGENT:\2 -->)", re.DOTALL)
 _FORBIDDEN = [
@@ -65,6 +66,12 @@ class ImplementerOutput(BaseModel):
     approach_html: str = ""
     contact_html: str = ""
     footer_html: str = ""
+    en_nav_html: str = ""
+    en_header_html: str = ""
+    en_services_html: str = ""
+    en_audiences_html: str = ""
+    en_contact_html: str = ""
+    en_footer_html: str = ""
     notes: str = ""
 
 
@@ -140,10 +147,9 @@ SYSTEM_PROMPT = (
     "certifications, numbers or promises. No <script>, no inline styles, no event handlers, "
     "no external URLs, no images.\n"
     "Use exactly this markup per slot:\n"
-    "- nav_html (goes INSIDE the team's existing <nav>, do not output <nav> yourself): "
-    "<ul><li><a href=\"#leistungen\">Leistungen</a></li><li><a href=\"#zielgruppen\">Zielgruppen</a></li>"
-    "<li><a href=\"#arbeitsweise\">Arbeitsweise</a></li><li><a href=\"#kontakt\">Kontakt</a></li></ul>\n"
-    "- header_html: <h1>COMPANY NAME</h1> followed by <p class=\"claim\">MAIN CLAIM</p>\n"
+    "- nav_html (goes INSIDE the team's existing <nav>, do not output <nav> yourself):\n"
+    "  * For German (index.html): <ul><li><a href=\"#leistungen\">Leistungen</a></li><li><a href=\"#zielgruppen\">Zielgruppen</a></li><li><a href=\"#arbeitsweise\">Arbeitsweise</a></li><li><a href=\"#kontakt\">Kontakt</a></li><li class=\"lang-switch\"><a href=\"en.html\" hreflang=\"en\" lang=\"en\">English</a></li></ul>\n"
+    "  * For English (en.html): <ul><li><a href=\"#services\">Services</a></li><li><a href=\"#target-groups\">Target groups</a></li><li><a href=\"#contact\">Contact</a></li><li class=\"lang-switch\"><a href=\"index.html\" hreflang=\"de\" lang=\"de\">Deutsch</a></li></ul>\n"    "- header_html: <h1>COMPANY NAME</h1> followed by <p class=\"claim\">MAIN CLAIM</p>\n"
     "- services_html: one <article class=\"service\"><h3>SERVICE NAME</h3><p>SERVICE TEXT</p></article> "
     "per service in scope\n"
     "- audiences_html: <ul><li>TARGET GROUP</li>...</ul> with each target group as its own <li>\n"
@@ -155,7 +161,8 @@ SYSTEM_PROMPT = (
     "for it (it stays as it is). If you change a slot, return its COMPLETE new content, keeping every "
     "existing item that is still required.\n"
     "Reply ONLY with one JSON object with the keys status, nav_html, header_html, services_html, "
-    "audiences_html, approach_html, contact_html, footer_html, notes. "
+    "audiences_html, approach_html, contact_html, footer_html, en_nav_html, en_header_html, "
+    "en_services_html, en_audiences_html, en_contact_html, en_footer_html, notes. "
     "If the brief is not a website brief, return status \"needs_clarification\" with the reason in notes."
 )
 

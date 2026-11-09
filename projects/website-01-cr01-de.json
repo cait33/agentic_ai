@@ -1,0 +1,13 @@
+{
+  "project_id": "website-01-cr01-de",
+  "customer": "Nordwerk Industrie-Service (fiktiv)",
+  "product_repo": "https://github.com/franciscotbatista99/client-01-website",
+  "product_path": "../client-01-website/client-01-website",
+  "task_id": "CR-01",
+  "brief": "docs/customer-01/brief-cr01-de.md",
+  "target_file": "site/index.html",
+  "allowed_write_paths": ["site/"],
+  "product_test_paths": ["tests/test_site.py"],
+  "runs_dir": "runs/website-01-cr01-de",
+  "max_correction_rounds": 2
+}
