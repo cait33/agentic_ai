@@ -69,3 +69,12 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-11-02,R-01,human,Francisco,0.5,hours,50.0,"[delivery] helped prepare the R-01 reference task | baseline for S5"
 2026-11-02,CUST-001,human,Francisco,0.25,hours,25.0,"[review] manual browser review of rc-1 at 375/1280 px, keyboard and focus | template tests/browser_test_s4.md"
 2026-11-02,CUST-001,human,Francisco,0.1,hours,10.0,"[review] human gate run 37079911 (CUST-002) | approved artifact a7a4bbd4, released as rc-1"
+2026-11-09,FACTORY-S5,human,Fatih,0.1,hours,10.0,"[factory_dev] F-NEW PO cache: po_cache.py, reuse_po_output, --no-po-cache, 6 factory tests, 41 passed (PR #40, AI-assisted, merged without review)"
+2026-11-09,R-01,agent,product-owner-agent,28.023,seconds,1.3081,"[agent] R-01 F-NEW run 1 e9902441: user stories, PO cache miss -> stored (659 in / 368 out tokens)"
+2026-11-09,R-01,agent,web-implementer-agent,37.3449,seconds,1.4258,[agent] R-01 F-NEW run 1 e9902441: services slot with 4th card (1580 in / 518 out tokens)
+2026-11-09,R-01,agent,qa-agent,0.6709,seconds,0.0067,"[agent] R-01 F-NEW run 1 e9902441: 25 passed, 0 LLM calls"
+2026-11-09,R-01,agent,product-owner-agent,0.0009,seconds,0.0,"[agent] R-01 F-NEW run 2 c97a41cc: PO cache hit (source e9902441), 0 LLM calls, 0 tokens"
+2026-11-09,R-01,agent,web-implementer-agent,27.6573,seconds,1.3289,[agent] R-01 F-NEW run 2 c97a41cc: services slot with 4th card (1580 in / 518 out tokens)
+2026-11-09,R-01,agent,qa-agent,0.6588,seconds,0.0066,"[agent] R-01 F-NEW run 2 c97a41cc: 25 passed, 0 LLM calls"
+2026-11-09,R-01,human,Fatih,0.25,hours,25.0,"[delivery] R-01 F-NEW runs e9902441 + c97a41cc operated on fresh checkouts of 66339b6, record-result, comparison + evidence PR #41"
+2026-11-09,R-01,human,Daniil,0.03,hours,3.0,"[review] human gate R-01 F-NEW runs e9902441 (54 s) + c97a41cc (59 s), both approved"
