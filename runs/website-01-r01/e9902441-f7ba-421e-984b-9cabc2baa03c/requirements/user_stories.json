@@ -1,0 +1,28 @@
+[
+  {
+    "id": "US1",
+    "description": "As a developer I want to add the 'Projektkoordination' card to the services section so that the reference task is completed",
+    "acceptance_criteria": [
+      {
+        "description": "Card 'Projektkoordination' with exact text exists"
+      },
+      {
+        "description": "All existing service cards remain unchanged"
+      }
+    ],
+    "backlog_value": 80
+  },
+  {
+    "id": "US2",
+    "description": "As a QA engineer I want to verify no unintended changes to other sections so that the reference task meets acceptance criteria",
+    "acceptance_criteria": [
+      {
+        "description": "All existing content, contact targets and navigation remain unchanged"
+      },
+      {
+        "description": "Human gate decision recorded and review time measured"
+      }
+    ],
+    "backlog_value": 70
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "task_id": "R-01",
+  "workflow_id": "c97a41cc-2c30-4c7a-8dbc-9fc7fca8e900",
+  "run_id": "c97a41cc-2c30-4c7a-8dbc-9fc7fca8e900",
+  "round": 0,
+  "reviewer": "Daniil",
+  "decision": "approved",
+  "comment": "R-01 checked in browser: card \"Projektkoordination\" with correct text present, 3 existing services, nav and contact link unchanged",
+  "visually_checked": true,
+  "reviewed_file": "site/index.html",
+  "reviewed_artifact_sha256": "ce03f07291fcc09aec9eb89e4a1376b8a9bb1c904b6c7753e58af066e1a31bca",
+  "tested_source_commit": "66339b6e088895c6d78a441ce255b882e0bdd1fb",
+  "agent_recommendation": "approved",
+  "current_artifact_sha256": "ce03f07291fcc09aec9eb89e4a1376b8a9bb1c904b6c7753e58af066e1a31bca",
+  "release_status": "released",
+  "release_blockers": [],
+  "identity_assurance": "self_declared_course_review",
+  "decided_at_utc": "2026-11-09T10:28:47.439481+00:00"
+}
