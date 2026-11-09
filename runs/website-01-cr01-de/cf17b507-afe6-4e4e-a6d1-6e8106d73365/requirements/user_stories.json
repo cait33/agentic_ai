@@ -1,0 +1,54 @@
+[
+  {
+    "id": "US1",
+    "description": "As a small production company I want to have a structured maintenance planning system so that I can manage technical tasks efficiently",
+    "acceptance_criteria": [
+      {
+        "description": "Maintenance tasks are structured and documented with clear responsibilities"
+      },
+      {
+        "description": "System provides a clear overview of upcoming maintenance activities"
+      }
+    ],
+    "backlog_value": 75
+  },
+  {
+    "id": "US2",
+    "description": "As a technical procurement department I want to coordinate spare parts requirements and delivery schedules so that I can avoid stockouts and delays",
+    "acceptance_criteria": [
+      {
+        "description": "Spare parts requirements are coordinated with delivery schedules"
+      },
+      {
+        "description": "System alerts for potential delivery delays"
+      }
+    ],
+    "backlog_value": 80
+  },
+  {
+    "id": "US3",
+    "description": "As a technical service company I want to maintain technical documentation in a clear and usable structure so that I can easily access and update information",
+    "acceptance_criteria": [
+      {
+        "description": "Technical documentation is organized in a logical structure"
+      },
+      {
+        "description": "Documentation is easily searchable and updatable"
+      }
+    ],
+    "backlog_value": 70
+  },
+  {
+    "id": "US4",
+    "description": "As a user I want to switch between German and English language on the website so that I can access the site in my preferred language",
+    "acceptance_criteria": [
+      {
+        "description": "Language switcher is visible on the website with label 'English'"
+      },
+      {
+        "description": "Switching to English changes all website content to English"
+      }
+    ],
+    "backlog_value": 60
+  }
+]

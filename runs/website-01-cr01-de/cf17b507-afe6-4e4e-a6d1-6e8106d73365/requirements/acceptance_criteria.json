@@ -1,0 +1,34 @@
+{
+  "US1": [
+    {
+      "description": "Maintenance tasks are structured and documented with clear responsibilities"
+    },
+    {
+      "description": "System provides a clear overview of upcoming maintenance activities"
+    }
+  ],
+  "US2": [
+    {
+      "description": "Spare parts requirements are coordinated with delivery schedules"
+    },
+    {
+      "description": "System alerts for potential delivery delays"
+    }
+  ],
+  "US3": [
+    {
+      "description": "Technical documentation is organized in a logical structure"
+    },
+    {
+      "description": "Documentation is easily searchable and updatable"
+    }
+  ],
+  "US4": [
+    {
+      "description": "Language switcher is visible on the website with label 'English'"
+    },
+    {
+      "description": "Switching to English changes all website content to English"
+    }
+  ]
+}
