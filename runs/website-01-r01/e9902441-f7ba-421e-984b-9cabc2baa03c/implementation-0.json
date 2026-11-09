@@ -1,0 +1,17 @@
+{
+  "status": "success",
+  "target_file": "site/index.html",
+  "artifact_sha256": "ce03f07291fcc09aec9eb89e4a1376b8a9bb1c904b6c7753e58af066e1a31bca",
+  "slots_written": [
+    "nav",
+    "header",
+    "services",
+    "audiences",
+    "approach",
+    "contact",
+    "footer"
+  ],
+  "slots_unchanged": [],
+  "notes": "",
+  "error": null
+}
