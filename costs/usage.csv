@@ -81,3 +81,6 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-11-09,CR-01,human,Francisco,0.2,hours,20.0,"[delivery] English page skeleton site/en.html: lang=en, own title, sections and empty AGENT slots for the Factory"
 2026-11-09,CR-01,human,Francisco,0.5,hours,50.0,"[delivery] product checks tests/test_cr01_en.py for the English page (17 checks; 10 failed / 30 passed on empty skeleton as expected)"
 2026-11-09,CR-01,human,Francisco,0.2,hours,20.0,"[delivery] helped write CR-01 brief docs/customer-01/cr01-en.md and project config projects/website-01-cr01-en.json"
+2026-11-09,FACTORY-S5,human,Caitlin,0.15,hours,15.0,"[rework] worked on s4 feedback - updated the cost total and merged in repository changes"
+2026-11-09,CUST-001,human,Caitlin,0.25,hours,25.0,"[delivery] created issues describing the CR-01 task and acceptance criteria for the changes to the views"
+2026-11-09,CUST-01,human,Caitlin,2.00,hours,200.0,"[delivery] researched and co wrote the php vulnerabilities answer to the customer questions"
