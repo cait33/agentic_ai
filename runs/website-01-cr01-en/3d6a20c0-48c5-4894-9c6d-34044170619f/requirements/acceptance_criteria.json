@@ -1,0 +1,34 @@
+{
+  "US1": [
+    {
+      "description": "Navigation links exist for #services, #target-groups, #contact and index.html with label 'Deutsch'"
+    },
+    {
+      "description": "Exact HTML structure matches provided example"
+    }
+  ],
+  "US2": [
+    {
+      "description": "Company name is displayed as 'Nordwerk Industrie-Service'"
+    },
+    {
+      "description": "Company name is present in the main content area"
+    }
+  ],
+  "US3": [
+    {
+      "description": "Main statement text matches exactly 'Practical support for your technical operations.'"
+    },
+    {
+      "description": "Main statement is visible in the header or main content"
+    }
+  ],
+  "US4": [
+    {
+      "description": "Services section contains exactly three items: Maintenance planning, Spare parts coordination, Operational documentation"
+    },
+    {
+      "description": "Services items are listed in the order specified"
+    }
+  ]
+}

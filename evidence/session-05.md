@@ -10,7 +10,7 @@ Deliver customer change CR-01 from the versioned baseline `rc-1` with the same F
 | Fatih     | Task 3: R-01 with F-NEW on fresh checkouts of R-BASE (runs `e9902441`, `c97a41cc`), comparison + decision (PR #41) |
 | Fatih     | Task 4: start/test instructions + maintenance note (product README, PR #20), CR-01 checks for the German page `tests/test_cr01_de.py` (4), AC-01–AC-10 checklist (PR #22), final regression (`--verify-only` run `2fb2d0dd`), fresh checkout, browser review, technical approval, tag `v1.0`, `session-05.md`, costs |
 | Daniil    | Task 3: human gate reviewer for both F-NEW R-01 runs |
-| Daniil    | Task 1 (CR-01): implementer + briefs + configs for the English view (Factory PR #43), Factory runs DE + EN, product change (product PR #21) |
+| Daniil    | Task 1 (CR-01): Factory implementation (`web_implementer.py` bilingual navigation prompt, `en_` fields), briefs + configs (Factory PR #43), operated and gate-reviewed CR-01 runs DE `cf17b507` + EN `3d6a20c0`, product change (product PR #21), browser review, run evidence (Factory PR #45), costs (PR #46) |
 | Francisco | Task 1 (CR-01): English page skeleton `site/en.html` (`lang="en"`, own title, sections, empty AGENT slots for the Factory) |
 | Francisco | Task 1 (CR-01): product checks `tests/test_cr01_en.py` for the English page (17 checks; 10 failed / 30 passed on the empty skeleton, as expected before the Factory run) |
 | Francisco | Task 1 (CR-01): helped with the CR-01 brief `docs/customer-01/cr01-en.md` and project config `projects/website-01-cr01-en.json` |
@@ -19,7 +19,7 @@ Deliver customer change CR-01 from the versioned baseline `rc-1` with the same F
 | Caitlin   | Task 2: research and co wrote php vulnerabilities answer |
 
 Only the existing roles (`organization/roles.yaml`) were used; no new agents or roles.
-Merged without a second review (time pressure): Factory PR #40 (Fatih), Factory PR #43 and product PR #21 (both self-merged by Daniil). Pushed directly to `main` without PR: product `b81446a` (`en.html` skeleton + `test_cr01_en.py`, Francisco), product `725a267` (SR-01 response, Caitlin/Rafael), Factory cost/evidence updates by Francisco, Caitlin, Rafael.
+Merged without a second review (time pressure): Factory PR #40 (Fatih), Factory PRs #43, #45, #46 and product PR #21 (self-merged by Daniil). Pushed directly to `main` without PR: product `b81446a` (`en.html` skeleton + `test_cr01_en.py`, Francisco), product `725a267` (SR-01 response, Caitlin/Rafael), Factory cost/evidence updates by Francisco, Caitlin, Rafael.
 
 
 ## Repositories and commits
@@ -42,24 +42,27 @@ Three separate states (not mixed):
 
 ## 1. Customer change CR-01
 
-- Change issue + impact analysis: issues by Caitlin in the product repo (CR-01 task and acceptance criteria for both views)
+- Change issue + impact analysis: product issue #1 (English view and target group extension) and further CR-01 issues by Caitlin
 - Briefs: `docs/customer-01/brief-cr01.md`, `brief-cr01-de.md`, `brief-cr01-en.md`; configs `projects/website-01-cr01-de.json` (target `site/index.html`), `projects/website-01-cr01-en.json` (target `site/en.html`), task ID `CR-01`
 - Factory change for CR-01: Factory PR #43 (Daniil) – implementer prompt with German and English navigation (language switch "English"/"Deutsch"); no new agents or roles
 - Manual product work (not by the agent): English page skeleton with empty AGENT slots (`b81446a`, Francisco)
 
 | | DE view `site/index.html` | EN view `site/en.html` |
 |---|---|---|
-| Run | `TODO (Daniil)` | `TODO (Daniil)` |
-| Inputs | product `TODO`, factory `c6cc9fa` | product `TODO`, factory `c6cc9fa` |
-| Agent-created diff / review PR | product PR #21 (`75452ea`) | product PR #21 (`75452ea`) |
-| Product check | `test_site.py` 23/23 | `test_cr01_en.py` 17/17 |
-| Correction rounds | TODO (Daniil) | TODO (Daniil) |
-| Human gate (name, time) | TODO (Daniil) | TODO (Daniil) |
-| Agent costs | TODO credits | TODO credits |
+| Run | `cf17b507-afe6-4e4e-a6d1-6e8106d73365` | `3d6a20c0-48c5-4894-9c6d-34044170619f` |
+| Inputs | product `b81446a` (skeleton), factory `ec688ed`, brief `brief-cr01-de.md` | product `b81446a`, factory `ec688ed`, brief `brief-cr01-en.md` |
+| Product checks in the run | `tests/test_site.py` 23 passed / 0 failed | `tests/test_cr01_en.py` 17 passed / 0 failed |
+| Correction rounds | 0 | 0 (one earlier EN attempt `b920be11` was rejected at the gate – missing language switch, anchor mismatch – and fixed in prompt/brief; that run is not in the repo and its agent costs are not recorded) |
+| Human gate | Daniil, approved 12:35 UTC (13:35 local) | Daniil, approved 12:20 UTC (13:20 local) |
+| Result | product `066f72c` (PR #21), sha256 `c82fd3f5…`, `released` | product `066f72c` (PR #21), sha256 `24f1c8a6…`, `released` |
+| LLM calls / agent costs | 2 / 2.4845 credits (PO 1.2166, implementer 1.2509, QA 0.0170) | 2 / 2.4538 credits (PO 1.2523, implementer 1.1873, QA 0.0142) |
+| Duration incl. human wait | 297 s | 291 s |
+
+Raw data: Factory `runs/website-01-cr01-de/cf17b507…`, `runs/website-01-cr01-en/3d6a20c0…` (PR #45). Both runs started on a product checkout with local changes (`product_dirty_at_start: true`); the agent-written result was merged to `main` via product PR #21 (no second reviewer). The DE run stored its PO result in the F-NEW cache (miss).
 
 New automated checks: `tests/test_cr01_en.py` (17: required EN content, `lang="en"`, title, language switch, contact, no invented content; Francisco) and `tests/test_cr01_de.py` (4: "Technische Einkaufsabteilungen", existing target groups kept, language switch "English"; Fatih, verified red on a manipulated copy).
 Regression AC-01–AC-08: 23/23 on the final state; all product checks 44/44 on `v1.0`.
-Browser review 375/1280 px + keyboard, both views, language switch both directions: Fatih, 13:55–13:57 local, no findings except the cosmetic defect below.
+Browser review 375/1280 px + keyboard, both views, language switch both directions: Daniil (during the gate, `http.server`) and Fatih (13:55–13:57 local, on `3fa2424`), no findings except the cosmetic defect below.
 Known defect (cosmetic, open): on `en.html` each service description repeats the service name and "Request information" appears as text and as link.
 
 
@@ -122,7 +125,7 @@ Full checklist: product `docs/acceptance.md` (PR #22, part of `v1.0`). Handover:
 
 Final regression on the release state: product `python -m pytest tests -q` → 44 passed on `v1.0`; Factory `tests/factory` → 41 passed (`evidence/session-05/factory-pytest.txt`); `--verify-only` run `2fb2d0dd-e75f-45b9-b0cc-2c8512b34212` on product `3fa2424` → 40 passed / 0 failed, approved by Fatih, `release_status: released`, artifact sha256 `33373692…` (raw data `runs/website-01/2fb2d0dd…`).
 
-- **Technical approval (team):** Fatih, 2026-11-09 14:05 local, release `v1.0` → `f1575ad`
+- **Technical approval (team):** Fatih, 2026-11-09 14:05 local, release `v1.0` → `f1575ad` (as recorded in `docs/acceptance.md`); Daniil and Francisco additionally reported their approval (13:30 UTC).
 - **Customer acceptance (instructor, Prof. Clemen):** accepted, 2026-11-09 ≈ 13:40 local, as communicated to the team; the decision was given on the state presented then, before product PR #21 was merged (13:47). Not self-declared.
 - Outstanding defects / open tasks: cosmetic duplicate texts on `en.html`; SR-01 had no independent fact check; known manifest issue `max_output_tokens_implementer` (2048 shown, 3072 used).
 
@@ -134,28 +137,31 @@ CI: no GitHub Actions runs in S5 (Actions disabled).
 
 | Category | Quantity | Credits |
 | -------- | -------- | ------- |
-| Agents CR-01 (runs DE + EN, Daniil) | TODO (Daniil) LLM calls | TODO |
+| Agents CR-01 (runs `cf17b507` DE + `3d6a20c0` EN) | 4 LLM calls, 2 QA runs | 4.94 |
 | Human delivery CR-01: EN skeleton, EN checks, brief/config help (Francisco) | 0.9 h | 90.00 |
+| Human review CR-01: gate both runs, browser review (Daniil) | 0.25 h | 25.00 |
 | Human delivery CR-01: issues for CR-01 (Caitlin, recorded as `CUST-001`) | 0.25 h | 25.00 |
-| Human delivery CR-01: briefs, implementer, runs, product change (Daniil) | TODO | TODO |
 | Human delivery SR-01: response + inventory (Rafael 2.0 h, Caitlin 2.0 h) | 4.0 h | 400.00 |
-| Human delivery acceptance/handover `CUST-001` (Fatih: README, DE checks, regression, fresh checkout, browser review, checklist, tag, evidence) | 1.0 h | 100.00 |
+| Human delivery acceptance/handover `CUST-001`: Fatih (README, DE checks, regression, fresh checkout, browser review, checklist, tag, evidence) | 1.0 h | 100.00 |
+| Human delivery acceptance/handover `CUST-001`: Daniil (AC verification, browser review, documentation) | 0.4 h | 40.00 |
 | Agent: final `--verify-only` run `2fb2d0dd` (QA, 0 LLM calls) | 1 run | 0.01 |
-| **Session delivery S5 (CR-01 + SR-01 + CUST-001)** | without Daniil's CR-01 rows | **615.01 + TODO** |
+| **Session delivery S5 (CR-01 + SR-01 + CUST-001)** | | **684.94** |
 | Factory development `FACTORY-S5` (one-off, separate): F-NEW | Fatih 0.1 h | 10.00 |
 | Rework (`FACTORY-S5`): S4 feedback, updated cost total | Caitlin 0.15 h | 15.00 |
-| Factory development `FACTORY-S5`: implementer for the English view (PR #43) | TODO (Daniil) | TODO |
+| Factory development `FACTORY-S5`: implementer for the English view, briefs, configs (PR #43) | Daniil 0.4 h | 40.00 |
 | R-01 F-NEW runs, operational (separate) | agents 2.74 + 1.34 = 4.08; human Fatih 0.25 h (25), Daniil review 0.03 h (3) | 32.08 |
+
+Not recorded: agent costs of the rejected EN attempt `b920be11` (see CR-01).
 
 ### Totals S3–S5 (from `costs/usage.csv`)
 
 | | S3 (26.10.) | S4 (02.11.) | S5 (09.11.) | Total |
 |---|---:|---:|---:|---:|
-| Customer delivery Nordwerk | 437.74 | 793.34¹ | 615.01 + TODO | TODO |
-| Factory development | 550.00 (`FACTORY-S3`) | 241.20 (`FACTORY-S4`) | 25.00 + TODO (`FACTORY-S5`) | TODO |
-| R-01 (baseline / experiment) | – | 82.72 | 32.08 | 114.80 |
+| Customer delivery Nordwerk | 437.74 | 793.34¹ | 684.94 | 1916.02 |
+| Factory development | 550.00 (`FACTORY-S3`) | 241.20 (`FACTORY-S4`) | 65.00 (`FACTORY-S5`) | 856.20 |
+| R-01 (baseline / experiment) | – | 82.72 | 32.08 | 114.79 |
 
-¹ incl. 25.0 S3 rework on the S4 day (see `session-04.md`).
+¹ incl. 25.0 S3 rework on the S4 day (see `session-04.md`). S5 customer delivery = `CR-01` 119.94 + `SR-01`/`CUST-01` 400.00 + `CUST-001` 165.01.
 
 Recompute from the CSV:
 ```
@@ -166,5 +172,5 @@ python3 -c "import csv,collections as c;d=c.defaultdict(float);[d.__setitem__((r
 ## Three transferable lessons
 
 1. **Measure the bottleneck before optimising, and isolate one variable.** The S4 traces showed the PO agent at 41–68 % of agent time; changing only the PO step (model, settings, task fixed, fresh R-BASE clones) made the effect attributable: −1 LLM call, −51 % credits, identical artifact hash.
-2. **A versioned skeleton plus a slot contract makes a change request deliverable with the same Factory.** The English view only needed an HTML skeleton with empty AGENT markers, new checks and an extended implementer prompt – no new agents. What the contract did not cover (prompt still saying "German-language", unused `en_*` fields, no check for the new German content) was only found in review; next time write the checks for *all* changed views before the run.
+2. **A versioned skeleton, a slot contract and view-specific checks make a change request deliverable with the same Factory.** The English view only needed an HTML skeleton with empty AGENT markers, new checks and an extended implementer prompt – no new agents. The whitelist check `test_cr01_en_only_required_texts` and the anchor check caught the first EN attempt (German anchors, missing language switch) at the gate; separate `product_test_paths` per view let DE and EN run independently while the final run checked everything together. Gaps of the contract (prompt still saying "German-language", no check for the new German content) were only found in review – next time write the checks for *all* changed views before the first run.
 3. **Keep authoring, checking and approving separate – and in that order.** Several changes reached `main` without a second reviewer (direct pushes, self-merged PRs), SR-01 was fact-checked by its own authors, and the customer accepted before the final change was merged. The release is still traceable because every state has a commit, a check result and a named approver, but the next delivery should plan a non-author review before merge and present the final tagged state for acceptance.

@@ -1,0 +1,19 @@
+{
+  "task_id": "CR-01",
+  "workflow_id": "3d6a20c0-48c5-4894-9c6d-34044170619f",
+  "run_id": "3d6a20c0-48c5-4894-9c6d-34044170619f",
+  "round": 0,
+  "reviewer": "Daniil",
+  "decision": "approved",
+  "comment": "",
+  "visually_checked": true,
+  "reviewed_file": "site/en.html",
+  "reviewed_artifact_sha256": "24f1c8a6193a7b4cbc9f5a39d7579f740e93cb48a11ef60ec7bfe7611cc3bada",
+  "tested_source_commit": "b81446a1f6723019da41b9fe5988f31471e9e59c",
+  "agent_recommendation": "approved",
+  "current_artifact_sha256": "24f1c8a6193a7b4cbc9f5a39d7579f740e93cb48a11ef60ec7bfe7611cc3bada",
+  "release_status": "released",
+  "release_blockers": [],
+  "identity_assurance": "self_declared_course_review",
+  "decided_at_utc": "2026-11-09T12:20:12.639102+00:00"
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "R1",
+    "description": "Navigation must link to #services, #target-groups, #contact and index.html with label 'Deutsch'",
+    "is_met": false
+  },
+  {
+    "id": "R2",
+    "description": "Company name must be 'Nordwerk Industrie-Service'",
+    "is_met": false
+  },
+  {
+    "id": "R3",
+    "description": "Main statement must be 'Practical support for your technical operations.'",
+    "is_met": false
+  },
+  {
+    "id": "R4",
+    "description": "Services section must list: Maintenance planning, Spare parts coordination, Operational documentation",
+    "is_met": false
+  }
+]

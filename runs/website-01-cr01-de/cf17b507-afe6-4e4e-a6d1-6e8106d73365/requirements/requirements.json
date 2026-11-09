@@ -1,0 +1,22 @@
+[
+  {
+    "id": "R1",
+    "description": "Firmenname: Nordwerk Industrie-Service",
+    "is_met": false
+  },
+  {
+    "id": "R2",
+    "description": "Hauptaussage: Praktische Unterstützung für Ihren technischen Betrieb",
+    "is_met": false
+  },
+  {
+    "id": "R3",
+    "description": "Leistungen: Wartungsplanung, Ersatzteilkoordination, Betriebsdokumentation",
+    "is_met": false
+  },
+  {
+    "id": "R4",
+    "description": "Zielgruppen: Kleine Produktionsbetriebe, Technische Serviceunternehmen, Technische Einkaufsabteilungen",
+    "is_met": false
+  }
+]

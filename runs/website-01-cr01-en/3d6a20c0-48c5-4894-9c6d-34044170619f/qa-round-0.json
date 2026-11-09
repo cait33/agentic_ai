@@ -1,0 +1,17 @@
+{
+  "task_id": "CR-01",
+  "verdict": "approved",
+  "summary": "All tests passed (17 passed, 0 skipped).",
+  "findings": [],
+  "test_run": {
+    "exit_code": 0,
+    "passed": 17,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "failed_tests": [],
+    "timed_out": false,
+    "output_tail": ".................                                                        [100%]\n17 passed in 0.03s\n"
+  },
+  "requires_human_approval": true
+}
