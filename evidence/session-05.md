@@ -14,8 +14,9 @@ Deliver customer change CR-01 from the versioned baseline `rc-1` with the same F
 | Fatih     | Task 4: start/test instructions + maintenance note (product README), AC-01–AC-10 checklist, final regression, `session-05.md`, costs |
 | Daniil    | Task 3: human gate reviewer for both F-NEW R-01 runs |
 | Daniil    | Task 1 (CR-01): TODO |
-| Francisco | Task 1 (CR-01): TODO |
-| Francisco | Task 2 (SR-01): TODO |
+| Francisco | Task 1 (CR-01): English page skeleton `site/en.html` (`lang="en"`, own title, sections, empty AGENT slots for the Factory) |
+| Francisco | Task 1 (CR-01): product checks `tests/test_cr01_en.py` for the English page (17 checks; 10 failed / 30 passed on the empty skeleton, as expected before the Factory run) |
+| Francisco | Task 1 (CR-01): helped with the CR-01 brief `docs/customer-01/cr01-en.md` and project config `projects/website-01-cr01-en.json` |
 | Rafael    | Task 2 (SR-01): TODO |
 | Caitlin   | Task 2 (SR-01): TODO |
 
