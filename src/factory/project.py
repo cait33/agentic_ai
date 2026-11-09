@@ -34,6 +34,7 @@ class ProjectConfig(BaseModel):
     product_test_paths: list[str] = Field(default_factory=lambda: ["tests"], min_length=1)
     runs_dir: str = Field(min_length=1)
     max_correction_rounds: int = Field(default=2, ge=0, le=2)
+    reuse_po_output: bool = Field(default=True, description="F-NEW: reuse PO result if brief/prompt/model unchanged")
 
     @field_validator("allowed_write_paths")
     @classmethod

@@ -398,3 +398,77 @@ def test_verify_only_never_loops_back_to_implementer(cfg, product, tmp_path) -> 
                                         qa=make_qa("changes_requested"), decide=decider("changes_requested"),
                                         factory_root=tmp_path / "factory", verify_only=True)
     assert "implementation" not in state["steps"] and state["steps"].count("human_gate") == 1
+
+
+# F-NEW (Session 5): PO output reuse ---------------------------------------------------
+def counting_po(result=None):
+    calls = []
+
+    def po(cfg, ctx):
+        calls.append(ctx.run_id)
+        return result or fake_po(cfg, ctx)
+    po.calls = calls
+    return po
+
+
+def run_with(cfg, tmp_path, po, *, root="factory"):
+    return cw.run_customer_workflow(cfg, "Fatih", po=po, implement=make_impl(FakeLLM(json.dumps(GOOD))),
+                                    qa=make_qa("approved"), decide=decider("approved"), factory_root=tmp_path / root)
+
+
+def test_po_cache_miss_then_hit_skips_second_po_call(cfg, tmp_path) -> None:
+    po = counting_po()
+    _, run1 = run_with(cfg, tmp_path, po)
+    _, run2 = run_with(cfg, tmp_path, po)
+    m1 = json.loads((run1 / "manifest.json").read_text(encoding="utf-8"))
+    m2 = json.loads((run2 / "manifest.json").read_text(encoding="utf-8"))
+    assert len(po.calls) == 1
+    assert m1["po_cache"]["hit"] is False and m1["po_cache"]["stored"] is True
+    assert m2["po_cache"]["hit"] is True and m2["po_cache"]["source_run_id"] == run1.name
+    assert m1["po_cache"]["key"] == m2["po_cache"]["key"]
+    assert json.loads((run2 / "requirements" / "user_stories.json").read_text(encoding="utf-8"))[0]["id"] == "US1"
+    hit = [json.loads(l) for l in (run2 / "trace.jsonl").read_text(encoding="utf-8").splitlines()
+           if json.loads(l).get("po_cache") == "hit"]
+    assert hit and hit[0]["calls"] == 0 and hit[0]["agent"] == "product-owner-agent"
+
+
+def test_po_cache_hit_still_runs_implementer_qa_and_gate(cfg, tmp_path) -> None:
+    po = counting_po()
+    run_with(cfg, tmp_path, po)
+    state, run2 = run_with(cfg, tmp_path, po)
+    assert state["steps"] == ["requirements", "implementation", "qa", "human_gate"]
+    assert json.loads((run2 / "manifest.json").read_text(encoding="utf-8"))["release_status"] == "released"
+
+
+def test_po_cache_disabled_calls_po_every_time(cfg, tmp_path) -> None:
+    po = counting_po()
+    off = cfg.model_copy(update={"reuse_po_output": False})
+    _, run1 = run_with(off, tmp_path, po)
+    run_with(off, tmp_path, po)
+    assert len(po.calls) == 2
+    assert json.loads((run1 / "manifest.json").read_text(encoding="utf-8"))["po_cache"]["enabled"] is False
+
+
+def test_unsuccessful_po_result_is_not_cached(cfg, tmp_path) -> None:
+    po = counting_po({"status": "needs_clarification", "summary": "x", "requirements": [], "user_stories": []})
+    run_with(cfg, tmp_path, po)
+    run_with(cfg, tmp_path, po)
+    assert len(po.calls) == 2
+
+
+def test_cache_key_changes_with_brief_prompt_or_model() -> None:
+    from src.factory.po_cache import cache_key
+    base = dict(provider="ollama", model="qwen3:4b", temperature=0.0)
+    k = cache_key("brief", "prompt", **base)
+    assert k == cache_key("brief", "prompt", **base)
+    assert k != cache_key("brief changed", "prompt", **base)
+    assert k != cache_key("brief", "prompt v2", **base)
+    assert k != cache_key("brief", "prompt", **{**base, "model": "other"})
+    assert k != cache_key("brief", "prompt", **{**base, "temperature": 0.2})
+
+
+def test_separate_factory_roots_do_not_share_cache(cfg, tmp_path) -> None:
+    po = counting_po()
+    run_with(cfg, tmp_path, po, root="factory-a")
+    run_with(cfg, tmp_path, po, root="factory-b")
+    assert len(po.calls) == 2
