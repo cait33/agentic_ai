@@ -219,3 +219,6 @@ __marimo__/
 
 # Generated agent logs; commit selected, sanitized evidence separately.
 logs/*.jsonl
+
+# Factory runtime state (F-NEW PO cache), not evidence
+state/

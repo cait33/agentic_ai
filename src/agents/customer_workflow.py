@@ -392,6 +392,10 @@ def run_customer_workflow(
     started_at = datetime.now(timezone.utc).isoformat()
     started = time.perf_counter()
 
+    po_cache_info: dict[str, Any] = {"enabled": False, "hit": False, "key": None}
+    if cfg.reuse_po_output and not verify_only:
+        from src.factory.po_cache import with_po_cache
+        po = with_po_cache(po, cfg, factory_root, po_cache_info, brief_root=FACTORY_ROOT)
     graph = build_graph(cfg, ctx, po=po, implement=implement, qa=qa, decide=decide,
                         input_commit=product_git["commit"], verify_only=verify_only)
     initial: CustomerState = {"round": 0, "errors": [], "steps": [], "history": [], "decisions": []}
@@ -426,6 +430,7 @@ def run_customer_workflow(
         "llm_settings": {"temperature": settings.llm_temperature, "json_mode": True, "reasoning": False,
                          "max_output_tokens_implementer": 2048},
         "mode": "verify_only" if verify_only else "full",
+        "po_cache": po_cache_info,
         "agents": ["qa-agent"] if verify_only else ["product-owner-agent", "web-implementer-agent", "qa-agent"],
         "steps": state.get("steps", []),
         "correction_rounds": state.get("round", 0),
@@ -479,10 +484,14 @@ def main() -> None:
     p.add_argument("--reviewer", help="Accountable human for the gate")
     p.add_argument("--record-result", metavar="RUN_ID", help="Link the product result commit to a finished run")
     p.add_argument("--note", default=None, help="Manual intervention note (with --record-result)")
+    p.add_argument("--no-po-cache", action="store_true",
+                   help="Disable PO output reuse for this run (behaves like F-BASE)")
     p.add_argument("--verify-only", action="store_true",
                    help="Skip PO + implementer: product check + human gate on the existing product state")
     a = p.parse_args()
     cfg = load_project(a.project, product_path=a.product_path)
+    if a.no_po_cache:
+        cfg = cfg.model_copy(update={"reuse_po_output": False})
     if a.record_result:
         print(json.dumps(record_result(cfg, a.record_result, note=a.note), indent=2, ensure_ascii=False))
         return
