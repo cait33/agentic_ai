@@ -1,0 +1,73 @@
+{
+  "task_id": "CUST-002",
+  "verdict": "changes_requested",
+  "summary": "All failing tests in the test suite for CUST-002 reference cases are due to a NameError: 'load_catalog' is not defined in the quotation/pricing.py module. This error occurs consistently across multiple test cases, indicating a missing function definition or import for 'load_catalog' in the pricing module.",
+  "findings": [
+    {
+      "severity": "high",
+      "test": "tests/test_reference_cases.py::test_hp_ac02_lines_match_customer_values[Q01]",
+      "description": "NameError: 'load_catalog' is not defined in quotation/pricing.py"
+    },
+    {
+      "severity": "high",
+      "test": "tests/test_reference_cases.py::test_hp_ac02_lines_match_customer_values[Q03]",
+      "description": "NameError: 'load_catalog' is not defined in quotation/pricing.py"
+    },
+    {
+      "severity": "high",
+      "test": "tests/test_reference_cases.py::test_hp_ac02_totals_match_customer_values[Q01]",
+      "description": "NameError: 'load_catalog' is not defined in quotation/pricing.py"
+    },
+    {
+      "severity": "high",
+      "test": "tests/test_reference_cases.py::test_hp_ac02_totals_match_customer_values[Q03]",
+      "description": "NameError: 'load_catalog' is not defined in quotation/pricing.py"
+    },
+    {
+      "severity": "high",
+      "test": "tests/test_reference_cases.py::test_hp_ac02_money_values_are_integer_cents[Q01]",
+      "description": "NameError: 'load_catalog' is not defined in quotation/pricing.py"
+    },
+    {
+      "severity": "high",
+      "test": "tests/test_reference_cases.py::test_hp_ac02_money_values_are_integer_cents[Q03]",
+      "description": "NameError: 'load_catalog' is not defined in quotation/pricing.py"
+    },
+    {
+      "severity": "high",
+      "test": "tests/test_reference_cases.py::test_hp_ac02_is_deterministic",
+      "description": "NameError: 'load_catalog' is not defined in quotation/pricing.py"
+    },
+    {
+      "severity": "high",
+      "test": "tests/test_reference_cases.py::test_hp_ac04_invalid_input_is_rejected[E01]",
+      "description": "NameError: 'load_catalog' is not defined in quotation/pricing.py"
+    },
+    {
+      "severity": "high",
+      "test": "tests/test_reference_cases.py::test_hp_ac04_invalid_input_does_not_mutate_items[E01]",
+      "description": "NameError: 'load_catalog' is not defined in quotation/pricing.py"
+    }
+  ],
+  "test_run": {
+    "exit_code": 1,
+    "passed": 8,
+    "failed": 9,
+    "errors": 0,
+    "skipped": 0,
+    "failed_tests": [
+      "tests/test_reference_cases.py::test_hp_ac02_lines_match_customer_values[Q01]",
+      "tests/test_reference_cases.py::test_hp_ac02_lines_match_customer_values[Q03]",
+      "tests/test_reference_cases.py::test_hp_ac02_totals_match_customer_values[Q01]",
+      "tests/test_reference_cases.py::test_hp_ac02_totals_match_customer_values[Q03]",
+      "tests/test_reference_cases.py::test_hp_ac02_money_values_are_integer_cents[Q01]",
+      "tests/test_reference_cases.py::test_hp_ac02_money_values_are_integer_cents[Q03]",
+      "tests/test_reference_cases.py::test_hp_ac02_is_deterministic",
+      "tests/test_reference_cases.py::test_hp_ac04_invalid_input_is_rejected[E01]",
+      "tests/test_reference_cases.py::test_hp_ac04_invalid_input_does_not_mutate_items[E01]"
+    ],
+    "timed_out": false,
+    "output_tail": "_catalog()\n              ^^^^^^^^^^^^\nE   NameError: name 'load_catalog' is not defined\n_______________ test_hp_ac02_totals_match_customer_values[Q01] ________________\ntests\\test_reference_cases.py:80: in test_hp_ac02_totals_match_customer_values\n    quote = calculate_quote(case[\"input\"][\"items\"], rule_version=RULE_VERSION)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nquotation\\pricing.py:29: in calculate_quote\n    catalog = load_catalog()\n              ^^^^^^^^^^^^\nE   NameError: name 'load_catalog' is not defined\n_______________ test_hp_ac02_totals_match_customer_values[Q03] ________________\ntests\\test_reference_cases.py:80: in test_hp_ac02_totals_match_customer_values\n    quote = calculate_quote(case[\"input\"][\"items\"], rule_version=RULE_VERSION)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nquotation\\pricing.py:29: in calculate_quote\n    catalog = load_catalog()\n              ^^^^^^^^^^^^\nE   NameError: name 'load_catalog' is not defined\n______________ test_hp_ac02_money_values_are_integer_cents[Q01] _______________\ntests\\test_reference_cases.py:86: in test_hp_ac02_money_values_are_integer_cents\n    quote = calculate_quote(VALID[case_id][\"input\"][\"items\"], rule_version=RULE_VERSION)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nquotation\\pricing.py:29: in calculate_quote\n    catalog = load_catalog()\n              ^^^^^^^^^^^^\nE   NameError: name 'load_catalog' is not defined\n______________ test_hp_ac02_money_values_are_integer_cents[Q03] _______________\ntests\\test_reference_cases.py:86: in test_hp_ac02_money_values_are_integer_cents\n    quote = calculate_quote(VALID[case_id][\"input\"][\"items\"], rule_version=RULE_VERSION)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nquotation\\pricing.py:29: in calculate_quote\n    catalog = load_catalog()\n              ^^^^^^^^^^^^\nE   NameError: name 'load_catalog' is not defined\n________________________ test_hp_ac02_is_deterministic ________________________\ntests\\test_reference_cases.py:95: in test_hp_ac02_is_deterministic\n    assert calculate_quote(items) == calculate_quote(items)\n           ^^^^^^^^^^^^^^^^^^^^^^\nquotation\\pricing.py:29: in calculate_quote\n    catalog = load_catalog()\n              ^^^^^^^^^^^^\nE   NameError: name 'load_catalog' is not defined\n_________________ test_hp_ac04_invalid_input_is_rejected[E01] _________________\ntests\\test_reference_cases.py:104: in test_hp_ac04_invalid_input_is_rejected\n    calculate_quote(INVALID[case_id][\"input\"][\"items\"], rule_version=RULE_VERSION)\nquotation\\pricing.py:29: in calculate_quote\n    catalog = load_catalog()\n              ^^^^^^^^^^^^\nE   NameError: name 'load_catalog' is not defined\n____________ test_hp_ac04_invalid_input_does_not_mutate_items[E01] ____________\ntests\\test_reference_cases.py:112: in test_hp_ac04_invalid_input_does_not_mutate_items\n    calculate_quote(items)\nquotation\\pricing.py:29: in calculate_quote\n    catalog = load_catalog()\n              ^^^^^^^^^^^^\nE   NameError: name 'load_catalog' is not defined\n=========================== short test summary info ===========================\nFAILED tests/test_reference_cases.py::test_hp_ac02_lines_match_customer_values[Q01]\nFAILED tests/test_reference_cases.py::test_hp_ac02_lines_match_customer_values[Q03]\nFAILED tests/test_reference_cases.py::test_hp_ac02_totals_match_customer_values[Q01]\nFAILED tests/test_reference_cases.py::test_hp_ac02_totals_match_customer_values[Q03]\nFAILED tests/test_reference_cases.py::test_hp_ac02_money_values_are_integer_cents[Q01]\nFAILED tests/test_reference_cases.py::test_hp_ac02_money_values_are_integer_cents[Q03]\nFAILED tests/test_reference_cases.py::test_hp_ac02_is_deterministic - NameErr...\nFAILED tests/test_reference_cases.py::test_hp_ac04_invalid_input_is_rejected[E01]\nFAILED tests/test_reference_cases.py::test_hp_ac04_invalid_input_does_not_mutate_items[E01]\n9 failed, 8 passed in 0.25s\n"
+  },
+  "requires_human_approval": true
+}

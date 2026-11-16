@@ -1,0 +1,40 @@
+{
+  "US1": [
+    {
+      "description": "Calculate net amount as 250 cents for 1 unit"
+    },
+    {
+      "description": "Shipping is 1200 cents"
+    },
+    {
+      "description": "Total is 1450 cents"
+    }
+  ],
+  "US2": [
+    {
+      "description": "Calculate net amount as 11875 cents for 50 units"
+    },
+    {
+      "description": "Shipping is 1200 cents"
+    },
+    {
+      "description": "Total is 13075 cents"
+    }
+  ],
+  "US3": [
+    {
+      "description": "Raise QuoteError with message 'Quantity must be at least 1'"
+    },
+    {
+      "description": "No quotation is generated"
+    }
+  ],
+  "US4": [
+    {
+      "description": "Only HP-V1 rule version is accepted"
+    },
+    {
+      "description": "Any other rule version raises QuoteError"
+    }
+  ]
+}

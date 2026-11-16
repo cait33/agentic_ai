@@ -1,0 +1,22 @@
+[
+  {
+    "id": "R1",
+    "description": "Calculate quote for HP-BOX with 1 unit: 250 cents net, 1200 cents shipping, total 1450 cents",
+    "is_met": false
+  },
+  {
+    "id": "R2",
+    "description": "Calculate quote for HP-BOX with 50 units: 11875 cents net, 1200 cents shipping, total 13075 cents",
+    "is_met": false
+  },
+  {
+    "id": "R3",
+    "description": "Return QuoteError for 0 units of HP-BOX",
+    "is_met": false
+  },
+  {
+    "id": "R4",
+    "description": "Handle only HP-V1 rule version with no other rule versions",
+    "is_met": false
+  }
+]

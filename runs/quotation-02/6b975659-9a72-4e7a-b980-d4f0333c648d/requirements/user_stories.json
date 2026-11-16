@@ -1,0 +1,60 @@
+[
+  {
+    "id": "US1",
+    "description": "As a HansePack customer I want to calculate the quote for HP-BOX with 1 unit so that I get 1450 cents total",
+    "acceptance_criteria": [
+      {
+        "description": "Calculate net amount as 250 cents for 1 unit"
+      },
+      {
+        "description": "Shipping is 1200 cents"
+      },
+      {
+        "description": "Total is 1450 cents"
+      }
+    ],
+    "backlog_value": 80
+  },
+  {
+    "id": "US2",
+    "description": "As a HansePack customer I want to calculate the quote for HP-BOX with 50 units so that I get 13075 cents total",
+    "acceptance_criteria": [
+      {
+        "description": "Calculate net amount as 11875 cents for 50 units"
+      },
+      {
+        "description": "Shipping is 1200 cents"
+      },
+      {
+        "description": "Total is 13075 cents"
+      }
+    ],
+    "backlog_value": 80
+  },
+  {
+    "id": "US3",
+    "description": "As a HansePack customer I want to get a QuoteError when requesting 0 units of HP-BOX so that I know it's invalid",
+    "acceptance_criteria": [
+      {
+        "description": "Raise QuoteError with message 'Quantity must be at least 1'"
+      },
+      {
+        "description": "No quotation is generated"
+      }
+    ],
+    "backlog_value": 70
+  },
+  {
+    "id": "US4",
+    "description": "As a HansePack customer I want the system to only support HP-V1 rule version so that I don't get unexpected behavior",
+    "acceptance_criteria": [
+      {
+        "description": "Only HP-V1 rule version is accepted"
+      },
+      {
+        "description": "Any other rule version raises QuoteError"
+      }
+    ],
+    "backlog_value": 60
+  }
+]

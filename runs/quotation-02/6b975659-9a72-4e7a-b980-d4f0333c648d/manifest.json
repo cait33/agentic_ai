@@ -1,0 +1,86 @@
+{
+  "run_id": "6b975659-9a72-4e7a-b980-d4f0333c648d",
+  "workflow_id": "6b975659-9a72-4e7a-b980-d4f0333c648d",
+  "project_id": "quotation-02",
+  "customer": "HansePack Handelsgesellschaft (fiktiv)",
+  "customer_task_id": "CUST-002",
+  "issue": "https://github.com/franciscotbatista99/client-02-quotation/issues/2",
+  "product_repo": "https://github.com/franciscotbatista99/client-02-quotation",
+  "product_path": "C:\\Germany_Uni\\Agentic_AI_Projekt\\client-02-quotation",
+  "factory_input_commit": "68b15a1f80ae1509f80775b8d3884416c421ff09",
+  "factory_dirty_at_start": true,
+  "product_input_commit": "c23811d5f4d22bc65b2c94b752750e3daa65c659",
+  "product_dirty_at_start": true,
+  "product_result_commit": "910ec242f3dbea3fc07103903eef0238f5c2059a",
+  "llm_provider": "ollama",
+  "llm_model": "qwen3:4b",
+  "llm_settings": {
+    "temperature": 0.0,
+    "json_mode": true,
+    "reasoning": false,
+    "max_output_tokens_implementer": 3072
+  },
+  "mode": "full",
+  "implementer_mode": "python_module",
+  "po_cache": {
+    "enabled": true,
+    "hit": true,
+    "key": "8c91fa5a789617f33d6005a7e8379e6c139eee6bdabf7917e04fa3638f5374bd",
+    "cache_file": "state\\po-cache\\quotation-02\\8c91fa5a789617f33d6005a7e8379e6c139eee6bdabf7917e04fa3638f5374bd.json",
+    "source_run_id": "d59125d8-81d1-41b4-bc2b-ce19bca79260"
+  },
+  "agents": [
+    "product-owner-agent",
+    "backend-api-agent",
+    "qa-agent"
+  ],
+  "steps": [
+    "requirements",
+    "implementation",
+    "qa",
+    "auto_correction",
+    "implementation",
+    "qa",
+    "human_gate"
+  ],
+  "correction_rounds": 1,
+  "max_correction_rounds": 2,
+  "history": [
+    {
+      "round": 0,
+      "artifact_sha256": "2cbf241284cc6045a1a32b4a145046ace70248839d08a30b766ccef4224b67fb",
+      "qa_verdict": "changes_requested",
+      "tests_passed": 8,
+      "tests_failed": 9
+    },
+    {
+      "round": 1,
+      "artifact_sha256": "6618da554d9cba714fabaad43dc7ccc7167b8840c530ddd728d23badd4db8ab3",
+      "qa_verdict": "approved",
+      "tests_passed": 17,
+      "tests_failed": 0
+    }
+  ],
+  "errors": [],
+  "target_file": "quotation/pricing.py",
+  "final_artifact_sha256": "6618da554d9cba714fabaad43dc7ccc7167b8840c530ddd728d23badd4db8ab3",
+  "criteria_product_check": {
+    "HP_AC01": "passed",
+    "HP_AC02": "passed",
+    "HP_AC04": "passed"
+  },
+  "release_status": "released",
+  "release_blockers": [],
+  "agent_recommendation": "approved",
+  "human_decision": "approved",
+  "reviewer": "Francisco",
+  "decided_at_utc": "2026-11-16T13:46:44.035400+00:00",
+  "agent_calls": 3,
+  "agent_credits": 3.9465,
+  "token_usage_complete": true,
+  "started_at_utc": "2026-11-16T13:18:28.917425+00:00",
+  "duration_seconds_incl_human_wait": 1695.1206,
+  "trace_file": "trace.jsonl",
+  "manual_interventions": [],
+  "product_dirty_at_record": true
+}
