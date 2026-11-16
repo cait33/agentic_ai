@@ -10,7 +10,7 @@ Switch the existing Factory to a second customer (HansePack, customer project 02
 | Task | Person | What |
 | ---- | ------ | ---- |
 | 1 | Francisco | Product repo `client-02-quotation`, customer fixtures + `SHA256SUMS` + `SOURCE.md`, README, customer issue TODO # |
-| 1 | Rafael | Project config `projects/quotation-02.json`, Factory brief `TODO` |
+|1 | Rafael | Project config projects/quotation-02.json, Factory brief docs/brief.md
 | 1 | Fatih | Nordwerk `v1.0` frozen and checked (fresh checkout, tests, startup; Factory PR #50) |
 | 1 | Daniil | Product planning: created functional product issues for `client-02-quotation` covering catalog validation, quotation calculation, web UI & export, and CR-02 shipping rules |
 | 2 | Daniil | Factory adaptation: extended `ProjectConfig` with `implementer`, `ac_test_pattern`, and `review_hint` fields |
@@ -19,7 +19,7 @@ Switch the existing Factory to a second customer (HansePack, customer project 02
 | 2 | Daniil + Caitlin | Real Factory run on `quotation-02`: TODO |
 | 2 | Francisco | Human reviewer at the gate: TODO |
 | 3 | Fatih | Product checks Q01/Q03/E01 + interface stub `quotation/pricing.py` (product PR #1), catalogue loader `quotation/catalog.py` (product PR #3), Factory project separation test (Factory PR #48) |
-| 4 | Rafael | Time tracking, plan S6/S7 + reserve S8, this index: TODO |
+|4 | Rafael | Time tracking, plan S6/S7 + reserve S8, this index
 
 Only existing roles (`organization/roles.yaml`) were used; no new agents or roles. The Python implementer runs under the existing role `backend_api_engineer`.
 Merged without a second review: Factory PR #49 (self-merged); direct pushes to `main`: Factory `69fa757`, `787e069` (project config). TODO: further.
@@ -38,11 +38,11 @@ Course materials S6–S8 synced into the Factory from `MARS-Group-HAW/agentic_ai
 
 ## 1. Order clarified, product repo created, Factory switched
 
-- Customer issue: TODO # (today's scope Q01/Q03/E01, open questions, explicit assumptions, responsibility)
+- Customer issue: #2 (today's scope Q01/Q03/E01, open questions, explicit assumptions, responsibility)
 - Customer fixtures: `fixtures/HansePack_Katalog.json` (sha256 `70f0e1a7…`), `fixtures/HansePack_Referenzfaelle.json` (sha256 `7deb994e…`), unchanged from the course repo; checked by `tests/test_fixtures.py` and `test_hp_ac01_fixtures_unchanged`
 - Product start/test: README TODO; `python -m pytest tests -q`; CLI TODO
 - Project config: `projects/quotation-02.json` – own `project_id`, product checkout `../client-02-quotation`, `target_file` `quotation/pricing.py`, `allowed_write_paths` `["quotation/"]`, `runs_dir` `runs/quotation-02`, `implementer` TODO
-- Factory brief: TODO
+- Factory brief: docs/brief-t6.md
 
 **Nordwerk frozen:** fresh checkout of tag `v1.0` (`f1575ad`), `git status` clean, 44 passed, `index.html` + `en.html` start via `python3 -m http.server` (Fatih, 12:10) – [`evidence/session-06/nordwerk-v1.0-check.txt`](session-06/nordwerk-v1.0-check.txt).
 
@@ -106,8 +106,10 @@ Project-switch effort (second customer) is recorded separately from Factory deve
 
 | Category | Who | Quantity | Credits |
 | -------- | --- | -------- | ------- |
-| Project switch: product repo, fixtures, issue, README | TODO | TODO | TODO |
-| Project switch: project config, brief | TODO | TODO | TODO |
+| Project switch: product repo, fixtures, issue, README | Rafael & Francisco | 1.5 h | 150.00 |
+| Project switch: project config, brief | Rafael | 1.0 h | 100.00 |
+| Customer delivery: S6 evidence documentation and planning | Rafael | 1.5 h | 150.00 |
+| Human review at the gate | Rafael | 1.0 h | 100.00 |
 | Project switch: Nordwerk frozen check | Fatih | TODO | TODO |
 | Factory development `FACTORY-S6`: ProjectConfig extension (implementer, ac_test_pattern, review_hint) | Daniil | 0.75 h | 75.00 |
 | Factory development `FACTORY-S6`: workflow dispatcher & dynamic human gate hints | Daniil | 0.75 h | 75.00 |
