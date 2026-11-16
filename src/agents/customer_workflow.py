@@ -1,31 +1,32 @@
-"""Customer delivery workflow (Session 3): Factory -> separate product checkout.
+"""Customer delivery workflow (Session 3, generalized Session 6): Factory -> separate product checkout.
 
-    PO agent ──stories──▶ Web implementer ──file + hash──▶ QA agent (product check) ──▶ Human gate
-                               ▲                                │ red                     │ changes_requested
-                               └──────── feedback ◀─────────────┴─────────────────────────┘
-                                       at most cfg.max_correction_rounds (<= 2), then escalate_to_human
+    PO agent ──stories──▶ Implementer (web_slots | python_module) ──file + hash──▶ QA agent ──▶ Human gate
+                               ▲                                                       │ red         │ changes_requested
+                               └──────────────────────── feedback ─────────────────────┴─────────────┘
+                                                      at most cfg.max_correction_rounds (<= 2), then escalate_to_human
 
-* Hand-over only via LangGraph state (structured dicts), one task_id + workflow_id.
-* Implementer may only write inside cfg.allowed_write_paths of the product checkout.
-* QA runs the product's own tests inside the product checkout.
-* A human decides about a concrete artifact hash; an agent "approved" is a recommendation only.
-* Release gate: a state counts as released ONLY if the human approved it, the product check
+- Hand-over only via LangGraph state (structured dicts), one task_id + workflow_id.
+- Implementer may only write inside cfg.allowed_write_paths of the product checkout.
+- QA runs the product's own tests inside the product checkout.
+- A human decides about a concrete artifact hash; an agent "approved" is a recommendation only.
+- Release gate: a state counts as released ONLY if the human approved it, the product check
   is green and the artifact on disk still has the hash that QA tested. Otherwise
   release_status = "not_released" with explicit blockers (also if a human typed "approved").
-* Evidence per run: runs/<project>/<run_id>/ (manifest.json, trace.jsonl, requirements/,
+- Evidence per run: runs/<project>/<run_id>/ (manifest.json, trace.jsonl, requirements/,
   implementation-N.json, qa-round-N.json, review-N.json). Nothing shared is overwritten.
 
 Run:
-    python -m src.agents.customer_workflow --project projects/website-01.json --reviewer Fatih
+    python -m src.agents.customer_workflow --project projects/hansepack-01.json --reviewer Francisco
 Verify an existing product state without any agent writing (manual change, failure case):
-    python -m src.agents.customer_workflow --verify-only --project projects/website-01.json --reviewer Fatih
+    python -m src.agents.customer_workflow --verify-only --project projects/hansepack-01.json --reviewer Francisco
 After reviewing and committing the product change:
-    python -m src.agents.customer_workflow --record-result RUN_ID --project projects/website-01.json
+    python -m src.agents.customer_workflow --record-result RUN_ID --project projects/hansepack-01.json
 """
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import time
@@ -45,7 +46,7 @@ from src.observability.tracing import append_trace
 Decision = Literal["approved", "changes_requested", "escalate_to_human"]
 IMPL_OK = ("success", "existing")  # "existing" = verify-only run, no agent wrote the product
 AC_TESTS = {f"AC-{n:02d}": f"ac{n:02d}" for n in range(1, 9)}
-_AC_TEST_RE = re.compile(r"def (test_(ac\d{2})\w*)")
+_DEFAULT_AC_TEST_RE = re.compile(r"def (test_(ac\d{2})\w*)")
 
 
 class RunContext(BaseModel):
@@ -102,19 +103,44 @@ DecideFn = Callable[[ProjectConfig, RunContext, dict[str, Any]], HumanDecision]
 def po_step(cfg: ProjectConfig, ctx: RunContext) -> dict[str, Any]:
     from src.agents.product_owner import run_po_task
 
-    task = EngineeringTask(task_id=ctx.task_id, workflow_id=ctx.workflow_id, task_type="requirements",
-                           description=f"Derive user stories for customer task {cfg.task_id} ({cfg.customer})",
-                           assigned_role="product_owner_requirements", input_files=[cfg.brief],
-                           metadata={"project_id": cfg.project_id})
+    task = EngineeringTask(
+        task_id=ctx.task_id,
+        workflow_id=ctx.workflow_id,
+        task_type="requirements",
+        description=f"Derive user stories for customer task {cfg.task_id} ({cfg.customer})",
+        assigned_role="product_owner_requirements",
+        input_files=[cfg.brief],
+        metadata={"project_id": cfg.project_id},
+    )
     return run_po_task(task, trace_file=ctx.trace_file, output_dir=Path(ctx.run_dir) / "requirements").model_dump()
 
 
 def implement_step(cfg: ProjectConfig, ctx: RunContext, stories: list[dict[str, Any]], feedback: str | None) -> dict[str, Any]:
+    if cfg.implementer == "python_module":
+        from src.agents.backend_api_engineer import ROLE, run_python_implementer
+
+        task = EngineeringTask(
+            task_id=ctx.task_id,
+            workflow_id=ctx.workflow_id,
+            task_type="implementation",
+            description=f"Implement Python logic in {cfg.target_file} for {cfg.task_id}",
+            assigned_role=ROLE,
+            input_files=[cfg.brief],
+            metadata={"project_id": cfg.project_id},
+        )
+        return run_python_implementer(task, cfg, stories=stories, feedback=feedback, trace_file=ctx.trace_file).model_dump()
+
     from src.agents.web_implementer import ROLE, run_implementer
 
-    task = EngineeringTask(task_id=ctx.task_id, workflow_id=ctx.workflow_id, task_type="implementation",
-                           description=f"Fill {cfg.target_file} for {cfg.task_id}", assigned_role=ROLE,
-                           input_files=[cfg.brief], metadata={"project_id": cfg.project_id})
+    task = EngineeringTask(
+        task_id=ctx.task_id,
+        workflow_id=ctx.workflow_id,
+        task_type="implementation",
+        description=f"Fill {cfg.target_file} for {cfg.task_id}",
+        assigned_role=ROLE,
+        input_files=[cfg.brief],
+        metadata={"project_id": cfg.project_id},
+    )
     return run_implementer(task, cfg, stories=stories, feedback=feedback, trace_file=ctx.trace_file).model_dump()
 
 
@@ -122,10 +148,15 @@ def qa_step(cfg: ProjectConfig, ctx: RunContext) -> dict[str, Any]:
     from src.agents.qa_agent import run_pytest, run_qa_agent
     from src.llm.factory import get_chat_model
 
-    task = EngineeringTask(task_id=ctx.task_id, workflow_id=ctx.workflow_id, task_type="product_check",
-                           description=f"Product check for {cfg.task_id} in {cfg.product_repo}",
-                           assigned_role="qa_test_engineer", input_files=cfg.product_test_paths,
-                           metadata={"project_id": cfg.project_id})
+    task = EngineeringTask(
+        task_id=ctx.task_id,
+        workflow_id=ctx.workflow_id,
+        task_type="product_check",
+        description=f"Product check for {cfg.task_id} in {cfg.product_repo}",
+        assigned_role="qa_test_engineer",
+        input_files=cfg.product_test_paths,
+        metadata={"project_id": cfg.project_id},
+    )
     report = run_qa_agent(
         task,
         llm=get_chat_model(reasoning=False, json_mode=True),
@@ -138,7 +169,7 @@ def qa_step(cfg: ProjectConfig, ctx: RunContext) -> dict[str, Any]:
 def cli_decision(cfg: ProjectConfig, ctx: RunContext, state: dict[str, Any]) -> HumanDecision:
     impl, qa = state.get("implementation", {}), state.get("qa", {})
     print("\n" + "=" * 60 + "\nHUMAN GATE")
-    print(f"Task {ctx.task_id} | run {ctx.run_id} | round {state.get('round', 0)}")
+    print(f"Task {ctx.task_id} | project {cfg.project_id} | run {ctx.run_id} | round {state.get('round', 0)}")
     print(f"Agent recommendation: {state['recommendation']}")
     if state.get("errors"):
         print(f"Errors: {state['errors']}")
@@ -150,9 +181,15 @@ def cli_decision(cfg: ProjectConfig, ctx: RunContext, state: dict[str, Any]) -> 
     blockers = release_blockers(cfg, state)
     if blockers:
         print("RELEASE BLOCKERS (Stand kann NICHT freigegeben werden): " + "; ".join(blockers))
-    print(f"\nBitte im Browser prüfen:  python3 -m http.server 8000 --directory {cfg.product_path / 'site'}")
-    print("-> http://localhost:8000  (Inhalte N-01/N-02/N-03, Link 'Anfrage stellen', Übungshinweis)")
-    checked = input("Inhalte und Kontaktlink im Browser geprüft? [j/n]: ").strip().lower() == "j"
+
+    if cfg.review_hint:
+        print(f"\nPrüfhinweis: {cfg.review_hint}")
+        checked = input("Ergebnis, Diff und Tests manuell geprüft? [j/n]: ").strip().lower() == "j"
+    else:
+        print(f"\nBitte im Browser prüfen:  python3 -m http.server 8000 --directory {cfg.product_path / 'site'}")
+        print("-> http://localhost:8000  (Inhalte N-01/N-02/N-03, Link 'Anfrage stellen', Übungshinweis)")
+        checked = input("Inhalte und Kontaktlink im Browser geprüft? [j/n]: ").strip().lower() == "j"
+
     choice = ""
     allowed = {"changes_requested", "escalate_to_human"} | (set() if blockers else {"approved"})
     while choice not in allowed:
@@ -165,17 +202,31 @@ def cli_decision(cfg: ProjectConfig, ctx: RunContext, state: dict[str, Any]) -> 
     return make_decision(cfg, ctx, state, choice, comment, visually_checked=checked)
 
 
-def make_decision(cfg: ProjectConfig, ctx: RunContext, state: dict[str, Any], decision: str,
-                  comment: str = "", *, visually_checked: bool = False) -> HumanDecision:
+def make_decision(
+        cfg: ProjectConfig,
+        ctx: RunContext,
+        state: dict[str, Any],
+        decision: str,
+        comment: str = "",
+        *,
+        visually_checked: bool = False,
+) -> HumanDecision:
     blockers = release_blockers(cfg, state)
     if decision != "approved":
         blockers = [f"human decision: {decision}", *blockers]
     return HumanDecision(
-        task_id=ctx.task_id, workflow_id=ctx.workflow_id, run_id=ctx.run_id,
-        round=state.get("round", 0), reviewer=ctx.reviewer, decision=decision, comment=comment,
-        visually_checked=visually_checked, reviewed_file=cfg.target_file,
+        task_id=ctx.task_id,
+        workflow_id=ctx.workflow_id,
+        run_id=ctx.run_id,
+        round=state.get("round", 0),
+        reviewer=ctx.reviewer,
+        decision=decision,
+        comment=comment,
+        visually_checked=visually_checked,
+        reviewed_file=cfg.target_file,
         reviewed_artifact_sha256=state.get("implementation", {}).get("artifact_sha256"),
-        tested_source_commit=state.get("_input_commit"), agent_recommendation=state["recommendation"],
+        tested_source_commit=state.get("_input_commit"),
+        agent_recommendation=state["recommendation"],
         current_artifact_sha256=_current_sha(cfg),
         release_status="released" if not blockers else "not_released",
         release_blockers=blockers,
@@ -183,10 +234,10 @@ def make_decision(cfg: ProjectConfig, ctx: RunContext, state: dict[str, Any], de
 
 
 def _current_sha(cfg: ProjectConfig) -> str | None:
-    from src.agents.web_implementer import sha256_file
-
     path = cfg.product_path / cfg.target_file
-    return sha256_file(path) if path.is_file() else None
+    if not path.is_file():
+        return None
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def release_blockers(cfg: ProjectConfig, state: dict[str, Any]) -> list[str]:
@@ -200,8 +251,10 @@ def release_blockers(cfg: ProjectConfig, state: dict[str, Any]) -> list[str]:
     qa = state.get("qa", {})
     if qa.get("verdict") != "approved":
         run = qa.get("test_run", {})
-        blockers.append(f"product check not green: verdict={qa.get('verdict')}, failed={run.get('failed')}, "
-                        f"errors={run.get('errors')}, tests={run.get('failed_tests', [])}")
+        blockers.append(
+            f"product check not green: verdict={qa.get('verdict')}, failed={run.get('failed')}, "
+            f"errors={run.get('errors')}, tests={run.get('failed_tests', [])}"
+        )
     current = _current_sha(cfg)
     if impl.get("artifact_sha256") and current != impl.get("artifact_sha256"):
         blockers.append("artifact changed after implementation/QA (hash mismatch)")
@@ -223,33 +276,36 @@ def qa_feedback(qa: dict[str, Any]) -> str:
 
 
 def product_ac_tests(cfg: ProjectConfig) -> dict[str, list[str]]:
-    """AC id -> product test function names (by naming convention test_acNN_*)."""
+    """AC id -> product test function names (by naming convention or cfg.ac_test_pattern)."""
+    pattern = re.compile(cfg.ac_test_pattern) if cfg.ac_test_pattern else _DEFAULT_AC_TEST_RE
     found: dict[str, list[str]] = {}
     for rel in cfg.product_test_paths:
         root = cfg.product_path / rel
         files = [root] if root.is_file() else sorted(root.rglob("test_*.py"))
         for file in files:
-            for name, key in _AC_TEST_RE.findall(file.read_text(encoding="utf-8")):
-                found.setdefault(key, []).append(name)
+            for match in pattern.findall(file.read_text(encoding="utf-8")):
+                if isinstance(match, tuple) and len(match) >= 2:
+                    name, key = match[0], match[1].lower()
+                    found.setdefault(key, []).append(name)
     return found
 
 
-def criteria_status(qa: dict[str, Any] | None, ac_tests: dict[str, list[str]] | None = None) -> dict[str, str]:
-    """Map AC ids to the product check result (automated evidence only, not acceptance).
-
-    passed     = AC has product tests and none of them failed in a completed run
-    failed     = at least one test of this AC failed
-    no_test    = no automated product test for this AC (needs manual review evidence)
-    not_checked/unknown = QA did not run / run incomplete
-    """
+def criteria_status(
+        qa: dict[str, Any] | None,
+        ac_tests: dict[str, list[str]] | None = None,
+        *,
+        custom_pattern: bool = False,
+) -> dict[str, str]:
+    """Map AC ids to the product check result (automated evidence only, not acceptance)."""
     ac_tests = ac_tests or {}
+    criteria_map = {k.upper(): k for k in ac_tests} if custom_pattern else AC_TESTS
     if not qa:
-        return {ac: "not_checked" for ac in AC_TESTS}
+        return {ac: "not_checked" for ac in criteria_map}
     run = qa.get("test_run", {})
     failed = " ".join(run.get("failed_tests", []))
     complete = not run.get("timed_out") and run.get("errors", 0) == 0
     out = {}
-    for ac, key in AC_TESTS.items():
+    for ac, key in criteria_map.items():
         if not ac_tests.get(key):
             out[ac] = "no_test"
         elif any(name in failed for name in ac_tests[key]):
@@ -282,8 +338,17 @@ def _dump(path: Path, data: Any) -> None:
 # --------------------------------------------------------------------------- #
 # Graph
 # --------------------------------------------------------------------------- #
-def build_graph(cfg: ProjectConfig, ctx: RunContext, *, po: PoFn, implement: ImplFn, qa: QaFn, decide: DecideFn,
-                input_commit: str | None, verify_only: bool = False):
+def build_graph(
+        cfg: ProjectConfig,
+        ctx: RunContext,
+        *,
+        po: PoFn,
+        implement: ImplFn,
+        qa: QaFn,
+        decide: DecideFn,
+        input_commit: str | None,
+        verify_only: bool = False,
+):
     run_dir = Path(ctx.run_dir)
     max_rounds = cfg.max_correction_rounds
 
@@ -308,26 +373,35 @@ def build_graph(cfg: ProjectConfig, ctx: RunContext, *, po: PoFn, implement: Imp
         out = guarded("qa", state, lambda: qa(cfg, ctx))
         if "qa" in out:
             _dump(run_dir / f"qa-round-{state.get('round', 0)}.json", out["qa"])
-            out["history"] = [*state.get("history", []), {
-                "round": state.get("round", 0),
-                "artifact_sha256": state.get("implementation", {}).get("artifact_sha256"),
-                "qa_verdict": out["qa"].get("verdict"),
-                "tests_passed": out["qa"].get("test_run", {}).get("passed"),
-                "tests_failed": out["qa"].get("test_run", {}).get("failed"),
-            }]
+            out["history"] = [
+                *state.get("history", []),
+                {
+                    "round": state.get("round", 0),
+                    "artifact_sha256": state.get("implementation", {}).get("artifact_sha256"),
+                    "qa_verdict": out["qa"].get("verdict"),
+                    "tests_passed": out["qa"].get("test_run", {}).get("passed"),
+                    "tests_failed": out["qa"].get("test_run", {}).get("failed"),
+                },
+            ]
         return out
 
     def correct_after_qa(state: CustomerState) -> CustomerState:
-        return {"round": state.get("round", 0) + 1, "feedback": qa_feedback(state["qa"]),
-                "steps": [*state.get("steps", []), "auto_correction"]}
+        return {
+            "round": state.get("round", 0) + 1,
+            "feedback": qa_feedback(state["qa"]),
+            "steps": [*state.get("steps", []), "auto_correction"],
+        }
 
     def human_gate(state: CustomerState) -> CustomerState:
         rec = recommend(state, max_rounds)
         decision = decide(cfg, ctx, {**state, "recommendation": rec, "_input_commit": input_commit})
         record = decision.model_dump()
         _dump(run_dir / f"review-{state.get('round', 0)}.json", record)
-        update: CustomerState = {"recommendation": rec, "decisions": [*state.get("decisions", []), record],
-                                 "steps": [*state.get("steps", []), "human_gate"]}
+        update: CustomerState = {
+            "recommendation": rec,
+            "decisions": [*state.get("decisions", []), record],
+            "steps": [*state.get("steps", []), "human_gate"],
+        }
         if decision.decision == "changes_requested" and state.get("round", 0) < max_rounds:
             update["round"] = state.get("round", 0) + 1
             update["feedback"] = f"Human reviewer {decision.reviewer}: {decision.comment}"
@@ -370,21 +444,27 @@ def build_graph(cfg: ProjectConfig, ctx: RunContext, *, po: PoFn, implement: Imp
 
 
 def run_customer_workflow(
-    cfg: ProjectConfig,
-    reviewer: str,
-    *,
-    po: PoFn = po_step,
-    implement: ImplFn = implement_step,
-    qa: QaFn = qa_step,
-    decide: DecideFn = cli_decision,
-    factory_root: Path = FACTORY_ROOT,
-    verify_only: bool = False,
+        cfg: ProjectConfig,
+        reviewer: str,
+        *,
+        po: PoFn = po_step,
+        implement: ImplFn = implement_step,
+        qa: QaFn = qa_step,
+        decide: DecideFn = cli_decision,
+        factory_root: Path = FACTORY_ROOT,
+        verify_only: bool = False,
 ) -> tuple[CustomerState, Path]:
     run_id = str(uuid.uuid4())
     run_dir = factory_root / cfg.runs_dir / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
-    ctx = RunContext(run_id=run_id, workflow_id=run_id, task_id=cfg.task_id, reviewer=reviewer,
-                     run_dir=str(run_dir), trace_file=str(run_dir / "trace.jsonl"))
+    ctx = RunContext(
+        run_id=run_id,
+        workflow_id=run_id,
+        task_id=cfg.task_id,
+        reviewer=reviewer,
+        run_dir=str(run_dir),
+        trace_file=str(run_dir / "trace.jsonl"),
+    )
     settings = get_settings()
 
     # Fix input commits BEFORE any agent touches the product checkout.
@@ -396,20 +476,35 @@ def run_customer_workflow(
     if cfg.reuse_po_output and not verify_only:
         from src.factory.po_cache import with_po_cache
         po = with_po_cache(po, cfg, factory_root, po_cache_info, brief_root=FACTORY_ROOT)
-    graph = build_graph(cfg, ctx, po=po, implement=implement, qa=qa, decide=decide,
-                        input_commit=product_git["commit"], verify_only=verify_only)
+    graph = build_graph(
+        cfg,
+        ctx,
+        po=po,
+        implement=implement,
+        qa=qa,
+        decide=decide,
+        input_commit=product_git["commit"],
+        verify_only=verify_only,
+    )
     initial: CustomerState = {"round": 0, "errors": [], "steps": [], "history": [], "decisions": []}
     if verify_only:  # no agent writes: the existing file is the artifact under review
-        initial["implementation"] = {"status": "existing", "target_file": cfg.target_file,
-                                     "artifact_sha256": _current_sha(cfg),
-                                     "notes": "verify-only run: product state not written by an agent"}
+        initial["implementation"] = {
+            "status": "existing",
+            "target_file": cfg.target_file,
+            "artifact_sha256": _current_sha(cfg),
+            "notes": "verify-only run: product state not written by an agent",
+        }
         _dump(run_dir / "implementation-0.json", initial["implementation"])
     state: CustomerState = graph.invoke(initial, {"recursion_limit": 40})
     duration = round(time.perf_counter() - started, 4)
 
+    impl_agent_name = "backend-api-agent" if cfg.implementer == "python_module" else "web-implementer-agent"
     final = state["decisions"][-1] if state.get("decisions") else {}
-    trace_lines = [json.loads(l) for l in Path(ctx.trace_file).read_text(encoding="utf-8").splitlines()] \
-        if Path(ctx.trace_file).exists() else []
+    trace_lines = (
+        [json.loads(l) for l in Path(ctx.trace_file).read_text(encoding="utf-8").splitlines()]
+        if Path(ctx.trace_file).exists()
+        else []
+    )
     agent_records = [r for r in trace_lines if r.get("agent") != "customer-workflow"]
     manifest = {
         "run_id": run_id,
@@ -427,11 +522,16 @@ def run_customer_workflow(
         "product_result_commit": None,  # filled by --record-result after the human commit
         "llm_provider": settings.llm_provider,
         "llm_model": settings.llm_model,
-        "llm_settings": {"temperature": settings.llm_temperature, "json_mode": True, "reasoning": False,
-                         "max_output_tokens_implementer": 2048},
+        "llm_settings": {
+            "temperature": settings.llm_temperature,
+            "json_mode": True,
+            "reasoning": False,
+            "max_output_tokens_implementer": 3072,
+        },
         "mode": "verify_only" if verify_only else "full",
+        "implementer_mode": cfg.implementer,
         "po_cache": po_cache_info,
-        "agents": ["qa-agent"] if verify_only else ["product-owner-agent", "web-implementer-agent", "qa-agent"],
+        "agents": ["qa-agent"] if verify_only else ["product-owner-agent", impl_agent_name, "qa-agent"],
         "steps": state.get("steps", []),
         "correction_rounds": state.get("round", 0),
         "max_correction_rounds": cfg.max_correction_rounds,
@@ -439,7 +539,11 @@ def run_customer_workflow(
         "errors": state.get("errors", []),
         "target_file": cfg.target_file,
         "final_artifact_sha256": state.get("implementation", {}).get("artifact_sha256"),
-        "criteria_product_check": criteria_status(state.get("qa"), product_ac_tests(cfg)),
+        "criteria_product_check": criteria_status(
+            state.get("qa"),
+            product_ac_tests(cfg),
+            custom_pattern=bool(cfg.ac_test_pattern),
+        ),
         "release_status": final.get("release_status", "not_released"),
         "release_blockers": final.get("release_blockers", ["no human decision"]),
         "agent_recommendation": state.get("recommendation"),
@@ -455,16 +559,33 @@ def run_customer_workflow(
         "manual_interventions": [],
     }
     _dump(run_dir / "manifest.json", manifest)
-    append_trace({"run_id": run_id, "workflow_id": run_id, "task_id": cfg.task_id, "project_id": cfg.project_id,
-                  "agent": "customer-workflow", "role": "agent_engineer", "calls": 0,
-                  "status": "error" if state.get("errors") else "success", "steps": state.get("steps", []),
-                  "recommendation": state.get("recommendation"), "human_decision": final.get("decision"),
-                  "duration_seconds": duration}, ctx.trace_file)
+    append_trace(
+        {
+            "run_id": run_id,
+            "workflow_id": run_id,
+            "task_id": cfg.task_id,
+            "project_id": cfg.project_id,
+            "agent": "customer-workflow",
+            "role": "agent_engineer",
+            "calls": 0,
+            "status": "error" if state.get("errors") else "success",
+            "steps": state.get("steps", []),
+            "recommendation": state.get("recommendation"),
+            "human_decision": final.get("decision"),
+            "duration_seconds": duration,
+        },
+        ctx.trace_file,
+    )
     return state, run_dir
 
 
-def record_result(cfg: ProjectConfig, run_id: str, *, note: str | None = None,
-                  factory_root: Path = FACTORY_ROOT) -> dict[str, Any]:
+def record_result(
+        cfg: ProjectConfig,
+        run_id: str,
+        *,
+        note: str | None = None,
+        factory_root: Path = FACTORY_ROOT,
+) -> dict[str, Any]:
     """After the human committed the product change: link the result commit to the run."""
     path = factory_root / cfg.runs_dir / run_id / "manifest.json"
     manifest = json.loads(path.read_text(encoding="utf-8"))
@@ -484,10 +605,16 @@ def main() -> None:
     p.add_argument("--reviewer", help="Accountable human for the gate")
     p.add_argument("--record-result", metavar="RUN_ID", help="Link the product result commit to a finished run")
     p.add_argument("--note", default=None, help="Manual intervention note (with --record-result)")
-    p.add_argument("--no-po-cache", action="store_true",
-                   help="Disable PO output reuse for this run (behaves like F-BASE)")
-    p.add_argument("--verify-only", action="store_true",
-                   help="Skip PO + implementer: product check + human gate on the existing product state")
+    p.add_argument(
+        "--no-po-cache",
+        action="store_true",
+        help="Disable PO output reuse for this run (behaves like F-BASE)",
+    )
+    p.add_argument(
+        "--verify-only",
+        action="store_true",
+        help="Skip PO + implementer: product check + human gate on the existing product state",
+    )
     a = p.parse_args()
     cfg = load_project(a.project, product_path=a.product_path)
     if a.no_po_cache:
@@ -499,9 +626,17 @@ def main() -> None:
         p.error("--reviewer is required")
     state, run_dir = run_customer_workflow(cfg, a.reviewer, verify_only=a.verify_only)
     final = state["decisions"][-1] if state.get("decisions") else {}
-    print(json.dumps({**{k: state.get(k) for k in ("steps", "errors", "recommendation", "round")},
-                      "release_status": final.get("release_status", "not_released"),
-                      "release_blockers": final.get("release_blockers", [])}, indent=2, ensure_ascii=False))
+    print(
+        json.dumps(
+            {
+                **{k: state.get(k) for k in ("steps", "errors", "recommendation", "round")},
+                "release_status": final.get("release_status", "not_released"),
+                "release_blockers": final.get("release_blockers", []),
+            },
+            indent=2,
+            ensure_ascii=False,
+        )
+    )
     print(f"Evidence: {run_dir}")
 
 

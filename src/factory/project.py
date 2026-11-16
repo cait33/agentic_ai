@@ -1,4 +1,4 @@
-"""Customer project addressing for the Factory (Session 3).
+"""Customer project addressing for the Factory (Session 3, extended Session 6).
 
 A project config (projects/<project_id>.json) tells the Factory WHICH customer
 product it works on, WHERE the separate product checkout lives and WHICH task
@@ -6,7 +6,7 @@ it delivers. Agents, policies and tools stay in the Factory; product files are
 only written inside the configured product checkout and allowed paths.
 
 Override the checkout location without editing the config:
-    PRODUCT_PATH=/path/to/client-01-website python -m src.agents.customer_workflow ...
+    PRODUCT_PATH=/path/to/client-02-quotation python -m src.agents.customer_workflow ...
 """
 
 from __future__ import annotations
@@ -15,6 +15,7 @@ import json
 import os
 import subprocess
 from pathlib import Path
+from typing import Literal
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -29,9 +30,21 @@ class ProjectConfig(BaseModel):
     task_id: str = Field(min_length=1)
     issue: str | None = None
     brief: str = Field(min_length=1, description="Factory-relative path of the customer brief")
+    implementer: Literal["web_slots", "python_module"] = Field(
+        default="web_slots",
+        description="Generic implementer capability mode: 'web_slots' (HTML) or 'python_module' (Python code)",
+    )
     target_file: str = "site/index.html"
     allowed_write_paths: list[str] = Field(default_factory=lambda: ["site/"], min_length=1)
     product_test_paths: list[str] = Field(default_factory=lambda: ["tests"], min_length=1)
+    ac_test_pattern: str | None = Field(
+        default=None,
+        description="Optional regex with 2 groups (full_test_name, criterion_key), defaults to test_acNN_*",
+    )
+    review_hint: str | None = Field(
+        default=None,
+        description="Optional human-gate inspection command/instructions shown instead of the default web preview hint",
+    )
     runs_dir: str = Field(min_length=1)
     max_correction_rounds: int = Field(default=2, ge=0, le=2)
     reuse_po_output: bool = Field(default=True, description="F-NEW: reuse PO result if brief/prompt/model unchanged")
