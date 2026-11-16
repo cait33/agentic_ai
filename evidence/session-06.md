@@ -12,7 +12,9 @@ Switch the existing Factory to a second customer (HansePack, customer project 02
 | 1 | Francisco | Product repo `client-02-quotation`, customer fixtures + `SHA256SUMS` + `SOURCE.md`, README, customer issue TODO # |
 | 1 | Rafael | Project config `projects/quotation-02.json`, Factory brief `TODO` |
 | 1 | Fatih | Nordwerk `v1.0` frozen and checked (fresh checkout, tests, startup; Factory PR #50) |
-| 2 | Daniil | Factory adaptation: config fields `implementer`, `ac_test_pattern`, `review_hint`; dispatcher in `customer_workflow.py`; generic gate hint; dynamic AC recognition (Factory PR #49) |
+| 1 | Daniil | Product planning: created functional product issues for `client-02-quotation` covering catalog validation, quotation calculation, web UI & export, and CR-02 shipping rules |
+| 2 | Daniil | Factory adaptation: extended `ProjectConfig` with `implementer`, `ac_test_pattern`, and `review_hint` fields |
+| 2 | Daniil | Factory adaptation: added dynamic dispatcher logic and generic review hints in `customer_workflow.py` |
 | 2 | Caitlin | TODO (code implementer `run_python_implementer`?) |
 | 2 | Daniil + Caitlin | Real Factory run on `quotation-02`: TODO |
 | 2 | Francisco | Human reviewer at the gate: TODO |
@@ -107,9 +109,9 @@ Project-switch effort (second customer) is recorded separately from Factory deve
 | Project switch: product repo, fixtures, issue, README | TODO | TODO | TODO |
 | Project switch: project config, brief | TODO | TODO | TODO |
 | Project switch: Nordwerk frozen check | Fatih | TODO | TODO |
-| Factory development `FACTORY-S6`: implementer mode, dispatcher, config fields (PR #49) | TODO | TODO | TODO |
-| Factory development `FACTORY-S6`: Python implementer | TODO | TODO | TODO |
-| Factory development `FACTORY-S6`: project separation test (PR #48) | Fatih | TODO | TODO |
+| Factory development `FACTORY-S6`: ProjectConfig extension (implementer, ac_test_pattern, review_hint) | Daniil | 0.75 h | 75.00 |
+| Factory development `FACTORY-S6`: workflow dispatcher & dynamic human gate hints | Daniil | 0.75 h | 75.00 |
+| Customer delivery `CUST-002`: functional product issues definition for HansePack | Daniil | 0.25 h | 25.00 |
 | Customer delivery: product checks, stub, catalogue loader | Fatih | TODO | TODO |
 | Agents (Factory run(s), incl. failed attempts) | – | TODO calls | TODO |
 | Human review at the gate | TODO | TODO | TODO |

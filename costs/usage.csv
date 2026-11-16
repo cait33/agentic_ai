@@ -96,3 +96,6 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-11-09,CUST-001,human,Daniil,0.4,hours,40.0,"[delivery] AC-01-AC-10 verification, browser review, handover and session-05 documentation"
 2026-11-09,CUST-001,human,Fatih,1.0,hours,100.0,"[delivery] S5 acceptance/handover: README (product PR #20), CR-01 DE checks test_cr01_de.py, AC-01..10 checklist (PR #22), final regression, fresh checkout, browser review 375/1280 both views, technical approval, tag v1.0, session-05 evidence"
 2026-11-09,CUST-001,agent,qa-agent,0.5367,seconds,0.0054,"[agent] final verify-only run 2fb2d0dd on product 3fa2424: 40 passed, 0 LLM calls"
+2026-11-16,FACTORY-S6,human,Daniil,0.75,hours,75.0,"[factory_dev] S6 ProjectConfig extension: added implementer mode, ac_test_pattern and review_hint fields"
+2026-11-16,FACTORY-S6,human,Daniil,0.75,hours,75.0,"[factory_dev] S6 workflow integration: implemented dispatcher in customer_workflow.py and generic human gate review hints"
+2026-11-16,FACTORY-S6,human,Daniil,0.25,hours,25.0,"[delivery] S6 created functional product issues for client-02-quotation (catalog validation, quotation calculation, web UI & export, and CR-02 shipping rules)"
