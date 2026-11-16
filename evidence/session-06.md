@@ -9,7 +9,7 @@ Switch the existing Factory to a second customer (HansePack, customer project 02
 
 | Task | Person | What |
 | ---- | ------ | ---- |
-| 1 | Francisco | Product repo `client-02-quotation`, customer fixtures + `SHA256SUMS` + `SOURCE.md`, README, customer issue TODO # |
+| 1 | Francisco | Created product repo `client-02-quotation`; customer fixtures with checksums, provenance checks `tests/test_fixtures.py`, README start/test commands (product PR #4); Factory brief `docs/customer-02/brief-t6.md` + completed `projects/quotation-02.json` (Factory PR #52); task ID `CUST-002` |
 |1 | Rafael | Project config projects/quotation-02.json, Factory brief docs/brief.md
 | 1 | Fatih | Nordwerk `v1.0` frozen and checked (fresh checkout, tests, startup; Factory PR #50) |
 | 1 | Daniil | Product planning: created functional product issues for `client-02-quotation` covering catalog validation, quotation calculation, web UI & export, and CR-02 shipping rules |
@@ -106,17 +106,18 @@ Project-switch effort (second customer) is recorded separately from Factory deve
 
 | Category | Who | Quantity | Credits |
 | -------- | --- | -------- | ------- |
-| Project switch: product repo, fixtures, issue, README | Rafael & Francisco | 1.5 h | 150.00 |
-| Project switch: project config, brief | Rafael & Francisco | 1.0 h | 100.00 |
-| Customer delivery: S6 evidence documentation and planning | Rafael | 1.5 h | 150.00 |
-| Human review at the gate | Rafael | 1.0 h | 100.00 |
+| Project switch `CUST-002`: product repo, customer fixtures with checksums, provenance checks, README | Francisco | 1.5 h | 150.00 |
+| Project switch `FACTORY-S6`: Factory brief + completed project config | Francisco | 0.5 h | 50.00 |
+| Project switch `CUST-002`: planning, issue definitions, first project config | Rafael | 1.0 h | 100.00 |
+| Customer delivery `CUST-002`: S6 evidence documentation and planning | Rafael | 1.5 h | 150.00 |
+| Review `CUST-002`: pull requests of the initial HansePack setup | Rafael | 0.5 h | 50.00 |
 | Project switch: Nordwerk frozen check | Fatih | TODO | TODO |
 | Factory development `FACTORY-S6`: ProjectConfig extension (implementer, ac_test_pattern, review_hint) | Daniil | 0.75 h | 75.00 |
 | Factory development `FACTORY-S6`: workflow dispatcher & dynamic human gate hints | Daniil | 0.75 h | 75.00 |
 | Customer delivery `CUST-002`: functional product issues definition for HansePack | Daniil | 0.25 h | 25.00 |
 | Customer delivery: product checks, stub, catalogue loader | Fatih | TODO | TODO |
 | Agents (Factory run(s), incl. failed attempts) | – | TODO calls | TODO |
-| Human review at the gate | TODO | TODO | TODO |
+| Human review at the gate (Factory run) | Francisco | TODO | TODO |
 | CI | – | none (Actions disabled) | 0 |
 
 Unknown values are marked `unknown`, not 0.
