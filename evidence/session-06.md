@@ -107,7 +107,7 @@ Project-switch effort (second customer) is recorded separately from Factory deve
 | Category | Who | Quantity | Credits |
 | -------- | --- | -------- | ------- |
 | Project switch: product repo, fixtures, issue, README | Rafael & Francisco | 1.5 h | 150.00 |
-| Project switch: project config, brief | Rafael | 1.0 h | 100.00 |
+| Project switch: project config, brief | Rafael & Francisco | 1.0 h | 100.00 |
 | Customer delivery: S6 evidence documentation and planning | Rafael | 1.5 h | 150.00 |
 | Human review at the gate | Rafael | 1.0 h | 100.00 |
 | Project switch: Nordwerk frozen check | Fatih | TODO | TODO |
