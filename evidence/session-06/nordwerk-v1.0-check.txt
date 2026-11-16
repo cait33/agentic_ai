@@ -1,0 +1,8 @@
+Nordwerk frozen state check – 2026-11-16 12:10 CET
+tag v1.0 -> f1575ad7c802e7fbcff7d9cab23ea999fd532015
+HEAD     -> f1575ad7c802e7fbcff7d9cab23ea999fd532015
+git status (empty = unchanged):
+--- product tests ---
+............................................                             [100%]
+44 passed in 0.04s
+--- startup: python3 -m http.server 8020 --directory site -> index.html + en.html load (checked by Fatih, 12:12)

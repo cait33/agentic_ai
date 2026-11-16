@@ -3,12 +3,15 @@
   "customer": "HansePack Handelsgesellschaft (fiktiv)",
   "product_repo": "https://github.com/franciscotbatista99/client-02-quotation",
   "product_path": "../client-02-quotation",
-  "task_id": "HT-T6",
+  "task_id": "CUST-002",
   "issue": "https://github.com/franciscotbatista99/client-02-quotation/issues/2",
-  "brief": "docs/brief.md",
+  "brief": "docs/customer-02/brief-t6.md",
+  "implementer": "python_module",
   "target_file": "quotation/pricing.py",
   "allowed_write_paths": ["quotation/"],
   "product_test_paths": ["tests/"],
+  "ac_test_pattern": "def (test_(hp_ac\\d{2})\\w*)",
+  "review_hint": "Check diff of quotation/pricing.py and run 'python -m pytest tests -q' in client-02-quotation. Expected: Q01 HP-BOX x1 = 250/1200/1450; Q03 HP-BOX x50 = 12500/625/11875/1200/13075; E01 quantity 0 = QuoteError, no quote. No prices in code, no float rounding.",
   "runs_dir": "runs/quotation-02",
   "max_correction_rounds": 2
 }
