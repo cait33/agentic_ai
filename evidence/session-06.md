@@ -15,7 +15,7 @@ Switch the existing Factory to a second customer (HansePack, customer project 02
 | 1 | Daniil | Product planning: created functional product issues for `client-02-quotation` covering catalog validation, quotation calculation, web UI & export, and CR-02 shipping rules |
 | 2 | Daniil | Factory adaptation: extended `ProjectConfig` with `implementer`, `ac_test_pattern`, and `review_hint` fields |
 | 2 | Daniil | Factory adaptation: added dynamic dispatcher logic and generic review hints in `customer_workflow.py` |
-| 2 | Caitlin | TODO (code implementer `run_python_implementer`?) |
+| 2 | Caitlin | Factory adaptation: created the tool code implementer for backend api engineer |
 | 2 | Daniil + Caitlin | Real Factory run on `quotation-02`: TODO |
 | 2 | Francisco | Human reviewer at the gate: TODO |
 | 3 | Fatih | Product checks Q01/Q03/E01 + interface stub `quotation/pricing.py` (product PR #1), catalogue loader `quotation/catalog.py` (product PR #3), Factory project separation test (Factory PR #48) |
@@ -115,6 +115,7 @@ Project-switch effort (second customer) is recorded separately from Factory deve
 | Factory development `FACTORY-S6`: ProjectConfig extension (implementer, ac_test_pattern, review_hint) | Daniil | 0.75 h | 75.00 |
 | Factory development `FACTORY-S6`: workflow dispatcher & dynamic human gate hints | Daniil | 0.75 h | 75.00 |
 | Customer delivery `CUST-002`: functional product issues definition for HansePack | Daniil | 0.25 h | 25.00 |
+| Factory development `FACTORY-S6`: created the generic code implementer for the backend api engineer | Caitlin | 3 h | 300.00 |
 | Customer delivery: product checks, stub, catalogue loader | Fatih | TODO | TODO |
 | Agents (Factory run(s), incl. failed attempts) | – | TODO calls | TODO |
 | Human review at the gate (Factory run) | Francisco | TODO | TODO |
