@@ -1,0 +1,19 @@
+{
+  "task_id": "CUST-002",
+  "workflow_id": "6b975659-9a72-4e7a-b980-d4f0333c648d",
+  "run_id": "6b975659-9a72-4e7a-b980-d4f0333c648d",
+  "round": 1,
+  "reviewer": "Francisco",
+  "decision": "approved",
+  "comment": "",
+  "visually_checked": true,
+  "reviewed_file": "quotation/pricing.py",
+  "reviewed_artifact_sha256": "6618da554d9cba714fabaad43dc7ccc7167b8840c530ddd728d23badd4db8ab3",
+  "tested_source_commit": "c23811d5f4d22bc65b2c94b752750e3daa65c659",
+  "agent_recommendation": "approved",
+  "current_artifact_sha256": "6618da554d9cba714fabaad43dc7ccc7167b8840c530ddd728d23badd4db8ab3",
+  "release_status": "released",
+  "release_blockers": [],
+  "identity_assurance": "self_declared_course_review",
+  "decided_at_utc": "2026-11-16T13:46:44.035400+00:00"
+}

@@ -1,0 +1,8 @@
+{
+  "status": "success",
+  "target_file": "quotation/pricing.py",
+  "artifact_sha256": "6618da554d9cba714fabaad43dc7ccc7167b8840c530ddd728d23badd4db8ab3",
+  "entrypoint_name": "quotation/pricing.py",
+  "notes": "",
+  "error": null
+}
