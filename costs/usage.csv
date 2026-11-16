@@ -99,3 +99,6 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-11-16,FACTORY-S6,human,Daniil,0.75,hours,75.0,"[factory_dev] S6 ProjectConfig extension: added implementer mode, ac_test_pattern and review_hint fields"
 2026-11-16,FACTORY-S6,human,Daniil,0.75,hours,75.0,"[factory_dev] S6 workflow integration: implemented dispatcher in customer_workflow.py and generic human gate review hints"
 2026-11-16,FACTORY-S6,human,Daniil,0.25,hours,25.0,"[delivery] S6 created functional product issues for client-02-quotation (catalog validation, quotation calculation, web UI & export, and CR-02 shipping rules)"
+2026-11-16,CUST-002,human,Rafael,1.0,hours,100.0,"[delivery] S6 planning: assisted Francisco with the HansePack brief and issue definitions"
+2026-11-16,CUST-002,human,Rafael,0.5,hours,50.0,"[review] Human gate and code review: reviewed and approved pull requests for the initial HansePack setup"
+2026-11-16,CUST-002,human,Rafael,1.5,hours,150.0,"[delivery] S6 evidence documentation: prepared session-06.md and delivery plan (parallel effort with Fatih)"
