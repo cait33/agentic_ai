@@ -347,7 +347,6 @@ def run_backend_agent(task: EngineeringTask, llm: Any | None = None, trace_file:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--task-id", default="BACKEND-AUDIT-01")
-    parser.add_argument("--file", default="src/app/main.py")
     parser.add_argument("--task-type", default="api_analysis")
     args = parser.parse_args()
 
@@ -356,7 +355,6 @@ if __name__ == "__main__":
     elif args.task_type == "api_analysis":
         input_files = ["src/app/main.py"]
     else:
-        #TODO make these the json files
         input_files = ["task sheets\session-06-08\HansePack_Katalog.json", "task sheets\session-06-08/HansePack_Referenzfaelle.json"]
 
     task = EngineeringTask(
