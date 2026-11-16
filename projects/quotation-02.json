@@ -3,7 +3,7 @@
   "customer": "HansePack Handelsgesellschaft (fiktiv)",
   "product_repo": "https://github.com/franciscotbatista99/client-02-quotation",
   "product_path": "../client-02-quotation",
-  "task_id": "HP-T6",
+  "task_id": "CUST-002",
   "issue": "https://github.com/franciscotbatista99/client-02-quotation/issues/2",
   "brief": "docs/customer-02/brief-t6.md",
   "implementer": "python_module",
