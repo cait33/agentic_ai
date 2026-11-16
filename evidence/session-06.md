@@ -100,7 +100,7 @@ Product logic is deterministic Python without LLM; prices come from the binding 
 - Product test command: `cd client-02-quotation && python -m pytest tests -q` (expected values only from `fixtures/HansePack_Referenzfaelle.json`, never from the agent)
 - Factory test command: `python -m pytest` (separation test included in the standard run, mocked agents, temporary git repos)
 - Before the Factory run (stub): 9 failed / 8 passed – as expected. In the run: round 0 8/9, round 1 17/0. Final product state `910ec24`: **17 passed** ([`product-pytest.txt`](session-06/product-pytest.txt), Fatih)
-- Human review of result + code diff: Francisco at the gate, 13:46 UTC
+- Human review at the gate: Francisco, 13:46 UTC, decision based on the gate summary (QA 17/17); no separate code diff review recorded
 - Known gaps for S7 (not tested today): the agent code does not yet reject `bool` quantities, quantities > 10 000, duplicate SKUs or more than 3 lines (E02–E10)
 
 
@@ -126,7 +126,7 @@ Project-switch effort (second customer) is recorded separately from Factory deve
 | Review `FACTORY-S6`: review of the first implementer version (bug list) | Fatih | 0.15 h | 15.00 |
 | Agents `CUST-002`: run `6b975659` (incl. failed round 0) | – | 3 LLM calls | 3.95 |
 | Agents: earlier test run(s), e.g. `d59125d8` (not in the repository) | – | unknown | unknown |
-| Human review at the gate (Factory run) | Francisco | unknown (Francisco to add) | unknown |
+| Human review at the gate `CUST-002` (runs `796ac9f1`, `6b975659`) | Francisco | 0.1 h | 10.00 |
 | CI | – | none (Actions disabled) | 0 |
 
 Unknown values are marked `unknown`, not 0.
@@ -135,13 +135,13 @@ Unknown values are marked `unknown`, not 0.
 
 | Session | Planned scope | Budget (credits) |
 |---|---|---|
-| S6 | HP-AC01 first state, HP-AC02 (Q01, Q03), HP-AC04 E01, project separation | – (no budget agreed before the session) · **actual 1118.95** |
+| S6 | HP-AC01 first state, HP-AC02 (Q01, Q03), HP-AC04 E01, project separation | – (no budget agreed before the session) · **actual 1128.95** |
 | S7 | HP-AC03 (Q01–Q14), HP-AC04 (E01–E10), HP-AC05 web UI, HP-AC06 JSON export, HP-AC07 release candidate | 1600 (team planning: 5 people × ≈ 3 h = 1500 + ≈ 25 agent runs à ≈ 4 credits) |
 | S8 (reserve) | CR-02 / HP-V2 shipping rule (HP-AC08), HP-AC09 release | 600 reserve (one rule change + regression + release, based on the S5 change request CR-01: ≈ 685) |
 
 Budgets are a team planning proposal, not agreed with the instructor yet.
 
-Actual S6 effort (from `costs/usage.csv`): **11.15 h human + 3.95 agent credits = 1118.95 credits** (`CUST-002` 548.95, `FACTORY-S6` 570.00; Francisco's gate time not yet recorded).
+Actual S6 effort (from `costs/usage.csv`): **11.25 h human + 3.95 agent credits = 1128.95 credits** (`CUST-002` 558.95, `FACTORY-S6` 570.00).
 Of this, **project-switch effort** for the second customer: **3.2 h = 320 credits** (product repo + fixtures + README 1.5 h, Factory brief + config 0.5 h – Francisco; planning + first config 1.0 h – Rafael; Nordwerk freeze check + catalogue loader 0.2 h – Fatih).
 One-off Factory development (`FACTORY-S6`, separate): 5.7 h incl. 0.25 h product issues booked there by Daniil.
 
