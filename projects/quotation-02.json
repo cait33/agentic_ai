@@ -11,7 +11,7 @@
   "allowed_write_paths": ["quotation/"],
   "product_test_paths": ["tests/"],
   "ac_test_pattern": "def (test_(hp_ac\\d{2})\\w*)",
-  "review_hint": "Check diff of quotation/pricing.py and run 'python -m pytest tests -q' in client-02-quotation. Expected: Q01 HP-BOX x1 = 250/1200/1450; Q03 HP-BOX x50 = 12500/625/11875/1200/13075; E01 quantity 0 = QuoteError, no quote. No prices in code, no float rounding.",
+  "review_hint": "Check diff of quotation/pricing.py and run 'python -m pytest tests -q' in client-02-quotation. Expected: all 14 valid cases Q01-Q14 and all 10 invalid cases E01-E10 pass (duplicate SKU, bool True, qty 10001 rejected); CLI 'python -m quotation.pricing' works; no prices in code, no float rounding.",
   "runs_dir": "runs/quotation-02",
   "max_correction_rounds": 2
 }
