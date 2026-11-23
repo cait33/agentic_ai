@@ -1,0 +1,21 @@
+{
+  "project_id": "quotation-02-export",
+  "customer": "HansePack Handelsgesellschaft (fiktiv)",
+  "product_repo": "https://github.com/franciscotbatista99/client-02-quotation",
+  "product_path": "../client-02-quotation",
+  "task_id": "CUST-002",
+  "issue": "https://github.com/franciscotbatista99/client-02-quotation/issues/2",
+  "brief": "docs/customer-02/brief-t7-export.md",
+  "implementer": "python_module",
+  "target_file": "quotation/export.py",
+  "allowed_write_paths": [
+    "quotation/"
+  ],
+  "product_test_paths": [
+    "tests/"
+  ],
+  "ac_test_pattern": "def (test_(hp_ac\\d{2})\\w*)",
+  "review_hint": "Check the diff of quotation/export.py and run 'python -m pytest tests -q' in client-02-quotation: all green incl. tests/test_export.py and tests/test_web.py. Then start 'python -m quotation.web', calculate a multi-line case (e.g. HP-BOX 50 + HP-TAPE 10 = 17075 ct), download the JSON and compare it with the display; values copied unchanged, integer cents, rule_version HP-V1.",
+  "runs_dir": "runs/quotation-02-export",
+  "max_correction_rounds": 2
+}
