@@ -16,8 +16,7 @@ Complete the HansePack quotation calculator for the original HP-V1 rules (HP-AC0
 | 3 | Fatih + Francisco | Factory gate tests for passed / blocked / corrected states with mocked LLM `tests/factory/test_fault_gate.py` (Factory PR #59, written by Fatih, reviewed + merged by Francisco) |
 | 3 | Fatih + Francisco | Controlled discount fault on product branch `t7/injected-discount-fault`: fault run `991c4f06` (`not_released`) + correction run `bcae3e2c` (`released`), evidence Factory PR #60 |
 | 3 | Francisco | Human reviewer at the gate: fault run `changes_requested` 12:19 UTC, correction run `approved` 12:20 UTC (pair session with Fatih) |
-| 4 | Rafael (+ Francisco) | Tags Q-BASE / F-BASE, R-02 baseline run `TODO` on an isolated copy, bottleneck + hypothesis for S8 |
-| 4 | Rafael | Time tracking, plan deviations, this index |
+| 4 | Rafael (+ Francisco) | Tags Q-BASE / F-BASE, R-02 setup PR (review + merge Rafael), R-02 baseline run 01b79f0c on an isolated Q-BASE copy (run operation, gate + rework Francisco), bottleneck + hypothesis for S8 |
 
 Only existing roles (`organization/roles.yaml`) were used; no new agents or roles.
 Merged without a second review: Factory PR #58 (self-merged by Daniil), product PR #9 (merged by Fatih); direct pushes to `main`: Factory `df169ef`, `04b6e2b` (evidence skeleton), product `c8d80e3` (validation + CLI), `5d3ab42` (UI template); merged by the author: product PRs #11, #12, Factory PRs #61, #63 (Fatih). Reviewed by a second person: Factory PRs #59, #60, #62 and product PR #10 (written by Fatih, merged by Francisco); the export result (#12) was reviewed by Francisco at the gate before the merge.
@@ -31,7 +30,7 @@ Merged without a second review: Factory PR #58 (self-merged by Daniil), product 
 | HansePack product | https://github.com/franciscotbatista99/client-02-quotation | `910ec24` (end of S6) | `3ef8387` (release candidate HP-AC01–07) |
 | Nordwerk product (frozen) | https://github.com/franciscotbatista99/client-01-website | tag `v1.0` → `f1575ad` | unchanged |
 
-Release candidate = Q-BASE: tag `TODO` → product `TODO`. F-BASE: tag `TODO` → Factory `TODO`.
+Release candidate = Q-BASE: tag [`Q-BASE`](https://github.com/franciscotbatista99/client-02-quotation/tree/Q-BASE) → product `3ef8387`. F-BASE: tag [`F-BASE`](https://github.com/cait33/agentic_ai/tree/F-BASE) → Factory `9a6e0ca` (merge of the R-02 setup PR, no change under `src/`).
 
 
 ## 1. Calculation scope completed, small UI built
@@ -145,24 +144,43 @@ Fault injected on an isolated copy of the candidate: the 5 % discount starts **a
   - The loop-limit and project-separation tests still pass.
 - Mock tests show the workflow logic, not real LLM use; the real runs are `991c4f06` and `bcae3e2c` above.
 
-
 ## 4. R-02 baseline before improvement
 
-Task R-02 (verbatim, `TODO`): add `calculation_note` to exported quotation JSON with fixed text `Net amounts; shipping shown separately.`. Preserve display, money values and error handling. Add a test for the field; all existing business tests must still pass. Experiment only – not merged into the customer candidate.
+Task R-02 (verbatim, task sheet S7 section 4, Factory brief [`docs/customer-02/brief-r02.md`](../docs/customer-02/brief-r02.md)): add `calculation_note` to exported quotation JSON with fixed text `Net amounts; shipping shown separately.`. Preserve display, money values and error handling. Add a test for the field; all existing business tests must still pass. **Experiment only – never merged into the customer candidate.**
 
-| | |
+**Setup (fixed before the run, identical in S8):**
+
+- Config [`projects/quotation-02-r02.json`](../projects/quotation-02-r02.json): same Factory, implementer `python_module` → `quotation/export.py`, product tests `tests/`, max. 2 correction rounds, own runs area `runs/quotation-02-r02/`. **PO cache off** (`reuse_po_output: false`), so no run reuses an earlier run's output.
+- Independent acceptance checks [`tests/r02/test_r02_acceptance.py`](../tests/r02/test_r02_acceptance.py) are in the Factory repo, outside the agent's write area, and are evaluated with [`tests/r02/check_r02.py`](../tests/r02/check_r02.py):
+
+| ID | Criterion |
 |---|---|
-| Q-BASE / F-BASE | product `TODO` (tag `TODO`) / Factory `TODO` (tag `TODO`) |
-| Branch / checkout | `TODO` in isolated copy `TODO`, `git status` clean at start: TODO; result `TODO`, not merged |
-| Input / criteria | R-02 text, `TODO` (R-02 test) + all existing business tests |
-| Model / settings | TODO |
-| Run | `TODO` (raw data `runs/TODO/…`, Factory PR #TODO); second run: TODO / not done (time) |
-| Check quality | TODO/TODO green, correction rounds TODO, failed attempts: TODO |
-| Agent time / LLM calls | TODO s (PO TODO s, implementer TODO s, QA TODO s) / TODO |
-| Review / rework | TODO (name), TODO min / TODO min |
-| Known costs | agents TODO credits; human TODO credits; unknown: TODO |
-| Result | TODO (a failed full run also counts as baseline and stays visible) |
+| R02-1 | `calculation_note` present with the exact text for Q01–Q14 |
+| R02-2 | all other export values = calculation = customer values HP-V1, integer cents |
+| R02-3 | no other new fields, existing key order kept |
+| R02-4 | error handling unchanged: E01–E10 → `QuoteError`; web API quantity 0 → 422, no quote |
+| R02-5 | display unchanged: `pricing.py`, `web.py`, `catalog.py` unchanged vs Q-BASE; UI serves Q12 = 17 075 ct incl. note |
+| R02-6 | existing tests and customer fixtures unchanged vs Q-BASE |
+| R02-7 | product has its own passing test for `calculation_note` |
+| R02-8 | all product business tests pass (`python -m pytest tests`, Q-BASE: 153) |
 
+| | Run 1 |
+|---|---|
+| Q-BASE / F-BASE | product `3ef8387` (tag `Q-BASE`) / Factory `9a6e0ca` (tag `F-BASE`) |
+| Isolated copy / branch | `git worktree` of Q-BASE at `C:\Users\Utilizador\hp-r02-run1`, branch [`r02/baseline-run1`](https://github.com/franciscotbatista99/client-02-quotation/tree/r02/baseline-run1) (pushed, not merged); `product_dirty_at_start: false`, `factory_dirty_at_start: false` |
+| Model / settings | Ollama `qwen3:4b`, temperature 0.0, JSON mode, reasoning off, implementer max. 3072 output tokens |
+| Run ID | `01b79f0c-b798-4060-9b63-e226723bb758` (raw data `runs/quotation-02-r02/01b79f0c-b798-4060-9b63-e226723bb758/`), started 14:56:57 local |
+| Rounds / QA | round 0: 153 passed / 0 failed → QA `approved` (0 LLM calls); 0 correction rounds |
+| Gate | Francisco, `approved`, 15:06:11 local (14:06:11 UTC), comment: "Diff ok: calculation_note added at the end with exact text, all other fields unchanged; 153 passed. Finding: agent also deleted the module docstring (not requested, no functional effect). No product test for the field (implementer can only write quotation/) -> human rework after the run." → `released` |
+| Agent output commit | `aa19aaf` – `quotation/export.py` +2/−12: `calculation_note` added as last key; module docstring deleted (not requested) |
+| R-02 criteria on agent output | R02-1…R02-6 passed, **R02-7 failed** (no product test for the field), R02-8 passed (153) – [report](session-07/r02/run1-agent-output-checkfix.txt) |
+| Human rework | `4fda164`: `tests/test_r02_calculation_note.py` (9 lines), ≈ 5 min (15:21–15:26 local), by Francisco → all R02-1…R02-8 passed, 62/62 acceptance checks + 154 product tests – [report](session-07/r02/run1-after-rework.txt) |
+| Agent time / LLM calls / credits | 177.4 s (PO 87.7 s, implementer 47.1 s, QA 42.6 s) / 2 calls (PO 813 in / 383 out, implementer 1697 in / 326 out tokens) / **3.85 credits** |
+| Human review / rework | gate wait ≈ 376 s (≈ 6 min: diff, tests, decision) / rework ≈ 5 min |
+| Result | Full run, `released` by the human gate. **R-02 not complete from the Factory alone (R02-7)**; complete after ≈ 5 min human rework. |
+| Run 2 | not done (time) |
+
+Evaluation note: the first evaluation ([`run1-agent-output.txt`](session-07/r02/run1-agent-output.txt)) also showed R02-5 and R02-6 red. The cause was in the check, not in the product. The check compared sha256 values of LF files, but the Windows worktree has CRLF line endings (`core.autocrlf`); the agent diff touched only `export.py`. The check was fixed after the run (CRLF normalised before hashing, criteria unchanged, commit `4ab9c1b`), and the same agent output was evaluated again → [`run1-agent-output-checkfix.txt`](session-07/r02/run1-agent-output-checkfix.txt). Both reports are kept; S8 uses the fixed check for both variants.
 
 ## Cost
 
@@ -182,13 +200,13 @@ Factory development and the R-02 experiment are recorded separately from custome
 | Factory development `FACTORY-S7`: gate tests passed/blocked (mocked LLM) | Francisco | TODO h                                                    | TODO    |
 | Factory development `FACTORY-S7`: fault case (fault branch, fault + correction runs, PR #60) | Fatih | 0.2 h                                                     | 20.00   |
 | Factory development `FACTORY-S7`: fault case (fault branch, fault + correction runs) | Francisco | TODO h                                                    | TODO    |
-| R-02 baseline (separate): setup, run operation, recording | Rafael | TODO h                                                    | TODO    |
-| R-02 baseline (separate): support | Francisco | TODO h                                                    | TODO    |
+| R-02 baseline (separate): review + merge of setup PR, F-BASE tag, time tracking, evidence | Rafael | 0.5 h | 50.00 |
+| R-02 baseline (separate): Q-BASE tag, setup PR, worktree, run operation, gate review, rework, evaluation | Francisco | 1.5 h | 150.00 |
 | Agents `CUST-002`: export run `d9c8a2eb` (incl. failed round 0) | – | 4 LLM calls                                               | 5.60    |
 | Agents `CUST-002`: failed UI runs `7272cdc6` + `fbc26776` (Caitlin, branch `createWebsite2Run`) | – | 1 LLM call                                                | 1.81    |
 | Agents `CUST-002`: validation `c8d80e3` | – | unknown (no run evidence)                                 | unknown |
 | Agents `FACTORY-S7`: fault run `991c4f06` + correction run `bcae3e2c` | – | 1 LLM call                                                | 1.59    |
-| Agents `R-02`: run `TODO` (incl. failed runs) | – | TODO LLM calls                                            | TODO    |
+| Agents R-02: run 01b79f0c (1 full run, no failed runs) | – | 2 LLM calls | 3.85 |
 | Agents: test runs not in the repository | – | unknown                                                   | unknown |
 | CI | – | TODO (none – Actions disabled / N runs incl. failed runs) | TODO    |
 
@@ -204,16 +222,22 @@ Unknown values are marked `unknown`, not 0.
 Budgets are a team planning proposal, not agreed with the instructor yet.
 
 Actual S7 effort (from `costs/usage.csv`): **TODO h human + TODO agent credits + TODO CI = TODO credits** (`CUST-002` TODO, `FACTORY-S7` TODO, R-02 TODO).
-Plan deviations: TODO (planned vs. actual and reason, incl. budget over/under).
-
+Plan deviations: R-02 was planned for 13:30–14:15. Setup and tags ran ≈ 14:05–14:55, the run 14:57–15:06, evaluation and rework until ≈ 15:30 – after the 15:00 deadline. The R-02 check was fixed after the run (CRLF, see section 4). Second R-02 run not done (time). Further deviations: TODO.
 
 ## Bottleneck and hypothesis
 
-- **Observed bottleneck:** TODO (with numbers from `trace.jsonl` / `manifest.json` of today's runs)
-- **Small Factory change planned for S8:** TODO
-- **Hypothesis / measure:** if TODO, then TODO changes from TODO (R-02 baseline) to TODO with the same check quality; measured per R-02 run, F-BASE vs. F-NEW, same Q-BASE and model
-- The baseline was recorded on F-BASE `TODO` before any change; the change is implemented only afterwards.
-
+- **Observed bottleneck (R-02 baseline `01b79f0c`):** the Factory's check is blind to task-specific requirements, and the implementer cannot deliver tests.
+  - QA was green (153/0, 0 LLM calls) and recommended `approved`, but R-02 was not complete: there was no product test for the field (R02-7 failed).
+  - The agent also deleted the module docstring without being asked. No check detected it.
+  - Both problems were found only by the human: gate review ≈ 6 min, rework ≈ 5 min.
+  - Cause in the code: the `python_module` implementer writes exactly one file inside `quotation/` (`_product_target` in `src/agents/backend_api_engineer.py`), and QA only runs the product tests that already exist (`tests/test_export.py` deliberately ignores extra fields).
+- Not chosen: the missing import in round 0 (S6 `6b975659`, S7 `d9c8a2eb`). It did not occur in R-02, because `export.py` already had its imports, so R-02 cannot measure it.
+- **Small Factory change planned for S8 (F-NEW, exactly one):** *structured test task*. The `python_module` implementer may return, in its structured JSON output, **one new test file** under `tests/`. Only new files are allowed: existing tests cannot be changed or deleted. The same AST safety checks apply, through a new config field `allowed_test_paths`. QA runs the new test together with the existing tests, so a red task test leads to automatic correction feedback. Same model, settings, brief, Q-BASE and acceptance checks.
+- **Hypothesis / measure:** with F-NEW, R02-7 on the agent output changes from *failed* (baseline) to *passed*, and human rework drops from ≈ 5 min to 0, with R02-1…R02-6/R02-8 unchanged. Agent credits per run rise by at most ≈ 20 % (3.85 → ≤ 4.6).
+  - Measured with `tests/r02/check_r02.py` (criteria on agent output, correction rounds, calls/seconds/credits) plus human review/rework minutes.
+  - Comparison: F-BASE `9a6e0ca` vs. F-NEW, same Q-BASE `3ef8387` and `qwen3:4b`.
+  - One pair is a preliminary observation only.
+- The baseline was recorded on F-BASE `9a6e0ca` before any change; F-NEW is implemented only afterwards, on its own branch.
 
 ## Next steps (max. 3)
 

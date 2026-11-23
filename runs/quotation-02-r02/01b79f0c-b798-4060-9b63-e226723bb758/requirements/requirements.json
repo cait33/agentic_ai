@@ -1,0 +1,22 @@
+[
+  {
+    "id": "R1",
+    "description": "Add calculation_note key with exact text 'Net amounts; shipping shown separately.' to exported JSON",
+    "is_met": false
+  },
+  {
+    "id": "R2",
+    "description": "Preserve all existing keys, values, and line data without recalculating or modifying money values",
+    "is_met": false
+  },
+  {
+    "id": "R3",
+    "description": "Maintain function signature and deterministic output for quote_to_json",
+    "is_met": false
+  },
+  {
+    "id": "R4",
+    "description": "Add test for the new calculation_note field without breaking existing tests",
+    "is_met": false
+  }
+]

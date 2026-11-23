@@ -64,6 +64,9 @@ ROOT = Path(PRODUCT).expanduser().resolve() if PRODUCT else Path(".")
 if PRODUCT and str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+def _sha(rel: str) -> str:
+    """sha256 with CRLF normalised to LF (Windows checkouts with core.autocrlf convert text files)."""
+    return hashlib.sha256((ROOT / rel).read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 def _reference() -> dict:
     return json.loads((ROOT / "fixtures" / "HansePack_Referenzfaelle.json").read_text(encoding="utf-8"))
@@ -150,7 +153,7 @@ def test_r02_4_web_api_invalid_quantity_is_error_without_quote(base_url):
 # R02-5 ---------------------------------------------------------------------------------------------------------
 def test_r02_5_display_and_calculation_code_unchanged(base_url):
     for rel in ("quotation/pricing.py", "quotation/web.py", "quotation/catalog.py"):
-        assert hashlib.sha256((ROOT / rel).read_bytes()).hexdigest() == UNCHANGED_AT_Q_BASE[rel], rel
+        assert _sha(rel) == UNCHANGED_AT_Q_BASE[rel], rel
     with urllib.request.urlopen(base_url + "/", timeout=5) as res:
         assert res.status == 200
     status, text = _post(base_url + "/api/quote", {"items": [{"sku": "HP-BOX", "quantity": 50},
@@ -163,7 +166,7 @@ def test_r02_5_display_and_calculation_code_unchanged(base_url):
 # R02-6 ---------------------------------------------------------------------------------------------------------
 @pytest.mark.parametrize("rel", sorted(r for r in UNCHANGED_AT_Q_BASE if r.startswith(("tests/", "fixtures/"))))
 def test_r02_6_existing_tests_and_fixtures_unchanged(rel):
-    assert hashlib.sha256((ROOT / rel).read_bytes()).hexdigest() == UNCHANGED_AT_Q_BASE[rel]
+    assert _sha(rel) == UNCHANGED_AT_Q_BASE[rel]
 
 
 # R02-7 ---------------------------------------------------------------------------------------------------------

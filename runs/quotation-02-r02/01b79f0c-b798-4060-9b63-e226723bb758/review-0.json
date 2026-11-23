@@ -1,0 +1,19 @@
+{
+  "task_id": "R-02",
+  "workflow_id": "01b79f0c-b798-4060-9b63-e226723bb758",
+  "run_id": "01b79f0c-b798-4060-9b63-e226723bb758",
+  "round": 0,
+  "reviewer": "Francisco",
+  "decision": "approved",
+  "comment": "Diff ok: calculation_note added at the end with exact text 'Net amounts; shipping shown separately.', all other fields unchanged; 153 passed. Finding: agent also deleted the module docstring (not requested, no functional effect). No product test for the field (implementer can only write quotation/) -> human rework after the run.",
+  "visually_checked": true,
+  "reviewed_file": "quotation/export.py",
+  "reviewed_artifact_sha256": "c8729467fad5adf8f64b8bf101dfd250fc9e121c00f7f8aded84a4e36af25bd6",
+  "tested_source_commit": "3ef83876d663b4ffb7222655c54fe7e4271973c2",
+  "agent_recommendation": "approved",
+  "current_artifact_sha256": "c8729467fad5adf8f64b8bf101dfd250fc9e121c00f7f8aded84a4e36af25bd6",
+  "release_status": "released",
+  "release_blockers": [],
+  "identity_assurance": "self_declared_course_review",
+  "decided_at_utc": "2026-11-23T14:06:11.114784+00:00"
+}
