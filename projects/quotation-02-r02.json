@@ -1,0 +1,22 @@
+{
+    "project_id": "quotation-02-r02",
+    "customer": "HansePack Handelsgesellschaft (fiktiv) – R-02 experiment, NOT a customer task",
+    "product_repo": "https://github.com/franciscotbatista99/client-02-quotation",
+    "product_path": "../hp-r02-run1",
+    "task_id": "R-02",
+    "issue": null,
+    "brief": "docs/customer-02/brief-r02.md",
+    "implementer": "python_module",
+    "target_file": "quotation/export.py",
+    "allowed_write_paths": [
+    "quotation/"
+    ],
+    "product_test_paths": [
+    "tests/"
+    ],
+    "ac_test_pattern": "def (test_(hp_ac\\d{2})\\w*)",
+    "review_hint": "R-02 experiment on an isolated Q-BASE copy (never merge). Check the diff of quotation/export.py (git diff), run 'python -m pytest tests -q' in the isolated copy (all green, >= 153 passed). Check that the exported JSON has calculation_note = 'Net amounts; shipping shown separately.' (exact text) and that all other fields/values are unchanged, e.g. python -m quotation.web, HP-BOX 50 + HP-TAPE 10 = 17075 ct, download JSON; quantity 0 -> error, no quote. Note: does the product now contain a test for calculation_note?",
+    "runs_dir": "runs/quotation-02-r02",
+    "max_correction_rounds": 2,
+    "reuse_po_output": false
+}
