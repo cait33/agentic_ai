@@ -6,11 +6,13 @@ Complete the HansePack quotation calculator for the original HP-V1 rules (HP-AC0
 
 | Task | Person | What |
 | ---- | ------ | ---- |
-| 1 | Daniil + Caitlin | Customer task E06/E09/E10 (input validation) through the Factory: real run `TODO`, result diff, human decision |
-| 1 | Daniil + Caitlin | Small web UI (FastAPI + plain HTML/JS): enter lines, calculate, show result + errors, net notice (product PR #TODO) |
-| 1 | Daniil + Caitlin | JSON download with the same calculated data as the display, integer cents, rule version (product PR #TODO) |
+| 1 | Daniil | Input validation E06/E09/E10 + CLI in `quotation/pricing.py` (product `c8d80e3`, pushed directly; Factory brief `docs/customer-02/brief-t7.md`, PR #58); run evidence: TODO (Daniil) |
+| 1 | Caitlin | Web UI attempts through the Factory: runs `7272cdc6` (web_slots, no target file) and `fbc26776` (python_module, write outside `quotation/` refused) – both `not_released`, branch `createWebsite2Run`; UI template `5d3ab42` (later replaced) |
+| 1 | Fatih | Customer task "JSON export" through the Factory: export stub + config `projects/quotation-02-export.json` + brief `brief-t7-export.md` (product PR #10, Factory PR #62), real run `d9c8a2eb` (1 correction round after human feedback, `released`), result product PR #12 (`3ef8387`), evidence Factory PR #63 |
+| 1 | Fatih | Small web UI `quotation/web.py` (human-written, standard library `http.server`) + `tests/test_web.py` + README start command (product PR #10) |
+| 1 | Francisco | Human gate of the export run: round 0 `changes_requested` with concrete feedback, round 1 `approved` incl. UI/export review |
 | 2 | Fatih | Product checks for all Q01–Q14 / E01–E10 (line values + totals) + JSON export contract test `tests/test_export.py` (product PR #9, `cb4c821`) |
-| 2 | Fatih | Fresh checkout without the Factory, product and Factory tests run separately, organisation of the human UI review |
+| 2 | Fatih | Candidate checks 153 passed, fresh checkout without the Factory, Factory tests 54 passed (separately), UI review organised (done by Francisco at the gate) |
 | 3 | Fatih + Francisco | Factory gate tests for passed / blocked / corrected states with mocked LLM `tests/factory/test_fault_gate.py` (Factory PR #59, written by Fatih, reviewed + merged by Francisco) |
 | 3 | Fatih + Francisco | Controlled discount fault on product branch `t7/injected-discount-fault`: fault run `991c4f06` (`not_released`) + correction run `bcae3e2c` (`released`), evidence Factory PR #60 |
 | 3 | Francisco | Human reviewer at the gate: fault run `changes_requested` 12:19 UTC, correction run `approved` 12:20 UTC (pair session with Fatih) |
@@ -18,7 +20,7 @@ Complete the HansePack quotation calculator for the original HP-V1 rules (HP-AC0
 | 4 | Rafael | Time tracking, plan deviations, this index |
 
 Only existing roles (`organization/roles.yaml`) were used; no new agents or roles.
-Merged without a second review: Factory PR #58 (self-merged by Daniil), product PR #9 (merged by Fatih); direct pushes to `main`: Factory `df169ef`, `04b6e2b` (evidence skeleton), product `c8d80e3` (validation + CLI), `5d3ab42` (UI template); TODO further. Reviewed by a second person: Factory PRs #59 and #60 (written by Fatih, reviewed and merged by Francisco on GitHub).
+Merged without a second review: Factory PR #58 (self-merged by Daniil), product PR #9 (merged by Fatih); direct pushes to `main`: Factory `df169ef`, `04b6e2b` (evidence skeleton), product `c8d80e3` (validation + CLI), `5d3ab42` (UI template); merged by the author: product PRs #11, #12, Factory PRs #61, #63 (Fatih). Reviewed by a second person: Factory PRs #59, #60, #62 and product PR #10 (written by Fatih, merged by Francisco); the export result (#12) was reviewed by Francisco at the gate before the merge.
 
 
 ## Repositories and commits
@@ -26,7 +28,7 @@ Merged without a second review: Factory PR #58 (self-merged by Daniil), product 
 | | Repository | From | To |
 |---|---|---|---|
 | Factory | https://github.com/cait33/agentic_ai | `3269bdd` (end of S6) | TODO (merge commit of the final S7 evidence PR) |
-| HansePack product | https://github.com/franciscotbatista99/client-02-quotation | `910ec24` (end of S6) | TODO (release candidate) |
+| HansePack product | https://github.com/franciscotbatista99/client-02-quotation | `910ec24` (end of S6) | `3ef8387` (release candidate HP-AC01–07) |
 | Nordwerk product (frozen) | https://github.com/franciscotbatista99/client-01-website | tag `v1.0` → `f1575ad` | unchanged |
 
 Release candidate = Q-BASE: tag `TODO` → product `TODO`. F-BASE: tag `TODO` → Factory `TODO`.
@@ -35,70 +37,72 @@ Release candidate = Q-BASE: tag `TODO` → product `TODO`. F-BASE: tag `TODO` �
 ## 1. Calculation scope completed, small UI built
 
 - Starting point: the S6 agent code (`910ec24`) already gets all Q01–Q14 right. E06 (duplicate SKU), E09 (`True` as quantity) and E10 (quantity 10 001) are not rejected yet, and there is no web UI and no JSON export.
-- Customer issue: #TODO (S7 scope: E06/E09/E10, web UI, JSON export)
-- Factory task: brief `TODO`. Project config `projects/quotation-02.json` reused; changes: TODO (brief path, `review_hint` for E06/E09/E10)
-- Web UI: FastAPI + plain HTML/CSS/JavaScript.
-  - Files: `TODO`.
-  - Made by: TODO (Factory run / by hand by Daniil + Caitlin – manual work counts as human work).
-  - Start command: `TODO`.
-  - Dependencies and startup documented in the README: TODO (the README still says "no runtime dependencies").
-- Validation: invalid input reaches `calculate_quote` in Python and is rejected there with `QuoteError`; the UI only shows the server error (no UI-only validation)
-- Net notice "Nettobeträge – Lehrprojekt, kein verbindliches Angebot" visible on the page
-- JSON export `quotation/export.py`: built from the same `calculate_quote` result as the display. Per line: SKU, quantity, unit price, list amount, discount %, discount and line net. Totals: goods net, shipping, total, currency `EUR` and `rule_version` `HP-V1`. Money values are integer cents.
+- Customer issue: #2 (scope, open questions, assumptions; S7 scope E06/E09/E10, web UI, JSON export)
+- **Validation E06/E09/E10** (Daniil, product `c8d80e3`): duplicate SKUs, `bool` quantities and quantities outside 1–10 000 are rejected with `QuoteError` (`type(quantity) is not int`), 1–3 lines; CLI `python -m quotation.pricing '<json>'`. Product checks after the change: 97 passed / 1 skipped (export not yet there). Whether `c8d80e3` came from a Factory run is not evidenced in the repository – TODO (Daniil): run ID or "by hand".
+- **Web UI** `quotation/web.py` – **human-written** (Fatih), standard library `http.server`, no runtime dependencies:
+  - start: `python -m quotation.web` → http://127.0.0.1:8000 (documented in the README)
+  - 1–3 lines (article + quantity), "Berechnen", table with all line values and totals, "JSON herunterladen", net notice "Nettobeträge – Lehrprojekt, kein verbindliches Angebot"
+  - no validation in the page: every entered value goes unchanged to `calculate_quote`; invalid input comes back as HTTP 422 with the Python error text and no quote
+  - `POST /api/quote` returns exactly `quote_to_json(calculate_quote(...))`; the page renders the table from that text and the download saves the same text → display and export cannot differ
+  - Earlier Factory attempts for the UI (Caitlin) failed and stay visible as failed runs: `7272cdc6` (web_slots, target file missing) and `fbc26776` (python_module, write to `site/index.html` refused) – branch `createWebsite2Run`, TODO merge
+- **JSON export** `quotation/export.py` – **written by the Factory agent** (run below): `quote_to_json(quote)` copies the customer fields unchanged (per line SKU, quantity, unit price, list amount, discount %, discount, line net; goods net, shipping, total, currency, `rule_version`), integer cents, `json.dumps(…, ensure_ascii=False, indent=2)`.
 
-### Factory run: input validation E06/E09/E10
+### Factory run: JSON export (S7 customer task)
 
-Task given to the Factory: reject duplicate SKUs (E06), Boolean quantities (E09) and quantities > 10 000 (E10) in `quotation/pricing.py` with `QuoteError`. No silent type coercion or SKU aggregation is allowed, and Q01–Q14 must stay correct. Results are checked by the team's product tests, not by the agent.
+Task given to the Factory (brief `docs/customer-02/brief-t7-export.md`): implement `quote_to_json` in `quotation/export.py` according to rule 7 / HP-AC06 of the client briefing – values copied unchanged, integer cents, deterministic, standard library only. Results are checked by the team's product tests (`tests/test_export.py`, `tests/test_web.py`), not by the agent.
 
 | | |
 |---|---|
-| Run | `TODO` (raw data `runs/quotation-02/TODO…`, Factory PR #TODO) |
-| Project / task | `quotation-02` / `CUST-002`, customer issue #TODO |
-| Inputs | product `TODO` (`git status` clean: TODO), Factory `TODO`, brief `TODO` |
-| Model / settings | TODO |
-| Structured handover | PO agent → user stories (`requirements/*.json`) → backend-api-agent → `implementation-N.json` (file + sha256) → QA agent → `qa-round-N.json` (failed tests as feedback) → gate `review-N.json` |
-| Round 0 | TODO |
-| Round 1 (correction) | TODO |
-| Correction rounds | TODO of max. 2 |
-| Human gate | TODO (name), `TODO`, TODO UTC (TODO local), review hint: diff + `pytest` + E06/E09/E10; comment: TODO |
-| Result | TODO, product result commit `TODO`, artifact sha256 `TODO…` |
-| Agent contribution | TODO (`quotation/pricing.py`, lines changed, link to diff) |
-| LLM calls / agent credits | TODO |
-| Duration | agent time ≈ TODO s; workflow incl. human wait TODO s |
-| Manual product work (counts as human work) | TODO |
+| Run | `d9c8a2eb-425f-49a5-9d28-7021149979d9` (raw data `runs/quotation-02-export/d9c8a2eb…`, Factory PR #63) |
+| Project / task | `quotation-02-export` (same Factory, own config + runs area) / `CUST-002`, customer issue #2 |
+| Inputs | product `f322fd0` (stub + UI + tests, `git status` clean), Factory `14828df`, brief `brief-t7-export.md` |
+| Model / settings | Ollama qwen3:4b, temperature 0, JSON mode, reasoning off, implementer max. 3072 output tokens |
+| Structured handover | PO agent → user stories (`requirements/*.json`, PO cache miss → stored) → backend-api-agent → `implementation-N.json` (file + sha256) → QA agent (real pytest in the product checkout) → `qa-round-N.json` → gate `review-N.json` → human feedback → implementer |
+| Round 0 | agent wrote `export.py` (`310446b5…`) but **without `import json`** and without the contract docstring → product checks 109 passed / **44 failed** (`NameError`) → QA `escalate_to_human` (its LLM assessment was unparseable, so no automatic correction) |
+| Human intervention | Francisco at the gate, round 0: `changes_requested`, 12:49 UTC: "NameError: name 'json' is not defined – add 'import json' and keep 'from typing import Any' at the top; keep the module docstring (contract) unchanged. The json.dumps logic itself is correct." |
+| Round 1 (correction) | implementer with this feedback → `c462738f…` → **153 passed / 0 failed** → QA `approved` |
+| Correction rounds | 1 of max. 2 |
+| Human gate | Francisco, `approved`, 12:53 UTC (13:53 local): "Diff ok (import json added, contract docstring kept); 153 passed. UI review: HP-BOX 50 + HP-TAPE 10 = 17075 ct, display = downloaded JSON; qty 0 -> error, no quote; net notice visible." |
+| Result | `released`, product result commit `3ef8387` (PR #12, agent output committed unchanged), artifact sha256 `c462738f…`; HP_AC01–HP_AC06 passed |
+| Agent contribution | `quotation/export.py` (new implementation, 40 lines) |
+| LLM calls / agent credits | 4 LLM calls (PO 1, implementer 2, QA 1) / **5.60 credits** (PO 1.31, implementer 1.31 + 1.31, QA 1.65 + 0.02) |
+| Duration | agent time ≈ 140 s; workflow incl. human wait 424 s |
+| Manual product work (counts as human work) | export stub (interface only), web UI `quotation/web.py`, `tests/test_web.py`, README, removal of the unused `site/` template and a committed `.DS_Store` (product PRs #10, #11) |
 
-Notes: TODO (e.g. checkout state at start, PO cache hit/miss, test runs not in the repository).
+Notes: `factory_dirty_at_start: true` (untracked local files on the operator's machine, no tracked Factory change); like the S6 run, round 0 failed on a missing import – see bottleneck below.
 
 
 ## 2. Customer-provided results tested
 
 | Check | Expected (customer values) | Automated test | Result |
 |---|---|---|---|
-| Q01–Q14 line values (HP-V1) | List amount, discount %, discount and line net, with tier boundaries 49/50/99/100. Rounding cases: Q04 1237.5 → 1238, Q13 3187.5 → 3188, Q14 662.5 → 663 (HALF_UP). | `test_hp_ac03_lines_match_customer_values[Q01–Q14]` | TODO |
-| Q01–Q14 totals (HP-V1) | goods net, shipping, total; Q06 shipping after discount (45 000 → 1200), Q07 at threshold (50 000 → 0) | `test_hp_ac03_totals_*` | TODO |
-| E01–E10 | Rejected in Python with `QuoteError` and no quote. Input is not modified, types are not coerced and SKUs are not aggregated. | `test_hp_ac04_*[E01–E10]`, `test_hp_ac04_duplicate_sku_is_not_aggregated`, `test_hp_ac04_no_silent_type_coercion` | TODO |
-| JSON export | required fields, integer cents, rule version, export = calculation | `tests/test_export.py` (`test_hp_ac06_*`) | TODO |
-| Independence | no Factory/LLM/network imports, no lookup of reference answers, fixtures unchanged | `test_hp_ac01_*` + `tests/test_fixtures.py` | TODO |
-| Factory | gate passed/blocked, loop limit, project separation | Factory `python -m pytest` | TODO passed ([`factory-pytest.txt`](session-07/factory-pytest.txt)) |
+| Q01–Q14 line values (HP-V1) | List amount, discount %, discount and line net, with tier boundaries 49/50/99/100. Rounding cases: Q04 1237.5 → 1238, Q13 3187.5 → 3188, Q14 662.5 → 663 (HALF_UP). | `test_hp_ac03_lines_match_customer_values[Q01–Q14]` | ✅ 14/14 |
+| Q01–Q14 totals (HP-V1) | goods net, shipping, total; Q06 shipping after discount (45 000 → 1200), Q07 at threshold (50 000 → 0) | `test_hp_ac03_totals_*` | ✅ 14/14 |
+| E01–E10 | Rejected in Python with `QuoteError` and no quote. Input is not modified, types are not coerced and SKUs are not aggregated. | `test_hp_ac04_*[E01–E10]`, `test_hp_ac04_duplicate_sku_is_not_aggregated`, `test_hp_ac04_no_silent_type_coercion` | ✅ 10/10 + extra checks |
+| JSON export | required fields, integer cents, rule version, export = calculation | `tests/test_export.py` (`test_hp_ac06_*`), `tests/test_web.py` (`test_hp_ac06_displayed_text_is_exactly_the_export`) | ✅ |
+| Independence | no Factory/LLM/network imports, no lookup of reference answers, fixtures unchanged | `test_hp_ac01_*` + `tests/test_fixtures.py` | ✅ |
+| Factory | gate passed/blocked, loop limit, project separation | Factory `python -m pytest` | ✅ 54 passed ([`factory-pytest.txt`](session-07/factory-pytest.txt)) |
 
 - Product test command: `cd client-02-quotation && python -m pytest` (expected values only from `fixtures/HansePack_Referenzfaelle.json`, never from the agent)
 - Factory test command: `python -m pytest` in the Factory repo, run separately
 - Product check results:
   - Before the Factory run (`66f9c5e`, after product PR #9): 89 passed / 8 failed / 1 skipped. The 8 failures are E06, E09 and E10, including the no-aggregation and no-coercion checks. The skipped test is the export test, because `quotation/export.py` was not implemented yet.
-  - In the run: TODO.
-  - Final candidate `TODO`: **TODO passed** ([`product-pytest.txt`](session-07/product-pytest.txt), Fatih).
-- Expected values unchanged; differences found: TODO (none / which, how resolved, escalation to the instructor)
-- Human UI review: TODO (name), TODO (time), product `TODO`.
-  - Multi-line quotation: TODO (e.g. Q12: HP-BOX × 50 + HP-TAPE × 10 → total 17 075 cent).
-  - JSON downloaded and compared with the display: TODO.
-  - Invalid quantity TODO → error "TODO"; no quotation shown: TODO.
-  - Net notice visible: TODO.
+  - After the validation (`c8d80e3`): 97 passed / 1 skipped. After adding UI + export stub (`f322fd0`): 109 passed / 44 failed (export + UI tests, as expected).
+  - In the export run: round 0 109/44, round 1 153/0.
+  - Final candidate `3ef8387`: **153 passed** ([`product-pytest.txt`](session-07/product-pytest.txt), Fatih, 13:54).
+- Expected values unchanged; no differences between implementation and customer values on the candidate, no escalation to the instructor needed.
+- Human UI review: **Francisco**, 13:51–13:53 local, product `c462738f…` = candidate `3ef8387` (during the gate of run `d9c8a2eb`, recorded in `review-1.json`).
+  - Multi-line quotation: HP-BOX × 50 + HP-TAPE × 10 (Q12) → total 17 075 cent shown.
+  - JSON downloaded and compared with the display: identical.
+  - Invalid quantity 0 → error "Quantity must be an integer between 1 and 10000 (got 0)."; no quotation shown.
+  - Net notice visible.
+  - Automated complement: `tests/test_web.py` (27 tests); browser check with Playwright before the run (Q12 display 17 075 ct = download `total_cents` 17 075, quantity 0 → error, table hidden).
 
-**Fresh checkout:** TODO (name), TODO (time):
-- clone of `TODO`, with `git status` clean;
-- installed as in the README;
-- `python -m pytest` → TODO passed;
-- UI starts with `TODO`;
+**Fresh checkout:** Fatih, 13:54 local:
+- clone of `3ef8387`, with `git status` clean;
+- no installation needed except `pytest` (standard library only);
+- `python -m pytest` → 153 passed;
+- UI starts with `python -m quotation.web` (port 8031 in the check): page with net notice, `POST /api/quote` Q12 → `"total_cents": 17075`, quantity 0 → error;
 - no Factory, LLM or database needed.
 
 Record: [`evidence/session-07/fresh-checkout.txt`](session-07/fresh-checkout.txt).
@@ -158,7 +162,8 @@ Factory development and the R-02 experiment are recorded separately from custome
 | Customer delivery `CUST-002`: web UI + JSON export | Daniil | TODO h | TODO |
 | Customer delivery `CUST-002`: web UI + JSON export | Caitlin | TODO h | TODO |
 | Customer delivery `CUST-002`: product checks Q01–Q14 / E01–E10 + export test (product PR #9) | Fatih | 0.25 h | 25.00 |
-| Customer delivery `CUST-002`: fresh checkout, organisation of the human UI review | Fatih | TODO h | TODO |
+| Customer delivery `CUST-002`: web UI (human-written), export stub, UI tests, README, export task config + brief (product PR #10, Factory PR #62) | Fatih | 0.4 h | 40.00 |
+| Customer delivery `CUST-002`: export run operation, result PR #12, record-result, candidate checks, fresh checkout (Factory PR #63) | Fatih | 0.2 h | 20.00 |
 | Customer delivery `CUST-002`: time tracking, plan, this index | Rafael | TODO h | TODO |
 | Review `CUST-002`: human UI/export review | TODO | TODO h | TODO |
 | Review `CUST-002`: human gate (task run, fault run, correction run) | Francisco | TODO h | TODO |
@@ -168,7 +173,9 @@ Factory development and the R-02 experiment are recorded separately from custome
 | Factory development `FACTORY-S7`: fault case (fault branch, fault + correction runs) | Francisco | TODO h | TODO |
 | R-02 baseline (separate): setup, run operation, recording | Rafael | TODO h | TODO |
 | R-02 baseline (separate): support | Francisco | TODO h | TODO |
-| Agents `CUST-002`: run `TODO` (incl. failed rounds) | – | TODO LLM calls | TODO |
+| Agents `CUST-002`: export run `d9c8a2eb` (incl. failed round 0) | – | 4 LLM calls | 5.60 |
+| Agents `CUST-002`: failed UI runs `7272cdc6` + `fbc26776` (Caitlin, branch `createWebsite2Run`) | – | 1 LLM call | 1.81 |
+| Agents `CUST-002`: validation `c8d80e3` | – | unknown (no run evidence) | unknown |
 | Agents `FACTORY-S7`: fault run `991c4f06` + correction run `bcae3e2c` | – | 1 LLM call | 1.59 |
 | Agents `R-02`: run `TODO` (incl. failed runs) | – | TODO LLM calls | TODO |
 | Agents: test runs not in the repository | – | unknown | unknown |
