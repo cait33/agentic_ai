@@ -1,0 +1,16 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.5, pytest-9.1.1, pluggy-1.6.0 -- /Users/fatih/agentic_ai/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/fatih/agentic_ai
+configfile: pytest.ini
+plugins: anyio-4.15.1, langsmith-0.14.8
+collecting ... collected 6 items
+
+tests/factory/test_fault_gate.py::test_customer_reference_values_are_the_ones_of_the_task_sheet PASSED [ 16%]
+tests/factory/test_fault_gate.py::test_correct_candidate_passes_and_is_released PASSED [ 33%]
+tests/factory/test_fault_gate.py::test_injected_discount_fault_is_held_back_even_if_a_human_approves PASSED [ 50%]
+tests/factory/test_fault_gate.py::test_fault_triggers_correction_and_corrected_version_is_released PASSED [ 66%]
+tests/factory/test_fault_gate.py::test_human_rejection_keeps_a_green_state_unreleased PASSED [ 83%]
+tests/factory/test_fault_gate.py::test_artifact_changed_after_qa_blocks_release PASSED [100%]
+
+============================== 6 passed in 4.32s ===============================
