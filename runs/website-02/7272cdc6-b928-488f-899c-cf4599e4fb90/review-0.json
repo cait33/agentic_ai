@@ -1,0 +1,24 @@
+{
+  "task_id": "CUST-002",
+  "workflow_id": "7272cdc6-b928-488f-899c-cf4599e4fb90",
+  "run_id": "7272cdc6-b928-488f-899c-cf4599e4fb90",
+  "round": 0,
+  "reviewer": "Caitlin",
+  "decision": "escalate_to_human",
+  "comment": "file not found error",
+  "visually_checked": false,
+  "reviewed_file": "site/index.html",
+  "reviewed_artifact_sha256": null,
+  "tested_source_commit": "c8d80e3f5e7e6a67be4b2cf41e48495b42d95760",
+  "agent_recommendation": "escalate_to_human",
+  "current_artifact_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "release_status": "not_released",
+  "release_blockers": [
+    "human decision: escalate_to_human",
+    "agent errors: implementation: FileNotFoundError: Product file not found: site/index.html",
+    "implementation status: None",
+    "product check not green: verdict=None, failed=None, errors=None, tests=[]"
+  ],
+  "identity_assurance": "self_declared_course_review",
+  "decided_at_utc": "2026-11-23T11:32:25.838872+00:00"
+}

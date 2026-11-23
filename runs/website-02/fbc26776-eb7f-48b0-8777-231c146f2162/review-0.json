@@ -1,0 +1,24 @@
+{
+  "task_id": "CUST-002",
+  "workflow_id": "fbc26776-eb7f-48b0-8777-231c146f2162",
+  "run_id": "fbc26776-eb7f-48b0-8777-231c146f2162",
+  "round": 0,
+  "reviewer": "Caitlin",
+  "decision": "escalate_to_human",
+  "comment": "error",
+  "visually_checked": false,
+  "reviewed_file": "site/index.html",
+  "reviewed_artifact_sha256": null,
+  "tested_source_commit": "c8d80e3f5e7e6a67be4b2cf41e48495b42d95760",
+  "agent_recommendation": "escalate_to_human",
+  "current_artifact_sha256": null,
+  "release_status": "not_released",
+  "release_blockers": [
+    "human decision: escalate_to_human",
+    "agent errors: implementation: PermissionError: Python implementer may only write inside 'quotation/', got 'site/index.html'",
+    "implementation status: None",
+    "product check not green: verdict=None, failed=None, errors=None, tests=[]"
+  ],
+  "identity_assurance": "self_declared_course_review",
+  "decided_at_utc": "2026-11-23T11:30:07.242038+00:00"
+}

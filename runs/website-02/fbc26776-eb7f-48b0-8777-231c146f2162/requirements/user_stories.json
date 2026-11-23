@@ -1,0 +1,54 @@
+[
+  {
+    "id": "US1",
+    "description": "As a HansePack client I want to calculate the quote for valid reference cases using HP-V1 rule version so that the pricing is accurate and matches the 14 valid cases",
+    "acceptance_criteria": [
+      {
+        "description": "All 14 valid reference cases pass with exact line values and totals"
+      },
+      {
+        "description": "All money values are integers in cents (no floats or decimals)"
+      }
+    ],
+    "backlog_value": 85
+  },
+  {
+    "id": "US2",
+    "description": "As a HansePack client I want to handle invalid input cases with clear error messages so that the system raises `QuoteError` for all 10 invalid cases",
+    "acceptance_criteria": [
+      {
+        "description": "All 10 invalid cases raise `QuoteError` with non-empty understandable messages"
+      },
+      {
+        "description": "No quotation is produced for invalid inputs"
+      }
+    ],
+    "backlog_value": 80
+  },
+  {
+    "id": "US3",
+    "description": "As a developer I want a reproducible CLI entry point so that `python -m quotation.pricing` accepts JSON input and prints results to stdout",
+    "acceptance_criteria": [
+      {
+        "description": "CLI command `python -m quotation.pricing` parses JSON input and returns 0 on success"
+      },
+      {
+        "description": "CLI prints `Fehler: <message>` to stderr on error with exit code 2"
+      }
+    ],
+    "backlog_value": 75
+  },
+  {
+    "id": "US4",
+    "description": "As a HansePack client I want the pricing calculation to follow HP-V1 rules for discounts and shipping so that the net amounts are correctly computed",
+    "acceptance_criteria": [
+      {
+        "description": "Discounts applied per line based on tier boundaries (49/50, 99/100) with ROUND_HALF_UP"
+      },
+      {
+        "description": "Shipping calculated as 1200 cents if goods net < 50000 cents, otherwise 0"
+      }
+    ],
+    "backlog_value": 82
+  }
+]

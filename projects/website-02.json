@@ -1,0 +1,15 @@
+{
+  "project_id": "website-02",
+  "customer": "HansePack Handelsgesellschaft (fiktiv)",
+  "product_repo": "https://github.com/franciscotbatista99/client-02-quotation",
+  "product_path": "../client-02-quotation",
+  "task_id": "CUST-002",
+  "issue": "https://github.com/franciscotbatista99/client-02-quotation/issues/6",
+  "brief": "docs/customer-02/brief-t7.md",
+  "target_file": "site/index.html",
+  "allowed_write_paths": ["site/"],
+  "product_test_paths": ["tests/"],
+  "review_hint": "Check the website is a single simple page for items, quantities, lines, calculation and download. Check only Python, FastAPI, basic html, basic css and basic javascript are used.",
+  "runs_dir": "runs/website-02",
+  "max_correction_rounds": 2
+}
