@@ -11,14 +11,14 @@ Complete the HansePack quotation calculator for the original HP-V1 rules (HP-AC0
 | 1 | Daniil + Caitlin | JSON download with the same calculated data as the display, integer cents, rule version (product PR #TODO) |
 | 2 | Fatih | Product checks for all Q01–Q14 / E01–E10 (line values + totals) + JSON export contract test `tests/test_export.py` (product PR #9, `cb4c821`) |
 | 2 | Fatih | Fresh checkout without the Factory, product and Factory tests run separately, organisation of the human UI review |
-| 3 | Fatih + Francisco | Factory tests for passed and blocked gate states with mocked LLM (Factory PR #TODO) |
-| 3 | Fatih + Francisco | Controlled discount fault on a separate branch: fault run `TODO` + correction run `TODO` |
-| 3 | Francisco | Human reviewer at the gate: fault run TODO, correction run TODO |
+| 3 | Fatih + Francisco | Factory gate tests for passed / blocked / corrected states with mocked LLM `tests/factory/test_fault_gate.py` (Factory PR #59, written by Fatih, reviewed + merged by Francisco) |
+| 3 | Fatih + Francisco | Controlled discount fault on product branch `t7/injected-discount-fault`: fault run `991c4f06` (`not_released`) + correction run `bcae3e2c` (`released`), evidence Factory PR #60 |
+| 3 | Francisco | Human reviewer at the gate: fault run `changes_requested` 12:19 UTC, correction run `approved` 12:20 UTC (pair session with Fatih) |
 | 4 | Rafael (+ Francisco) | Tags Q-BASE / F-BASE, R-02 baseline run `TODO` on an isolated copy, bottleneck + hypothesis for S8 |
 | 4 | Rafael | Time tracking, plan deviations, this index |
 
 Only existing roles (`organization/roles.yaml`) were used; no new agents or roles.
-Merged without a second review: TODO; direct pushes to `main`: Factory `df169ef` (evidence skeleton), TODO. Reviewed by a second person: TODO.
+Merged without a second review: Factory PR #58 (self-merged by Daniil), product PR #9 (merged by Fatih); direct pushes to `main`: Factory `df169ef`, `04b6e2b` (evidence skeleton), product `c8d80e3` (validation + CLI), `5d3ab42` (UI template); TODO further. Reviewed by a second person: Factory PRs #59 and #60 (written by Fatih, reviewed and merged by Francisco on GitHub).
 
 
 ## Repositories and commits
@@ -110,19 +110,23 @@ Fault injected on an isolated copy of the candidate: the 5 % discount starts **a
 
 | | |
 |---|---|
-| Isolated state | branch `TODO`, checkout `TODO`, based on candidate `TODO`, fault commit `TODO`; Factory config `TODO` |
-| Expected effect | Q03 total 13 700 instead of 13 075 cent. Q12 contains HP-BOX × 50, so it gives 17 700 instead of 17 075. Checked in advance on `66f9c5e`: exactly 6 tests turn red (`test_hp_ac02_lines/totals[Q03]`, `test_hp_ac03_lines/totals[Q03]`, `test_hp_ac03_lines/totals[Q12]`). |
-| Fault run | `TODO`: product check TODO failed → gate TODO (no "approved" offered / `changes_requested` / correction round) → `not_released`, blockers: TODO |
-| Correction | TODO (by the agent in a correction round / by hand), commit `TODO` |
-| Correction run | `TODO`: TODO passed / 0 failed, artifact hash TODO (identical to the candidate: TODO) |
-| Human gate | Francisco: fault run `TODO` (TODO UTC), correction run `TODO` (TODO UTC) |
-| Delivered? | No – the fault state was never merged, tagged or released |
+| Isolated state | product branch `t7/injected-discount-fault` in a separate checkout `~/hp-fault` (fresh clone of `main` = `5d3ab42`, pricing as validated in `c8d80e3`), fault commit `851a7d2`; Factory `02f25ed`, config `projects/quotation-02.json` unchanged, product path overridden with `--product-path ~/hp-fault`; `git status` clean at both runs |
+| Expected effect | Q03 total 13 700 instead of 13 075 cent. Q12 contains HP-BOX × 50, so it gives 17 700 instead of 17 075. Checked before the run on `851a7d2` with the product tests: exactly 6 tests red (`test_hp_ac02_lines/totals[Q03]`, `test_hp_ac03_lines/totals[Q03]`, `test_hp_ac03_lines/totals[Q12]`), 91 passed, 1 skipped (export) |
+| Fault run | `991c4f06-502f-4b45-b294-93397d5bd07b` (Factory `--verify-only`: QA agent runs the product checks, then human gate). QA: **91 passed / 6 failed** → `changes_requested`. The gate printed "RELEASE BLOCKERS (Stand kann NICHT freigegeben werden)" and **did not offer "approved"** (only `changes_requested` / `escalate_to_human`). Result **`not_released`**, blockers: human decision `changes_requested` + "product check not green: failed=6, tests=[…Q03…, …Q12…]" |
+| Correction | by hand (Fatih, watched by Francisco): the one changed line reverted, commit `aa40d63` |
+| Correction run | `bcae3e2c-f183-4efb-80f1-43f6c468747e`: QA **97 passed / 0 failed** (1 skipped: export) → `approved` → **`released`**; artifact sha256 `a9124cae…` **identical** to `quotation/pricing.py` on product `main` |
+| Human gate | Francisco: fault run `changes_requested`, 12:19 UTC (13:19 local), "Injected discount fault: Q03 13700 instead of 13075 – not released"; correction run `approved`, 12:20 UTC (13:20 local), "Correction verified: Q03 13075 again, all Q01-Q14 / E01-E10 green" |
+| Model / costs | Ollama qwen3:4b; fault run 1 LLM call (QA failure assessment, 1565 in / 528 out tokens, 53 s) = 1.58 credits; correction run 0 LLM calls = 0.01 credits |
+| Delivered? | No – the fault state was never merged into `main`, tagged or released; the branch stays only as evidence |
 
-- Factory gate tests (mocked LLM): `tests/factory/TODO`, Factory PR #TODO. Result: TODO passed.
-  - Passed state: green check + human approval → `released`.
-  - Blocked state: red check → no approval, `not_released`.
+- Factory gate tests (mocked LLM, real pytest tool on a temporary product checkout with the unchanged customer fixtures): `tests/factory/test_fault_gate.py`, Factory PR #59 – **6 passed** ([`fault-gate-pytest.txt`](session-07/fault-gate-pytest.txt)); whole Factory suite 54 passed.
+  - Passed state: correct code → green check + human approval → `released`.
+  - Blocked state: injected fault → QA `changes_requested` in all 3 rounds (2 correction rounds = loop limit) → escalation → **`not_released` even if the human chooses "approved"**, blocker names Q03.
+  - Correction: fault in round 0 → QA feedback naming Q03 handed to the implementer → corrected round 1 → `released`.
+  - A green state without human approval stays `not_released`; a file changed after QA is blocked by the hash check.
+  - Counter-check: with the QA blocker disabled in `release_blockers`, the blocked-state test fails – the tests detect an ineffective gate.
   - The loop-limit and project-separation tests still pass.
-- Mock tests show the workflow logic, not real LLM use; real LLM runs: TODO
+- Mock tests show the workflow logic, not real LLM use; the real runs are `991c4f06` and `bcae3e2c` above.
 
 
 ## 4. R-02 baseline before improvement
@@ -153,19 +157,19 @@ Factory development and the R-02 experiment are recorded separately from custome
 | Customer delivery `CUST-002`: Factory task E06/E09/E10 (brief, run operation) | Caitlin | TODO h | TODO |
 | Customer delivery `CUST-002`: web UI + JSON export | Daniil | TODO h | TODO |
 | Customer delivery `CUST-002`: web UI + JSON export | Caitlin | TODO h | TODO |
-| Customer delivery `CUST-002`: product checks Q01–Q14 / E01–E10 + export test (product PR #9) | Fatih | TODO h | TODO |
+| Customer delivery `CUST-002`: product checks Q01–Q14 / E01–E10 + export test (product PR #9) | Fatih | 0.25 h | 25.00 |
 | Customer delivery `CUST-002`: fresh checkout, organisation of the human UI review | Fatih | TODO h | TODO |
 | Customer delivery `CUST-002`: time tracking, plan, this index | Rafael | TODO h | TODO |
 | Review `CUST-002`: human UI/export review | TODO | TODO h | TODO |
 | Review `CUST-002`: human gate (task run, fault run, correction run) | Francisco | TODO h | TODO |
-| Factory development `FACTORY-S7`: gate tests passed/blocked (mocked LLM) | Fatih | TODO h | TODO |
+| Factory development `FACTORY-S7`: gate tests passed/blocked (mocked LLM, PR #59) | Fatih | 0.25 h | 25.00 |
 | Factory development `FACTORY-S7`: gate tests passed/blocked (mocked LLM) | Francisco | TODO h | TODO |
-| Factory development `FACTORY-S7`: fault case (fault branch, fault + correction runs) | Fatih | TODO h | TODO |
+| Factory development `FACTORY-S7`: fault case (fault branch, fault + correction runs, PR #60) | Fatih | 0.2 h | 20.00 |
 | Factory development `FACTORY-S7`: fault case (fault branch, fault + correction runs) | Francisco | TODO h | TODO |
 | R-02 baseline (separate): setup, run operation, recording | Rafael | TODO h | TODO |
 | R-02 baseline (separate): support | Francisco | TODO h | TODO |
 | Agents `CUST-002`: run `TODO` (incl. failed rounds) | – | TODO LLM calls | TODO |
-| Agents `FACTORY-S7`: fault run `TODO` + correction run `TODO` | – | TODO LLM calls | TODO |
+| Agents `FACTORY-S7`: fault run `991c4f06` + correction run `bcae3e2c` | – | 1 LLM call | 1.59 |
 | Agents `R-02`: run `TODO` (incl. failed runs) | – | TODO LLM calls | TODO |
 | Agents: test runs not in the repository | – | unknown | unknown |
 | CI | – | TODO (none – Actions disabled / N runs incl. failed runs) | TODO |
