@@ -1,0 +1,19 @@
+{
+  "task_id": "CUST-002",
+  "workflow_id": "d9c8a2eb-425f-49a5-9d28-7021149979d9",
+  "run_id": "d9c8a2eb-425f-49a5-9d28-7021149979d9",
+  "round": 1,
+  "reviewer": "Francisco",
+  "decision": "approved",
+  "comment": "Diff ok (import json added, contract docstring kept); 153 passed. UI review: HP-BOX 50 + HP-TAPE 10 = 17075 ct, display = downloaded JSON; qty 0 -> error, no quote; net notice visible.",
+  "visually_checked": true,
+  "reviewed_file": "quotation/export.py",
+  "reviewed_artifact_sha256": "c462738fa596578b33db4910ece9b327a7a051d9a86ace79b1e17de676afa1c1",
+  "tested_source_commit": "f322fd0331827e61ded212d29cbf7ba394611bd7",
+  "agent_recommendation": "approved",
+  "current_artifact_sha256": "c462738fa596578b33db4910ece9b327a7a051d9a86ace79b1e17de676afa1c1",
+  "release_status": "released",
+  "release_blockers": [],
+  "identity_assurance": "self_declared_course_review",
+  "decided_at_utc": "2026-11-23T12:53:21.150106+00:00"
+}

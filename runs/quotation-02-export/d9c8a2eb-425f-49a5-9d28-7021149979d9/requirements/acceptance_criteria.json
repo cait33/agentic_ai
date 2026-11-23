@@ -1,0 +1,18 @@
+{
+  "US1": [
+    {
+      "description": "JSON output matches the structure defined in the interface specification"
+    },
+    {
+      "description": "All monetary values are integer cents without rounding"
+    }
+  ],
+  "US2": [
+    {
+      "description": "Copy values directly from the input quote without modification"
+    },
+    {
+      "description": "Use standard library json to format the output"
+    }
+  ]
+}

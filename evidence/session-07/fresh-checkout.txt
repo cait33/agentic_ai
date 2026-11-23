@@ -1,0 +1,10 @@
+Fresh checkout – Fatih – 2026-11-23 13:54
+commit: 3ef8387
+git status (empty = clean):
+--- python -m pytest ---
+153 passed in 0.60s
+--- start UI ---
+Nettobeträge – Lehrprojekt, kein verbindliches Angebot
+  "total_cents": 17075
+{"error": "Quantity must be an integer between 1 and 10000 (got 0)."}
+no Factory, no LLM, no database used

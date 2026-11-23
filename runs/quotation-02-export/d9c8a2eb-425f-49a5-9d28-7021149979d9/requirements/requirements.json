@@ -1,0 +1,22 @@
+[
+  {
+    "id": "R1",
+    "description": "JSON export must contain exactly the specified keys in order: currency, rule_version, lines, goods_net_cents, shipping_cents, total_cents",
+    "is_met": false
+  },
+  {
+    "id": "R2",
+    "description": "Line items must include SKU, quantity, unit_price_cents, list_amount_cents, discount_percent, discount_cents, net_cents in order",
+    "is_met": false
+  },
+  {
+    "id": "R3",
+    "description": "All monetary values must be integer cents without rounding or conversion",
+    "is_met": false
+  },
+  {
+    "id": "R4",
+    "description": "Output must be deterministic and use standard library json without additional dependencies",
+    "is_met": false
+  }
+]

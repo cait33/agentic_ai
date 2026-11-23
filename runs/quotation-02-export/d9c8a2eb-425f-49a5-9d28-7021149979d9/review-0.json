@@ -1,0 +1,22 @@
+{
+  "task_id": "CUST-002",
+  "workflow_id": "d9c8a2eb-425f-49a5-9d28-7021149979d9",
+  "run_id": "d9c8a2eb-425f-49a5-9d28-7021149979d9",
+  "round": 0,
+  "reviewer": "Francisco",
+  "decision": "changes_requested",
+  "comment": "NameError: name 'json' is not defined - add 'import json' and keep 'from typing import Any' at the top; keep the module docstring (contract) unchanged. The json.dumps logic itself is correct.",
+  "visually_checked": true,
+  "reviewed_file": "quotation/export.py",
+  "reviewed_artifact_sha256": "310446b5d7b8cd47c870e8aa0675fc53c771ddf701f75fb93b183c994d83f959",
+  "tested_source_commit": "f322fd0331827e61ded212d29cbf7ba394611bd7",
+  "agent_recommendation": "escalate_to_human",
+  "current_artifact_sha256": "310446b5d7b8cd47c870e8aa0675fc53c771ddf701f75fb93b183c994d83f959",
+  "release_status": "not_released",
+  "release_blockers": [
+    "human decision: changes_requested",
+    "product check not green: verdict=escalate_to_human, failed=44, errors=0, tests=['tests/test_export.py::test_hp_ac06_export_matches_calculation[Q01]', 'tests/test_export.py::test_hp_ac06_export_matches_calculation[Q02]', 'tests/test_export.py::test_hp_ac06_export_matches_calculation[Q03]', 'tests/test_export.py::test_hp_ac06_export_matches_calculation[Q04]', 'tests/test_export.py::test_hp_ac06_export_matches_calculation[Q05]', 'tests/test_export.py::test_hp_ac06_export_matches_calculation[Q06]', 'tests/test_export.py::test_hp_ac06_export_matches_calculation[Q07]', 'tests/test_export.py::test_hp_ac06_export_matches_calculation[Q08]', 'tests/test_export.py::test_hp_ac06_export_matches_calculation[Q09]', 'tests/test_export.py::test_hp_ac06_export_matches_calculation[Q10]', 'tests/test_export.py::test_hp_ac06_export_matches_calculation[Q11]', 'tests/test_export.py::test_hp_ac06_export_matches_calculation[Q12]', 'tests/test_export.py::test_hp_ac06_export_matches_calculation[Q13]', 'tests/test_export.py::test_hp_ac06_export_matches_calculation[Q14]', 'tests/test_export.py::test_hp_ac06_export_matches_customer_values[Q01]', 'tests/test_export.py::test_hp_ac06_export_matches_customer_values[Q02]', 'tests/test_export.py::test_hp_ac06_export_matches_customer_values[Q03]', 'tests/test_export.py::test_hp_ac06_export_matches_customer_values[Q04]', 'tests/test_export.py::test_hp_ac06_export_matches_customer_values[Q05]', 'tests/test_export.py::test_hp_ac06_export_matches_customer_values[Q06]', 'tests/test_export.py::test_hp_ac06_export_matches_customer_values[Q07]', 'tests/test_export.py::test_hp_ac06_export_matches_customer_values[Q08]', 'tests/test_export.py::test_hp_ac06_export_matches_customer_values[Q09]', 'tests/test_export.py::test_hp_ac06_export_matches_customer_values[Q10]', 'tests/test_export.py::test_hp_ac06_export_matches_customer_values[Q11]', 'tests/test_export.py::test_hp_ac06_export_matches_customer_values[Q12]', 'tests/test_export.py::test_hp_ac06_export_matches_customer_values[Q13]', 'tests/test_export.py::test_hp_ac06_export_matches_customer_values[Q14]', 'tests/test_export.py::test_hp_ac06_export_money_is_integer_cents_and_has_rule_version', 'tests/test_web.py::test_hp_ac05_api_returns_customer_values[Q01]', 'tests/test_web.py::test_hp_ac05_api_returns_customer_values[Q02]', 'tests/test_web.py::test_hp_ac05_api_returns_customer_values[Q03]', 'tests/test_web.py::test_hp_ac05_api_returns_customer_values[Q04]', 'tests/test_web.py::test_hp_ac05_api_returns_customer_values[Q05]', 'tests/test_web.py::test_hp_ac05_api_returns_customer_values[Q06]', 'tests/test_web.py::test_hp_ac05_api_returns_customer_values[Q07]', 'tests/test_web.py::test_hp_ac05_api_returns_customer_values[Q08]', 'tests/test_web.py::test_hp_ac05_api_returns_customer_values[Q09]', 'tests/test_web.py::test_hp_ac05_api_returns_customer_values[Q10]', 'tests/test_web.py::test_hp_ac05_api_returns_customer_values[Q11]', 'tests/test_web.py::test_hp_ac05_api_returns_customer_values[Q12]', 'tests/test_web.py::test_hp_ac05_api_returns_customer_values[Q13]', 'tests/test_web.py::test_hp_ac05_api_returns_customer_values[Q14]', 'tests/test_web.py::test_hp_ac06_displayed_text_is_exactly_the_export[Q12]']"
+  ],
+  "identity_assurance": "self_declared_course_review",
+  "decided_at_utc": "2026-11-23T12:49:44.386657+00:00"
+}
