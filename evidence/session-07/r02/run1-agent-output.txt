@@ -1,0 +1,253 @@
+# R-02 evaluation – agent-output
+checked_at_utc: 2026-11-23T14:10:43.184021+00:00
+python: 3.12.10
+factory_commit: 9a6e0ca5951729b77ef35f47d2a6b047027f2d91
+factory_dirty: True
+product_path: C:\Users\Utilizador\hp-r02-run1
+product_commit: aa19aaf111f24085a19985a693c71dc7a9aca3eb
+product_branch: r02/baseline-run1
+q_base: 3ef83876d663b4ffb7222655c54fe7e4271973c2
+product_git_status_porcelain: (clean)
+files changed since Q-BASE (committed + working tree):
+quotation/export.py | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
+
+## Summary
+{
+  "label": "agent-output",
+  "product_tests": {
+    "returncode": 0,
+    "passed": 153
+  },
+  "acceptance_tests": {
+    "returncode": 1,
+    "failed": 7,
+    "passed": 55
+  },
+  "criteria": {
+    "R02-1": "passed",
+    "R02-2": "passed",
+    "R02-3": "passed",
+    "R02-4": "passed",
+    "R02-5": "failed",
+    "R02-6": "failed",
+    "R02-7": "failed",
+    "R02-8": "passed"
+  },
+  "r02_complete": false,
+  "factory_run": {
+    "run_id": "01b79f0c-b798-4060-9b63-e226723bb758",
+    "factory_input_commit": "9a6e0ca5951729b77ef35f47d2a6b047027f2d91",
+    "factory_dirty_at_start": false,
+    "product_input_commit": "3ef83876d663b4ffb7222655c54fe7e4271973c2",
+    "product_dirty_at_start": false,
+    "product_result_commit": "aa19aaf111f24085a19985a693c71dc7a9aca3eb",
+    "llm": "ollama qwen3:4b {'temperature': 0.0, 'json_mode': True, 'reasoning': False, 'max_output_tokens_implementer': 3072}",
+    "po_cache": {
+      "enabled": false,
+      "hit": false,
+      "key": null
+    },
+    "steps": [
+      "requirements",
+      "implementation",
+      "qa",
+      "human_gate"
+    ],
+    "history": [
+      {
+        "round": 0,
+        "artifact_sha256": "c8729467fad5adf8f64b8bf101dfd250fc9e121c00f7f8aded84a4e36af25bd6",
+        "qa_verdict": "approved",
+        "tests_passed": 153,
+        "tests_failed": 0
+      }
+    ],
+    "correction_rounds": 0,
+    "release_status": "released",
+    "release_blockers": [],
+    "human_decision": "approved",
+    "reviewer": "Francisco",
+    "decided_at_utc": "2026-11-23T14:06:11.114784+00:00",
+    "agent_calls": 2,
+    "agent_credits": 3.8522,
+    "agent_seconds": 177.4,
+    "duration_seconds_incl_human_wait": 553.5539,
+    "human_wait_seconds_approx": 376.2
+  }
+}
+
+## usage.csv rows (agent records of the run, paste into costs/usage.csv)
+2026-11-23,R-02,agent,product-owner-agent,87.6888,seconds,1.9085,"[agent] R-02 baseline run 01b79f0c: success (813 in / 383 out tokens)"
+2026-11-23,R-02,agent,backend-api-agent,47.0757,seconds,1.5177,"[agent] R-02 baseline run 01b79f0c: success (1697 in / 326 out tokens)"
+2026-11-23,R-02,agent,qa-agent,42.6024,seconds,0.426,"[agent] R-02 baseline run 01b79f0c: approved (0 LLM calls)"
+
+## Product tests (python -m pytest tests -q)
+........................................................................ [ 47%]
+........................................................................ [ 94%]
+.........                                                                [100%]
+153 passed in 1.07s
+
+## R-02 acceptance checks (experiments/r02/test_r02_acceptance.py)
+.....................................................F..FFFFFF           [100%]
+================================== FAILURES ===================================
+______________ test_r02_5_display_and_calculation_code_unchanged ______________
+
+base_url = 'http://127.0.0.1:58427'
+
+    def test_r02_5_display_and_calculation_code_unchanged(base_url):
+        for rel in ("quotation/pricing.py", "quotation/web.py", "quotation/catalog.py"):
+>           assert hashlib.sha256((ROOT / rel).read_bytes()).hexdigest() == UNCHANGED_AT_Q_BASE[rel], rel
+E           AssertionError: quotation/pricing.py
+E           assert '15fbbaa9b7b6...2cc0734ebe315' == 'a9124caeafb1...d2cb8bf99ebb6'
+E             
+E             - a9124caeafb1c1514fdff0afda65f5a4ba94409fe344bdb8427d2cb8bf99ebb6
+E             + 15fbbaa9b7b64bcf66221cc3d12edf9d7bf1fdb13124e3677272cc0734ebe315
+
+tests\r02\test_r02_acceptance.py:153: AssertionError
+____ test_r02_6_existing_tests_and_fixtures_unchanged[fixtures/SHA256SUMS] ____
+
+rel = 'fixtures/SHA256SUMS'
+
+    @pytest.mark.parametrize("rel", sorted(r for r in UNCHANGED_AT_Q_BASE if r.startswith(("tests/", "fixtures/"))))
+    def test_r02_6_existing_tests_and_fixtures_unchanged(rel):
+>       assert hashlib.sha256((ROOT / rel).read_bytes()).hexdigest() == UNCHANGED_AT_Q_BASE[rel]
+E       AssertionError: assert 'ad5ab37fb8e0...0d7f42150dec6' == '64b86226e26c...f6faff2c964f0'
+E         
+E         - 64b86226e26c1ba9fd47fa6e81e542e8f76f152126b3d61e87df6faff2c964f0
+E         + ad5ab37fb8e0c5d0f42add36c8137c6280cc08713cdd7bd029b0d7f42150dec6
+
+tests\r02\test_r02_acceptance.py:166: AssertionError
+___ test_r02_6_existing_tests_and_fixtures_unchanged[tests/test_export.py] ____
+
+rel = 'tests/test_export.py'
+
+    @pytest.mark.parametrize("rel", sorted(r for r in UNCHANGED_AT_Q_BASE if r.startswith(("tests/", "fixtures/"))))
+    def test_r02_6_existing_tests_and_fixtures_unchanged(rel):
+>       assert hashlib.sha256((ROOT / rel).read_bytes()).hexdigest() == UNCHANGED_AT_Q_BASE[rel]
+E       AssertionError: assert '24722903b214...38f56ae736643' == '79d2188d8044...56df994a758f8'
+E         
+E         - 79d2188d8044d0d1453ec4bb92fcd1d0a369502393dfe133fef56df994a758f8
+E         + 24722903b214f8f2aa9c244f97042c6fba25aab9df8451bdfc038f56ae736643
+
+tests\r02\test_r02_acceptance.py:166: AssertionError
+__ test_r02_6_existing_tests_and_fixtures_unchanged[tests/test_fixtures.py] ___
+
+rel = 'tests/test_fixtures.py'
+
+    @pytest.mark.parametrize("rel", sorted(r for r in UNCHANGED_AT_Q_BASE if r.startswith(("tests/", "fixtures/"))))
+    def test_r02_6_existing_tests_and_fixtures_unchanged(rel):
+>       assert hashlib.sha256((ROOT / rel).read_bytes()).hexdigest() == UNCHANGED_AT_Q_BASE[rel]
+E       AssertionError: assert '9e26c3b014e7...863bbc65ea2b4' == '5aa7f30728c2...2da40fc394d59'
+E         
+E         - 5aa7f30728c215962db9bf4745647d3c7c752bd6ccddd1942862da40fc394d59
+E         + 9e26c3b014e735873276a6ea1c10760b72e5208fc9cc91859f5863bbc65ea2b4
+
+tests\r02\test_r02_acceptance.py:166: AssertionError
+_ test_r02_6_existing_tests_and_fixtures_unchanged[tests/test_reference_cases.py] _
+
+rel = 'tests/test_reference_cases.py'
+
+    @pytest.mark.parametrize("rel", sorted(r for r in UNCHANGED_AT_Q_BASE if r.startswith(("tests/", "fixtures/"))))
+    def test_r02_6_existing_tests_and_fixtures_unchanged(rel):
+>       assert hashlib.sha256((ROOT / rel).read_bytes()).hexdigest() == UNCHANGED_AT_Q_BASE[rel]
+E       AssertionError: assert 'c33649e176e5...835f1c171f744' == 'a2e2862d71d9...d96a6f0cd02f1'
+E         
+E         - a2e2862d71d9ebdc8e26ba7dc95f48c5b13c22a47e80b1ee959d96a6f0cd02f1
+E         + c33649e176e5b69db6c02d3fa24143e579a7db79e5982b61ce9835f1c171f744
+
+tests\r02\test_r02_acceptance.py:166: AssertionError
+_____ test_r02_6_existing_tests_and_fixtures_unchanged[tests/test_web.py] _____
+
+rel = 'tests/test_web.py'
+
+    @pytest.mark.parametrize("rel", sorted(r for r in UNCHANGED_AT_Q_BASE if r.startswith(("tests/", "fixtures/"))))
+    def test_r02_6_existing_tests_and_fixtures_unchanged(rel):
+>       assert hashlib.sha256((ROOT / rel).read_bytes()).hexdigest() == UNCHANGED_AT_Q_BASE[rel]
+E       AssertionError: assert 'e31d636febb3...6785f6c9cc535' == 'c5c49e760560...a59d1b84772f2'
+E         
+E         - c5c49e7605605bdbe051be537f6bd51957d59f37a7c1bb58a24a59d1b84772f2
+E         + e31d636febb38145340ec72021d0794d09320dca6e603ed84ed6785f6c9cc535
+
+tests\r02\test_r02_acceptance.py:166: AssertionError
+____________ test_r02_7_product_has_own_passing_test_for_the_field ____________
+
+    def test_r02_7_product_has_own_passing_test_for_the_field():
+        own = [p for p in sorted((ROOT / "tests").rglob("test_*.py")) if "calculation_note" in p.read_text(encoding="utf-8")]
+        assert own, "no product test mentions calculation_note"
+        proc = subprocess.run([sys.executable, "-m", "pytest", "tests", "-q", "-k", "calculation_note", "-p", "no:cacheprovider"],
+                              cwd=ROOT, capture_output=True, text=True, timeout=300)
+        # returncode 5 = no test selected
+>       assert proc.returncode == 0, proc.stdout[-2000:] + proc.stderr[-2000:]
+E       AssertionError: 
+E         153 deselected in 0.05s
+E         
+E       assert 5 == 0
+E        +  where 5 = CompletedProcess(args=['C:\\Users\\Utilizador\\agentic_ai\\.venv\\Scripts\\python.exe', '-m', 'pytest', 'tests', '-q', '-k', 'calculation_note', '-p', 'no:cacheprovider'], returncode=5, stdout='\n153 deselected in 0.05s\n', stderr='').returncode
+
+tests\r02\test_r02_acceptance.py:176: AssertionError
+=================================== PASSES ====================================
+=========================== short test summary info ===========================
+PASSED tests/r02/test_r02_acceptance.py::test_r02_1_calculation_note_exact_text[Q01]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_1_calculation_note_exact_text[Q02]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_1_calculation_note_exact_text[Q03]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_1_calculation_note_exact_text[Q04]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_1_calculation_note_exact_text[Q05]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_1_calculation_note_exact_text[Q06]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_1_calculation_note_exact_text[Q07]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_1_calculation_note_exact_text[Q08]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_1_calculation_note_exact_text[Q09]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_1_calculation_note_exact_text[Q10]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_1_calculation_note_exact_text[Q11]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_1_calculation_note_exact_text[Q12]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_1_calculation_note_exact_text[Q13]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_1_calculation_note_exact_text[Q14]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_2_values_unchanged[Q01]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_2_values_unchanged[Q02]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_2_values_unchanged[Q03]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_2_values_unchanged[Q04]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_2_values_unchanged[Q05]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_2_values_unchanged[Q06]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_2_values_unchanged[Q07]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_2_values_unchanged[Q08]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_2_values_unchanged[Q09]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_2_values_unchanged[Q10]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_2_values_unchanged[Q11]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_2_values_unchanged[Q12]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_2_values_unchanged[Q13]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_2_values_unchanged[Q14]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_3_no_other_new_fields[Q01]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_3_no_other_new_fields[Q02]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_3_no_other_new_fields[Q03]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_3_no_other_new_fields[Q04]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_3_no_other_new_fields[Q05]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_3_no_other_new_fields[Q06]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_3_no_other_new_fields[Q07]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_3_no_other_new_fields[Q08]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_3_no_other_new_fields[Q09]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_3_no_other_new_fields[Q10]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_3_no_other_new_fields[Q11]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_3_no_other_new_fields[Q12]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_3_no_other_new_fields[Q13]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_3_no_other_new_fields[Q14]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_4_error_handling_unchanged[E01]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_4_error_handling_unchanged[E02]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_4_error_handling_unchanged[E03]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_4_error_handling_unchanged[E04]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_4_error_handling_unchanged[E05]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_4_error_handling_unchanged[E06]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_4_error_handling_unchanged[E07]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_4_error_handling_unchanged[E08]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_4_error_handling_unchanged[E09]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_4_error_handling_unchanged[E10]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_4_web_api_invalid_quantity_is_error_without_quote
+PASSED tests/r02/test_r02_acceptance.py::test_r02_6_existing_tests_and_fixtures_unchanged[fixtures/HansePack_Katalog.json]
+PASSED tests/r02/test_r02_acceptance.py::test_r02_6_existing_tests_and_fixtures_unchanged[fixtures/HansePack_Referenzfaelle.json]
+FAILED tests/r02/test_r02_acceptance.py::test_r02_5_display_and_calculation_code_unchanged
+FAILED tests/r02/test_r02_acceptance.py::test_r02_6_existing_tests_and_fixtures_unchanged[fixtures/SHA256SUMS]
+FAILED tests/r02/test_r02_acceptance.py::test_r02_6_existing_tests_and_fixtures_unchanged[tests/test_export.py]
+FAILED tests/r02/test_r02_acceptance.py::test_r02_6_existing_tests_and_fixtures_unchanged[tests/test_fixtures.py]
+FAILED tests/r02/test_r02_acceptance.py::test_r02_6_existing_tests_and_fixtures_unchanged[tests/test_reference_cases.py]
+FAILED tests/r02/test_r02_acceptance.py::test_r02_6_existing_tests_and_fixtures_unchanged[tests/test_web.py]
+FAILED tests/r02/test_r02_acceptance.py::test_r02_7_product_has_own_passing_test_for_the_field
+7 failed, 55 passed in 2.76s

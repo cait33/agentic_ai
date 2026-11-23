@@ -1,0 +1,18 @@
+{
+  "US1": [
+    {
+      "description": "The calculation_note key exists with exact text 'Net amounts; shipping shown separately.' in the exported JSON"
+    },
+    {
+      "description": "All existing keys and values remain unchanged"
+    }
+  ],
+  "US2": [
+    {
+      "description": "New test passes for calculation_note field"
+    },
+    {
+      "description": "All existing 153 tests remain passed"
+    }
+  ]
+}

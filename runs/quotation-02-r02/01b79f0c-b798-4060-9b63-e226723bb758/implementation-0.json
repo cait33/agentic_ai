@@ -1,0 +1,8 @@
+{
+  "status": "success",
+  "target_file": "quotation/export.py",
+  "artifact_sha256": "c8729467fad5adf8f64b8bf101dfd250fc9e121c00f7f8aded84a4e36af25bd6",
+  "entrypoint_name": "quote_to_json",
+  "notes": "Added the 'calculation_note' key with the exact text 'Net amounts; shipping shown separately.' to the JSON output. All existing keys and values remain unchanged. The function signature and behavior are preserved exactly as required.",
+  "error": null
+}
