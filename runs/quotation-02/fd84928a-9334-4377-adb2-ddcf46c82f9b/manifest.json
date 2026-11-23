@@ -1,0 +1,71 @@
+{
+  "run_id": "fd84928a-9334-4377-adb2-ddcf46c82f9b",
+  "workflow_id": "fd84928a-9334-4377-adb2-ddcf46c82f9b",
+  "project_id": "quotation-02",
+  "customer": "HansePack Handelsgesellschaft (fiktiv)",
+  "customer_task_id": "CUST-002",
+  "issue": "https://github.com/franciscotbatista99/client-02-quotation/issues/2",
+  "product_repo": "https://github.com/franciscotbatista99/client-02-quotation",
+  "product_path": "C:\\Germany_Uni\\Agentic_AI_Projekt\\client-02-quotation",
+  "factory_input_commit": "9ffbf75e35b7c257c090846fe237399c2de94cc8",
+  "factory_dirty_at_start": true,
+  "product_input_commit": "c8d80e3f5e7e6a67be4b2cf41e48495b42d95760",
+  "product_dirty_at_start": true,
+  "product_result_commit": null,
+  "llm_provider": "ollama",
+  "llm_model": "qwen3:4b",
+  "llm_settings": {
+    "temperature": 0.0,
+    "json_mode": true,
+    "reasoning": false,
+    "max_output_tokens_implementer": 3072
+  },
+  "mode": "verify_only",
+  "implementer_mode": "python_module",
+  "po_cache": {
+    "enabled": false,
+    "hit": false,
+    "key": null
+  },
+  "agents": [
+    "qa-agent"
+  ],
+  "steps": [
+    "qa",
+    "human_gate"
+  ],
+  "correction_rounds": 0,
+  "max_correction_rounds": 2,
+  "history": [
+    {
+      "round": 0,
+      "artifact_sha256": "15fbbaa9b7b64bcf66221cc3d12edf9d7bf1fdb13124e3677272cc0734ebe315",
+      "qa_verdict": "approved",
+      "tests_passed": 97,
+      "tests_failed": 0
+    }
+  ],
+  "errors": [],
+  "target_file": "quotation/pricing.py",
+  "final_artifact_sha256": "15fbbaa9b7b64bcf66221cc3d12edf9d7bf1fdb13124e3677272cc0734ebe315",
+  "criteria_product_check": {
+    "HP_AC06": "passed",
+    "HP_AC01": "passed",
+    "HP_AC02": "passed",
+    "HP_AC03": "passed",
+    "HP_AC04": "passed"
+  },
+  "release_status": "released",
+  "release_blockers": [],
+  "agent_recommendation": "approved",
+  "human_decision": "approved",
+  "reviewer": "Daniil",
+  "decided_at_utc": "2026-11-23T11:19:36.333823+00:00",
+  "agent_calls": 0,
+  "agent_credits": 0.0091,
+  "token_usage_complete": true,
+  "started_at_utc": "2026-11-23T11:18:44.738834+00:00",
+  "duration_seconds_incl_human_wait": 51.5977,
+  "trace_file": "trace.jsonl",
+  "manual_interventions": []
+}
