@@ -138,3 +138,4 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-11-23,R-02,human,Rafael,3,hours,300,"[r02] review + merge of R-02 setup PR, F-BASE tag 9a6e0ca, time tracking, evidence"
 2026-11-23,R-02,human,Francisco,1.5,hours,150.0,"[r02] Q-BASE tag, setup PR, worktree, run 01b79f0c operation, gate review (approved 15:06), rework test 4fda164 (~5 min), evaluation + check fix"
 2026-11-23,R-02,human,Rafael,0.5,hours,50.0,"[r02] review + merge of R-02 setup PR, F-BASE tag 9a6e0ca, time tracking, evidence"
+2026-11-23,CUST-002,human,Caitlin,0.75,hours,75.0,"[delivery] S7 worked on creating template and other documents for factory runs for creating the website"
