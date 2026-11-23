@@ -1,0 +1,6 @@
+{
+  "status": "existing",
+  "target_file": "quotation/pricing.py",
+  "artifact_sha256": "a9124caeafb1c1514fdff0afda65f5a4ba94409fe344bdb8427d2cb8bf99ebb6",
+  "notes": "verify-only run: product state not written by an agent"
+}

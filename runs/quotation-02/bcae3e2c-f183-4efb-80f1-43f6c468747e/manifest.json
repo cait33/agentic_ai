@@ -1,0 +1,71 @@
+{
+  "run_id": "bcae3e2c-f183-4efb-80f1-43f6c468747e",
+  "workflow_id": "bcae3e2c-f183-4efb-80f1-43f6c468747e",
+  "project_id": "quotation-02",
+  "customer": "HansePack Handelsgesellschaft (fiktiv)",
+  "customer_task_id": "CUST-002",
+  "issue": "https://github.com/franciscotbatista99/client-02-quotation/issues/2",
+  "product_repo": "https://github.com/franciscotbatista99/client-02-quotation",
+  "product_path": "/Users/fatih/hp-fault",
+  "factory_input_commit": "02f25ed51ac000c201607e116814e4309231e14f",
+  "factory_dirty_at_start": true,
+  "product_input_commit": "aa40d63b71d107de57c19eeb0f0ae0b7f2ebc9e6",
+  "product_dirty_at_start": false,
+  "product_result_commit": null,
+  "llm_provider": "ollama",
+  "llm_model": "qwen3:4b",
+  "llm_settings": {
+    "temperature": 0.0,
+    "json_mode": true,
+    "reasoning": false,
+    "max_output_tokens_implementer": 3072
+  },
+  "mode": "verify_only",
+  "implementer_mode": "python_module",
+  "po_cache": {
+    "enabled": false,
+    "hit": false,
+    "key": null
+  },
+  "agents": [
+    "qa-agent"
+  ],
+  "steps": [
+    "qa",
+    "human_gate"
+  ],
+  "correction_rounds": 0,
+  "max_correction_rounds": 2,
+  "history": [
+    {
+      "round": 0,
+      "artifact_sha256": "a9124caeafb1c1514fdff0afda65f5a4ba94409fe344bdb8427d2cb8bf99ebb6",
+      "qa_verdict": "approved",
+      "tests_passed": 97,
+      "tests_failed": 0
+    }
+  ],
+  "errors": [],
+  "target_file": "quotation/pricing.py",
+  "final_artifact_sha256": "a9124caeafb1c1514fdff0afda65f5a4ba94409fe344bdb8427d2cb8bf99ebb6",
+  "criteria_product_check": {
+    "HP_AC06": "passed",
+    "HP_AC01": "passed",
+    "HP_AC02": "passed",
+    "HP_AC03": "passed",
+    "HP_AC04": "passed"
+  },
+  "release_status": "released",
+  "release_blockers": [],
+  "agent_recommendation": "approved",
+  "human_decision": "approved",
+  "reviewer": "Francisco",
+  "decided_at_utc": "2026-11-23T12:20:37.185454+00:00",
+  "agent_calls": 0,
+  "agent_credits": 0.0055,
+  "token_usage_complete": true,
+  "started_at_utc": "2026-11-23T12:20:21.224159+00:00",
+  "duration_seconds_incl_human_wait": 15.9772,
+  "trace_file": "trace.jsonl",
+  "manual_interventions": []
+}

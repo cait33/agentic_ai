@@ -1,0 +1,22 @@
+{
+  "task_id": "CUST-002",
+  "workflow_id": "991c4f06-502f-4b45-b294-93397d5bd07b",
+  "run_id": "991c4f06-502f-4b45-b294-93397d5bd07b",
+  "round": 0,
+  "reviewer": "Francisco",
+  "decision": "changes_requested",
+  "comment": "Injected discount fault: Q03 13700 instead of 13075 – not released",
+  "visually_checked": true,
+  "reviewed_file": "quotation/pricing.py",
+  "reviewed_artifact_sha256": "447a833b96e66c2a787ab66eb96450b7b60d7df7ff8099d917098ed0e54798b0",
+  "tested_source_commit": "851a7d28cfd9e0a03ab81883dc158fb19e6e146b",
+  "agent_recommendation": "changes_requested",
+  "current_artifact_sha256": "447a833b96e66c2a787ab66eb96450b7b60d7df7ff8099d917098ed0e54798b0",
+  "release_status": "not_released",
+  "release_blockers": [
+    "human decision: changes_requested",
+    "product check not green: verdict=changes_requested, failed=6, errors=0, tests=['tests/test_reference_cases.py::test_hp_ac02_lines_match_customer_values[Q03]', 'tests/test_reference_cases.py::test_hp_ac02_totals_match_customer_values[Q03]', 'tests/test_reference_cases.py::test_hp_ac03_lines_match_customer_values[Q03]', 'tests/test_reference_cases.py::test_hp_ac03_lines_match_customer_values[Q12]', 'tests/test_reference_cases.py::test_hp_ac03_totals_match_customer_values[Q03]', 'tests/test_reference_cases.py::test_hp_ac03_totals_match_customer_values[Q12]']"
+  ],
+  "identity_assurance": "self_declared_course_review",
+  "decided_at_utc": "2026-11-23T12:19:18.998464+00:00"
+}

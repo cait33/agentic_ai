@@ -1,0 +1,19 @@
+{
+  "task_id": "CUST-002",
+  "workflow_id": "bcae3e2c-f183-4efb-80f1-43f6c468747e",
+  "run_id": "bcae3e2c-f183-4efb-80f1-43f6c468747e",
+  "round": 0,
+  "reviewer": "Francisco",
+  "decision": "approved",
+  "comment": "Correction verified: Q03 13075 again, all Q01-Q14 / E01-E10 green",
+  "visually_checked": true,
+  "reviewed_file": "quotation/pricing.py",
+  "reviewed_artifact_sha256": "a9124caeafb1c1514fdff0afda65f5a4ba94409fe344bdb8427d2cb8bf99ebb6",
+  "tested_source_commit": "aa40d63b71d107de57c19eeb0f0ae0b7f2ebc9e6",
+  "agent_recommendation": "approved",
+  "current_artifact_sha256": "a9124caeafb1c1514fdff0afda65f5a4ba94409fe344bdb8427d2cb8bf99ebb6",
+  "release_status": "released",
+  "release_blockers": [],
+  "identity_assurance": "self_declared_course_review",
+  "decided_at_utc": "2026-11-23T12:20:37.185454+00:00"
+}

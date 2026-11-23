@@ -1,0 +1,55 @@
+{
+  "task_id": "CUST-002",
+  "verdict": "changes_requested",
+  "summary": "Multiple tests for customer value matching in quotation cases failed due to discrepancies in discount calculations and expected values. The failures occur across both line items and totals for AC02 and AC03 quotation cases with Q03 and Q12 rule versions.",
+  "findings": [
+    {
+      "severity": "high",
+      "test": "test_hp_ac02_lines_match_customer_values[Q03]",
+      "description": "Line items for AC02 quotation case Q03 failed: Expected discount_percent=5 and discount_cents=625 but actual has discount_percent=0 and discount_cents=0."
+    },
+    {
+      "severity": "high",
+      "test": "test_hp_ac02_totals_match_customer_values[Q03]",
+      "description": "Totals for AC02 quotation case Q03 failed: Expected goods_net_cents=11875 but actual is 12500; total_cents discrepancy of 625."
+    },
+    {
+      "severity": "high",
+      "test": "test_hp_ac03_lines_match_customer_values[Q03]",
+      "description": "Line items for AC03 quotation case Q03 failed: Expected discount_percent=5 and discount_cents=625 but actual has discount_percent=0 and discount_cents=0."
+    },
+    {
+      "severity": "high",
+      "test": "test_hp_ac03_lines_match_customer_values[Q12]",
+      "description": "Line items for AC03 quotation case Q12 failed: Expected discount_percent=5 and discount_cents=625 but actual has discount_percent=0 and discount_cents=0."
+    },
+    {
+      "severity": "high",
+      "test": "test_hp_ac03_totals_match_customer_values[Q03]",
+      "description": "Totals for AC03 quotation case Q03 failed: Expected goods_net_cents=11875 but actual is 12500; total_cents discrepancy of 625."
+    },
+    {
+      "severity": "high",
+      "test": "test_hp_ac03_totals_match_customer_values[Q12]",
+      "description": "Totals for AC03 quotation case Q12 failed: Expected goods_net_cents=15875 but actual is 16500; total_cents discrepancy of 625."
+    }
+  ],
+  "test_run": {
+    "exit_code": 1,
+    "passed": 91,
+    "failed": 6,
+    "errors": 0,
+    "skipped": 1,
+    "failed_tests": [
+      "tests/test_reference_cases.py::test_hp_ac02_lines_match_customer_values[Q03]",
+      "tests/test_reference_cases.py::test_hp_ac02_totals_match_customer_values[Q03]",
+      "tests/test_reference_cases.py::test_hp_ac03_lines_match_customer_values[Q03]",
+      "tests/test_reference_cases.py::test_hp_ac03_lines_match_customer_values[Q12]",
+      "tests/test_reference_cases.py::test_hp_ac03_totals_match_customer_values[Q03]",
+      "tests/test_reference_cases.py::test_hp_ac03_totals_match_customer_values[Q12]"
+    ],
+    "timed_out": false,
+    "output_tail": "P-BOX', 'quantity': 50, 'unit_price_cents': 250, 'list_amount_cents': 12500, 'discount_percent': 0, 'discount_cents': 0, 'net_cents': 12500} != {'sku': 'HP-BOX', 'quantity': 50, 'unit_price_cents': 250, 'list_amount_cents': 12500, 'discount_percent': 5, 'discount_cents': 625, 'net_cents': 11875}\nE     Use -v to get more diff\n________________ test_hp_ac02_totals_match_customer_values[Q03] ________________\ntests/test_reference_cases.py:83: in test_hp_ac02_totals_match_customer_values\n    assert {field: quote[field] for field in TOTAL_FIELDS} == case[\"expected\"][RULE_VERSION]\nE   AssertionError: assert {'currency': ...s': 1200, ...} == {'currency': ...s': 1200, ...}\nE     \nE     Omitting 3 identical items, use -vv to show\nE     Differing items:\nE     {'total_cents': 13700} != {'total_cents': 13075}\nE     {'goods_net_cents': 12500} != {'goods_net_cents': 11875}\nE     Use -v to get more diff\n________________ test_hp_ac03_lines_match_customer_values[Q03] _________________\ntests/test_reference_cases.py:113: in test_hp_ac03_lines_match_customer_values\n    assert lines == case[\"expected_lines\"]\nE   AssertionError: assert [{'sku': 'HP-...: 12500, ...}] == [{'sku': 'HP-...: 12500, ...}]\nE     \nE     At index 0 diff: {'sku': 'HP-BOX', 'quantity': 50, 'unit_price_cents': 250, 'list_amount_cents': 12500, 'discount_percent': 0, 'discount_cents': 0, 'net_cents': 12500} != {'sku': 'HP-BOX', 'quantity': 50, 'unit_price_cents': 250, 'list_amount_cents': 12500, 'discount_percent': 5, 'discount_cents': 625, 'net_cents': 11875}\nE     Use -v to get more diff\n________________ test_hp_ac03_lines_match_customer_values[Q12] _________________\ntests/test_reference_cases.py:113: in test_hp_ac03_lines_match_customer_values\n    assert lines == case[\"expected_lines\"]\nE   AssertionError: assert [{'sku': 'HP-...': 4000, ...}] == [{'sku': 'HP-...': 4000, ...}]\nE     \nE     At index 0 diff: {'sku': 'HP-BOX', 'quantity': 50, 'unit_price_cents': 250, 'list_amount_cents': 12500, 'discount_percent': 0, 'discount_cents': 0, 'net_cents': 12500} != {'sku': 'HP-BOX', 'quantity': 50, 'unit_price_cents': 250, 'list_amount_cents': 12500, 'discount_percent': 5, 'discount_cents': 625, 'net_cents': 11875}\nE     Use -v to get more diff\n________________ test_hp_ac03_totals_match_customer_values[Q03] ________________\ntests/test_reference_cases.py:120: in test_hp_ac03_totals_match_customer_values\n    assert {field: quote[field] for field in TOTAL_FIELDS} == case[\"expected\"][RULE_VERSION]\nE   AssertionError: assert {'currency': ...s': 1200, ...} == {'currency': ...s': 1200, ...}\nE     \nE     Omitting 3 identical items, use -vv to show\nE     Differing items:\nE     {'total_cents': 13700} != {'total_cents': 13075}\nE     {'goods_net_cents': 12500} != {'goods_net_cents': 11875}\nE     Use -v to get more diff\n________________ test_hp_ac03_totals_match_customer_values[Q12] ________________\ntests/test_reference_cases.py:120: in test_hp_ac03_totals_match_customer_values\n    assert {field: quote[field] for field in TOTAL_FIELDS} == case[\"expected\"][RULE_VERSION]\nE   AssertionError: assert {'currency': ...s': 1200, ...} == {'currency': ...s': 1200, ...}\nE     \nE     Omitting 3 identical items, use -vv to show\nE     Differing items:\nE     {'total_cents': 17700} != {'total_cents': 17075}\nE     {'goods_net_cents': 16500} != {'goods_net_cents': 15875}\nE     Use -v to get more diff\n=========================== short test summary info ============================\nFAILED tests/test_reference_cases.py::test_hp_ac02_lines_match_customer_values[Q03]\nFAILED tests/test_reference_cases.py::test_hp_ac02_totals_match_customer_values[Q03]\nFAILED tests/test_reference_cases.py::test_hp_ac03_lines_match_customer_values[Q03]\nFAILED tests/test_reference_cases.py::test_hp_ac03_lines_match_customer_values[Q12]\nFAILED tests/test_reference_cases.py::test_hp_ac03_totals_match_customer_values[Q03]\nFAILED tests/test_reference_cases.py::test_hp_ac03_totals_match_customer_values[Q12]\n6 failed, 91 passed, 1 skipped in 0.07s\n"
+  },
+  "requires_human_approval": true
+}
