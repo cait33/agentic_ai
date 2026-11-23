@@ -116,3 +116,8 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-11-16,CUST-002,agent,qa-agent,14.6635,seconds,1.1966,"[agent] run 6b975659 round 0: 8 passed / 9 failed, changes_requested (1306 in / 595 out tokens)"
 2026-11-16,CUST-002,agent,backend-api-agent,29.9805,seconds,1.4297,"[agent] run 6b975659 round 1 (QA feedback): import fixed (3717 in / 1388 out tokens)"
 2026-11-16,CUST-002,agent,qa-agent,1.3128,seconds,0.0131,"[agent] run 6b975659 round 1: 17 passed / 0 failed, approved, 0 LLM calls"
+2026-11-23,CUST-002,human,Fatih,0.25,hours,25.0,"[delivery] product checks for all Q01-Q14 / E01-E10 + JSON export contract test tests/test_export.py (product PR #9)"
+2026-11-23,FACTORY-S7,human,Fatih,0.25,hours,25.0,"[factory_dev] Factory gate tests passed/blocked/correction with mocked LLM tests/factory/test_fault_gate.py (PR #59)"
+2026-11-23,FACTORY-S7,human,Fatih,0.2,hours,20.0,"[factory_dev] injected discount fault on product branch t7/injected-discount-fault, fault run 991c4f06 + correction run bcae3e2c (PR #60)"
+2026-11-23,FACTORY-S7,agent,qa-agent,53.0565,seconds,1.583,"[agent] fault run 991c4f06 (verify-only, product 851a7d2): 91 passed / 6 failed (Q03, Q12), changes_requested, not_released (1565 in / 528 out tokens)"
+2026-11-23,FACTORY-S7,agent,qa-agent,0.5456,seconds,0.0055,"[agent] correction run bcae3e2c (verify-only, product aa40d63): 97 passed / 0 failed, approved, released, 0 LLM calls"
