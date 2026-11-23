@@ -1,0 +1,8 @@
+{
+  "status": "success",
+  "target_file": "quotation/export.py",
+  "artifact_sha256": "c462738fa596578b33db4910ece9b327a7a051d9a86ace79b1e17de676afa1c1",
+  "entrypoint_name": "quote_to_json",
+  "notes": "Fixed NameError by adding 'import json' and kept the module docstring and function signature unchanged as required. All business logic is deterministic and copies values directly from the input quote without modification.",
+  "error": null
+}

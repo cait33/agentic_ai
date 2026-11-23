@@ -1,0 +1,8 @@
+{
+  "status": "success",
+  "target_file": "quotation/export.py",
+  "artifact_sha256": "310446b5d7b8cd47c870e8aa0675fc53c771ddf701f75fb93b183c994d83f959",
+  "entrypoint_name": "quote_to_json",
+  "notes": "Implemented quote_to_json as per the interface specification. Copied values directly from the input quote without modification. Used standard library json to format the output with ensure_ascii=False and indent=2. All monetary values are integer cents as specified in the customer brief.",
+  "error": null
+}
