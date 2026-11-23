@@ -5,8 +5,8 @@ Complete the HansePack quotation calculator for the original HP-V1 rules (HP-AC0
 ## Tasks/Responsibilities
 
 | Task | Person | What |
-| ---- | ------ | ---- |
-| 1 | Daniil | Input validation E06/E09/E10 + CLI in `quotation/pricing.py` (product `c8d80e3`, pushed directly; Factory brief `docs/customer-02/brief-t7.md`, PR #58); run evidence: TODO (Daniil) |
+| ---- | ----- | ---- |
+| 1 | Daniil| Customer task E06/E09/E10 (input validation + CLI) through the Factory: `--verify-only` run `fd84928a-9334-4377-adb2-ddcf46c82f9b` (`released`), `quotation/pricing.py` (`c8d80e3`), human decision (`Daniil`, `approved`) |
 | 1 | Caitlin | Web UI attempts through the Factory: runs `7272cdc6` (web_slots, no target file) and `fbc26776` (python_module, write outside `quotation/` refused) – both `not_released`, branch `createWebsite2Run`; UI template `5d3ab42` (later replaced) |
 | 1 | Fatih | Customer task "JSON export" through the Factory: export stub + config `projects/quotation-02-export.json` + brief `brief-t7-export.md` (product PR #10, Factory PR #62), real run `d9c8a2eb` (1 correction round after human feedback, `released`), result product PR #12 (`3ef8387`), evidence Factory PR #63 |
 | 1 | Fatih | Small web UI `quotation/web.py` (human-written, standard library `http.server`) + `tests/test_web.py` + README start command (product PR #10) |
@@ -38,7 +38,7 @@ Release candidate = Q-BASE: tag `TODO` → product `TODO`. F-BASE: tag `TODO` �
 
 - Starting point: the S6 agent code (`910ec24`) already gets all Q01–Q14 right. E06 (duplicate SKU), E09 (`True` as quantity) and E10 (quantity 10 001) are not rejected yet, and there is no web UI and no JSON export.
 - Customer issue: #2 (scope, open questions, assumptions; S7 scope E06/E09/E10, web UI, JSON export)
-- **Validation E06/E09/E10** (Daniil, product `c8d80e3`): duplicate SKUs, `bool` quantities and quantities outside 1–10 000 are rejected with `QuoteError` (`type(quantity) is not int`), 1–3 lines; CLI `python -m quotation.pricing '<json>'`. Product checks after the change: 97 passed / 1 skipped (export not yet there). Whether `c8d80e3` came from a Factory run is not evidenced in the repository – TODO (Daniil): run ID or "by hand".
+- **Validation E06/E09/E10** (Daniil, product `c8d80e3`): duplicate SKUs, `bool` quantities and quantities outside 1–10 000 are rejected with `QuoteError` (`type(quantity) is not int`), 1–3 lines; CLI `python -m quotation.pricing '<json>'`. Product checks after the change: 97 passed / 1 skipped (export not yet there). E06/E09/E10 validation and CLI main() added by hand in c8d80e3, then verified via --verify-only run fd84928a-9334-4377-adb2-ddcf46c82f9b..
 - **Web UI** `quotation/web.py` – **human-written** (Fatih), standard library `http.server`, no runtime dependencies:
   - start: `python -m quotation.web` → http://127.0.0.1:8000 (documented in the README)
   - 1–3 lines (article + quantity), "Berechnen", table with all line values and totals, "JSON herunterladen", net notice "Nettobeträge – Lehrprojekt, kein verbindliches Angebot"
@@ -46,6 +46,19 @@ Release candidate = Q-BASE: tag `TODO` → product `TODO`. F-BASE: tag `TODO` �
   - `POST /api/quote` returns exactly `quote_to_json(calculate_quote(...))`; the page renders the table from that text and the download saves the same text → display and export cannot differ
   - Earlier Factory attempts for the UI (Caitlin) failed and stay visible as failed runs: `7272cdc6` (web_slots, target file missing) and `fbc26776` (python_module, write to `site/index.html` refused) – branch `createWebsite2Run`, TODO merge
 - **JSON export** `quotation/export.py` – **written by the Factory agent** (run below): `quote_to_json(quote)` copies the customer fields unchanged (per line SKU, quantity, unit price, list amount, discount %, discount, line net; goods net, shipping, total, currency, `rule_version`), integer cents, `json.dumps(…, ensure_ascii=False, indent=2)`.
+
+### Factory run: input validation E06/E09/E10
+
+Task given to the Factory: reject duplicate SKUs (E06), Boolean quantities (E09) and quantities > 10 000 (E10) in quotation/pricing.py with QuoteError. No silent type coercion or SKU aggregation is allowed, and Q01–Q14 must stay correct. Results are checked by the team's product tests, not by the agent.
+
+|                |                                                                                                                                                                                                                                                                  |
+|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Run            | fd84928a-9334-4377-adb2-ddcf46c82f9b (--verify-only, raw data runs/quotation-02/fd84928a-9334-4377-adb2-ddcf46c82f9b)                                                                                                                                            |
+| Project / task | quotation-02 / CUST-002, customer issue #2                                                                                                                                                                                                                |
+| Inputs         | product commit c8d80e3 (quotation/pricing.py with E06/E09/E10 validation + CLI main()), Factory createWebsite2Run / projects/quotation-02.json, brief docs/customer-02/brief-t7.md|
+| Human gate     | Daniil, approved, review hint: diff + pytest + E06/E09/E10; comment: "All changes to client repo done successfully."|
+| Result         | released (QA: 97 passed / 0 failed, 1 skipped export), product result commit c8d80e3, artifact sha256 15fbbaa9b7b64bcf66221cc3d12edf9d7bf1fdb13124e3677272cc0734ebe315|
+| Manual product work (counts as human work)        | Added strict checks for E06 (duplicate SKU & 1 <= len(items) <= 3), E09 (type(quantity) is int rejecting bool), E10 (1 <= quantity <= 10000), non-dict item guard, and CLI main() in quotation/pricing.py (c8d80e3).|
 
 ### Factory run: JSON export (S7 customer task)
 
@@ -87,7 +100,7 @@ Notes: `factory_dirty_at_start: true` (untracked local files on the operator's m
 - Factory test command: `python -m pytest` in the Factory repo, run separately
 - Product check results:
   - Before the Factory run (`66f9c5e`, after product PR #9): 89 passed / 8 failed / 1 skipped. The 8 failures are E06, E09 and E10, including the no-aggregation and no-coercion checks. The skipped test is the export test, because `quotation/export.py` was not implemented yet.
-  - After the validation (`c8d80e3`): 97 passed / 1 skipped. After adding UI + export stub (`f322fd0`): 109 passed / 44 failed (export + UI tests, as expected).
+    After c8d80e3 / --verify-only fd84928a-9334-4377-adb2-ddcf46c82f9b: 97 passed / 0 failed / 1 skipped (all Q01–Q14 and E01–E10 green; 1 skipped test is test_export.py before quotation/export.py is present).
   - In the export run: round 0 109/44, round 1 153/0.
   - Final candidate `3ef8387`: **153 passed** ([`product-pytest.txt`](session-07/product-pytest.txt), Fatih, 13:54).
 - Expected values unchanged; no differences between implementation and customer values on the candidate, no escalation to the instructor needed.
@@ -155,31 +168,30 @@ Task R-02 (verbatim, `TODO`): add `calculation_note` to exported quotation JSON 
 
 Factory development and the R-02 experiment are recorded separately from customer delivery.
 
-| Category | Who | Quantity | Credits |
-| -------- | --- | -------- | ------- |
-| Customer delivery `CUST-002`: Factory task E06/E09/E10 (brief, run operation) | Daniil | TODO h | TODO |
-| Customer delivery `CUST-002`: Factory task E06/E09/E10 (brief, run operation) | Caitlin | TODO h | TODO |
-| Customer delivery `CUST-002`: web UI + JSON export | Daniil | TODO h | TODO |
-| Customer delivery `CUST-002`: web UI + JSON export | Caitlin | TODO h | TODO |
-| Customer delivery `CUST-002`: product checks Q01–Q14 / E01–E10 + export test (product PR #9) | Fatih | 0.25 h | 25.00 |
-| Customer delivery `CUST-002`: web UI (human-written), export stub, UI tests, README, export task config + brief (product PR #10, Factory PR #62) | Fatih | 0.4 h | 40.00 |
-| Customer delivery `CUST-002`: export run operation, result PR #12, record-result, candidate checks, fresh checkout (Factory PR #63) | Fatih | 0.2 h | 20.00 |
-| Customer delivery `CUST-002`: time tracking, plan, this index | Rafael | TODO h | TODO |
-| Review `CUST-002`: human UI/export review | TODO | TODO h | TODO |
-| Review `CUST-002`: human gate (task run, fault run, correction run) | Francisco | TODO h | TODO |
-| Factory development `FACTORY-S7`: gate tests passed/blocked (mocked LLM, PR #59) | Fatih | 0.25 h | 25.00 |
-| Factory development `FACTORY-S7`: gate tests passed/blocked (mocked LLM) | Francisco | TODO h | TODO |
-| Factory development `FACTORY-S7`: fault case (fault branch, fault + correction runs, PR #60) | Fatih | 0.2 h | 20.00 |
-| Factory development `FACTORY-S7`: fault case (fault branch, fault + correction runs) | Francisco | TODO h | TODO |
-| R-02 baseline (separate): setup, run operation, recording | Rafael | TODO h | TODO |
-| R-02 baseline (separate): support | Francisco | TODO h | TODO |
-| Agents `CUST-002`: export run `d9c8a2eb` (incl. failed round 0) | – | 4 LLM calls | 5.60 |
-| Agents `CUST-002`: failed UI runs `7272cdc6` + `fbc26776` (Caitlin, branch `createWebsite2Run`) | – | 1 LLM call | 1.81 |
-| Agents `CUST-002`: validation `c8d80e3` | – | unknown (no run evidence) | unknown |
-| Agents `FACTORY-S7`: fault run `991c4f06` + correction run `bcae3e2c` | – | 1 LLM call | 1.59 |
-| Agents `R-02`: run `TODO` (incl. failed runs) | – | TODO LLM calls | TODO |
-| Agents: test runs not in the repository | – | unknown | unknown |
-| CI | – | TODO (none – Actions disabled / N runs incl. failed runs) | TODO |
+| Category | Who | Quantity                                                  | Credits |
+| -------- | --- |-----------------------------------------------------------|---------|
+| Customer delivery `CUST-002`: Factory task E06/E09/E10 validation, CLI `main()`, `--verify-only` gate & cleanup (`c8d80e3`, `fd84928a-9334-4377-adb2-ddcf46c82f9b`) | Daniil | 1.5 h                                                     | 150.00  |
+| Customer delivery `CUST-002`: Factory task E06/E09/E10 (brief, run operation) | Caitlin | TODO h                                                    | TODO    |
+| Customer delivery `CUST-002`: web UI + JSON export | Caitlin | TODO h                                                    | TODO    |
+| Customer delivery `CUST-002`: product checks Q01–Q14 / E01–E10 + export test (product PR #9) | Fatih | 0.25 h                                                    | 25.00   |
+| Customer delivery `CUST-002`: web UI (human-written), export stub, UI tests, README, export task config + brief (product PR #10, Factory PR #62) | Fatih | 0.4 h                                                     | 40.00   |
+| Customer delivery `CUST-002`: export run operation, result PR #12, record-result, candidate checks, fresh checkout (Factory PR #63) | Fatih | 0.2 h                                                     | 20.00   |
+| Customer delivery `CUST-002`: time tracking, plan, this index | Rafael | TODO h                                                    | TODO    |
+| Review `CUST-002`: human UI/export review | TODO | TODO h                                                    | TODO    |
+| Review `CUST-002`: human gate (task run, fault run, correction run) | Francisco | TODO h                                                    | TODO    |
+| Factory development `FACTORY-S7`: gate tests passed/blocked (mocked LLM, PR #59) | Fatih | 0.25 h                                                    | 25.00   |
+| Factory development `FACTORY-S7`: gate tests passed/blocked (mocked LLM) | Francisco | TODO h                                                    | TODO    |
+| Factory development `FACTORY-S7`: fault case (fault branch, fault + correction runs, PR #60) | Fatih | 0.2 h                                                     | 20.00   |
+| Factory development `FACTORY-S7`: fault case (fault branch, fault + correction runs) | Francisco | TODO h                                                    | TODO    |
+| R-02 baseline (separate): setup, run operation, recording | Rafael | TODO h                                                    | TODO    |
+| R-02 baseline (separate): support | Francisco | TODO h                                                    | TODO    |
+| Agents `CUST-002`: export run `d9c8a2eb` (incl. failed round 0) | – | 4 LLM calls                                               | 5.60    |
+| Agents `CUST-002`: failed UI runs `7272cdc6` + `fbc26776` (Caitlin, branch `createWebsite2Run`) | – | 1 LLM call                                                | 1.81    |
+| Agents `CUST-002`: validation `c8d80e3` | – | unknown (no run evidence)                                 | unknown |
+| Agents `FACTORY-S7`: fault run `991c4f06` + correction run `bcae3e2c` | – | 1 LLM call                                                | 1.59    |
+| Agents `R-02`: run `TODO` (incl. failed runs) | – | TODO LLM calls                                            | TODO    |
+| Agents: test runs not in the repository | – | unknown                                                   | unknown |
+| CI | – | TODO (none – Actions disabled / N runs incl. failed runs) | TODO    |
 
 Unknown values are marked `unknown`, not 0.
 

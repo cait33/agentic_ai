@@ -128,3 +128,6 @@ date,task_id,actor_type,actor,quantity,unit,credits,notes
 2026-11-23,CUST-002,agent,qa-agent,58.0638,seconds,1.652,"[agent] export run d9c8a2eb round 0: 109 passed / 44 failed, assessment unparseable -> escalate_to_human (2031 in / 768 out tokens)"
 2026-11-23,CUST-002,agent,backend-api-agent,26.1066,seconds,1.3101,"[agent] export run d9c8a2eb round 1 (human feedback): import fixed (1682 in / 386 out tokens)"
 2026-11-23,CUST-002,agent,qa-agent,1.9684,seconds,0.0197,"[agent] export run d9c8a2eb round 1: 153 passed / 0 failed, approved, 0 LLM calls"
+2026-11-23,CUST-002,human,Daniil,0.6,hours,60.0,"[delivery] S7 HP-V1 input validation in quotation/pricing.py: E06 (duplicate SKUs & 1..3 items), E09 (strict type(q) is int rejecting bools), E10 (1..10000 range), and non-dict item guard"
+2026-11-23,CUST-002,human,Daniil,0.4,hours,40.0,"[delivery] S7 CLI entry point main() in quotation/pricing.py and PowerShell/JSON verification against all 97 product tests"
+2026-11-23,CUST-002,human,Daniil,0.5,hours,50.0,"[review] S7 human gate and branch cleanup: ran --verify-only fd84928a-9334-4377-adb2-ddcf46c82f9b (approved, released)"
