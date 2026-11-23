@@ -171,8 +171,7 @@ Factory development and the R-02 experiment are recorded separately from custome
 | Category | Who | Quantity                                                  | Credits |
 | -------- | --- |-----------------------------------------------------------|---------|
 | Customer delivery `CUST-002`: Factory task E06/E09/E10 validation, CLI `main()`, `--verify-only` gate & cleanup (`c8d80e3`, `fd84928a-9334-4377-adb2-ddcf46c82f9b`) | Daniil | 1.5 h                                                     | 150.00  |
-| Customer delivery `CUST-002`: Factory task E06/E09/E10 (brief, run operation) | Caitlin | TODO h                                                    | TODO    |
-| Customer delivery `CUST-002`: web UI + JSON export | Caitlin | TODO h                                                    | TODO    |
+| Customer delivery `CUST-002`: attempting web UI + JSON export | Caitlin | 0.75 h                                                    | 75.0    |
 | Customer delivery `CUST-002`: product checks Q01–Q14 / E01–E10 + export test (product PR #9) | Fatih | 0.25 h                                                    | 25.00   |
 | Customer delivery `CUST-002`: web UI (human-written), export stub, UI tests, README, export task config + brief (product PR #10, Factory PR #62) | Fatih | 0.4 h                                                     | 40.00   |
 | Customer delivery `CUST-002`: export run operation, result PR #12, record-result, candidate checks, fresh checkout (Factory PR #63) | Fatih | 0.2 h                                                     | 20.00   |
