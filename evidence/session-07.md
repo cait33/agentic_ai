@@ -18,7 +18,7 @@ Complete the HansePack quotation calculator for the original HP-V1 rules (HP-AC0
 | 4 | Rafael | Time tracking, plan deviations, this index |
 
 Only existing roles (`organization/roles.yaml`) were used; no new agents or roles.
-Merged without a second review: TODO; direct pushes to `main`: TODO. Reviewed by a second person: TODO.
+Merged without a second review: TODO; direct pushes to `main`: Factory `df169ef` (evidence skeleton), TODO. Reviewed by a second person: TODO.
 
 
 ## Repositories and commits
@@ -195,6 +195,6 @@ Plan deviations: TODO (planned vs. actual and reason, incl. budget over/under).
 
 ## Next steps (max. 3)
 
-1. S8: CR-02 / HP-V2 shipping rule (1500 cent below 40 000 cent goods net, free from 40 000) through the Factory; tests against the HP-V2 expectations, versioned release and handover (HP-AC08, HP-AC09).
-2. S8: implement the planned Factory change and repeat R-02 on the same Q-BASE with the same model; compare with this baseline.
-3. TODO (open finding from today)
+1. S8 customer change CR-02 / HP-V2 through the Factory: shipping 1500 cent below 40 000 cent goods net after discount, free from exactly 40 000. Regression of all Q01–Q14 under HP-V2 and E01–E10 (line values and discounts unchanged), human review of Q06/Q10/Q11, versioned release (HP-AC08, HP-AC09).
+2. S8 Factory experiment: implement exactly one small change (F-NEW) for the bottleneck above. Repeat R-02 from a fresh isolated copy of the same HP-V1 Q-BASE, with the same model, settings and checks and no reuse of baseline output, patches or caches. Compare with this baseline and decide keep / adapt / revert.
+3. S8 handover and economic review: hand over startup, tests and rule description to the customer; reconcile S6–S8 cost totals; show with evidence what was reused from Nordwerk, what stayed customer-specific and which Factory investment we keep for a third customer.
