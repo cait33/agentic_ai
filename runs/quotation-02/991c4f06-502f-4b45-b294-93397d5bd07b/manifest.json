@@ -1,0 +1,74 @@
+{
+  "run_id": "991c4f06-502f-4b45-b294-93397d5bd07b",
+  "workflow_id": "991c4f06-502f-4b45-b294-93397d5bd07b",
+  "project_id": "quotation-02",
+  "customer": "HansePack Handelsgesellschaft (fiktiv)",
+  "customer_task_id": "CUST-002",
+  "issue": "https://github.com/franciscotbatista99/client-02-quotation/issues/2",
+  "product_repo": "https://github.com/franciscotbatista99/client-02-quotation",
+  "product_path": "/Users/fatih/hp-fault",
+  "factory_input_commit": "02f25ed51ac000c201607e116814e4309231e14f",
+  "factory_dirty_at_start": true,
+  "product_input_commit": "851a7d28cfd9e0a03ab81883dc158fb19e6e146b",
+  "product_dirty_at_start": false,
+  "product_result_commit": null,
+  "llm_provider": "ollama",
+  "llm_model": "qwen3:4b",
+  "llm_settings": {
+    "temperature": 0.0,
+    "json_mode": true,
+    "reasoning": false,
+    "max_output_tokens_implementer": 3072
+  },
+  "mode": "verify_only",
+  "implementer_mode": "python_module",
+  "po_cache": {
+    "enabled": false,
+    "hit": false,
+    "key": null
+  },
+  "agents": [
+    "qa-agent"
+  ],
+  "steps": [
+    "qa",
+    "human_gate"
+  ],
+  "correction_rounds": 1,
+  "max_correction_rounds": 2,
+  "history": [
+    {
+      "round": 0,
+      "artifact_sha256": "447a833b96e66c2a787ab66eb96450b7b60d7df7ff8099d917098ed0e54798b0",
+      "qa_verdict": "changes_requested",
+      "tests_passed": 91,
+      "tests_failed": 6
+    }
+  ],
+  "errors": [],
+  "target_file": "quotation/pricing.py",
+  "final_artifact_sha256": "447a833b96e66c2a787ab66eb96450b7b60d7df7ff8099d917098ed0e54798b0",
+  "criteria_product_check": {
+    "HP_AC06": "passed",
+    "HP_AC01": "passed",
+    "HP_AC02": "failed",
+    "HP_AC03": "failed",
+    "HP_AC04": "passed"
+  },
+  "release_status": "not_released",
+  "release_blockers": [
+    "human decision: changes_requested",
+    "product check not green: verdict=changes_requested, failed=6, errors=0, tests=['tests/test_reference_cases.py::test_hp_ac02_lines_match_customer_values[Q03]', 'tests/test_reference_cases.py::test_hp_ac02_totals_match_customer_values[Q03]', 'tests/test_reference_cases.py::test_hp_ac03_lines_match_customer_values[Q03]', 'tests/test_reference_cases.py::test_hp_ac03_lines_match_customer_values[Q12]', 'tests/test_reference_cases.py::test_hp_ac03_totals_match_customer_values[Q03]', 'tests/test_reference_cases.py::test_hp_ac03_totals_match_customer_values[Q12]']"
+  ],
+  "agent_recommendation": "changes_requested",
+  "human_decision": "changes_requested",
+  "reviewer": "Francisco",
+  "decided_at_utc": "2026-11-23T12:19:18.998464+00:00",
+  "agent_calls": 1,
+  "agent_credits": 1.583,
+  "token_usage_complete": true,
+  "started_at_utc": "2026-11-23T12:17:49.278321+00:00",
+  "duration_seconds_incl_human_wait": 89.7705,
+  "trace_file": "trace.jsonl",
+  "manual_interventions": []
+}

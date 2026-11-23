@@ -1,0 +1,17 @@
+{
+  "task_id": "CUST-002",
+  "verdict": "approved",
+  "summary": "All tests passed (97 passed, 1 skipped).",
+  "findings": [],
+  "test_run": {
+    "exit_code": 0,
+    "passed": 97,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 1,
+    "failed_tests": [],
+    "timed_out": false,
+    "output_tail": "........................................................................ [ 74%]\n.........................                                                [100%]\n97 passed, 1 skipped in 0.04s\n"
+  },
+  "requires_human_approval": true
+}
