@@ -200,15 +200,15 @@ Factory development and the R-02 experiment are recorded separately from custome
 | Factory development `FACTORY-S7`: gate tests passed/blocked (mocked LLM) | Francisco | TODO h                                                    | TODO    |
 | Factory development `FACTORY-S7`: fault case (fault branch, fault + correction runs, PR #60) | Fatih | 0.2 h                                                     | 20.00   |
 | Factory development `FACTORY-S7`: fault case (fault branch, fault + correction runs) | Francisco | TODO h                                                    | TODO    |
-| R-02 baseline (separate): review + merge of setup PR, F-BASE tag, time tracking, evidence | Rafael | 0.5 h | 50.00 |
-| R-02 baseline (separate): Q-BASE tag, setup PR, worktree, run operation, gate review, rework, evaluation | Francisco | 1.5 h | 150.00 |
+| R-02 baseline (separate): review + merge of setup PR, F-BASE tag, time tracking, evidence | Rafael | 0.8 h | 80.00 |
+| R-02 baseline (separate): Q-BASE tag, setup PR, worktree, run operation, gate review, rework, evaluation | Francisco | 1.2 h | 120.00 |
 | Agents `CUST-002`: export run `d9c8a2eb` (incl. failed round 0) | – | 4 LLM calls                                               | 5.60    |
 | Agents `CUST-002`: failed UI runs `7272cdc6` + `fbc26776` (Caitlin, branch `createWebsite2Run`) | – | 1 LLM call                                                | 1.81    |
 | Agents `CUST-002`: validation `c8d80e3` | – | unknown (no run evidence)                                 | unknown |
 | Agents `FACTORY-S7`: fault run `991c4f06` + correction run `bcae3e2c` | – | 1 LLM call                                                | 1.59    |
 | Agents R-02: run 01b79f0c (1 full run, no failed runs) | – | 2 LLM calls | 3.85 |
 | Agents: test runs not in the repository | – | unknown                                                   | unknown |
-| CI | – | TODO (none – Actions disabled / N runs incl. failed runs) | TODO    |
+| CI | – | 28 Factory CI runs on 23 Nov (CI up to #155, 0 failed); product repo has no CI workflow | 28.00 |
 
 Unknown values are marked `unknown`, not 0.
 
@@ -216,13 +216,13 @@ Unknown values are marked `unknown`, not 0.
 
 | Session | Planned scope | Budget (credits) |
 |---|---|---|
-| S7 | HP-AC03 (Q01–Q14), HP-AC04 (E01–E10), HP-AC05 web UI, HP-AC06 JSON export, HP-AC07 release candidate | 1600 (team planning from S6: 5 people × ≈ 3 h = 1500 + ≈ 25 agent runs à ≈ 4 credits) · **actual TODO** |
+| S7 | HP-AC03 (Q01–Q14), HP-AC04 (E01–E10), HP-AC05 web UI, HP-AC06 JSON export, HP-AC07 release candidate | 1600 (team planning from S6: 5 people × ≈ 3 h = 1500 + ≈ 25 agent runs à ≈ 4 credits) · **actual ≈ 594 (lower bound, see below)** |
 | S8 (reserve) | CR-02 / HP-V2 shipping rule (HP-AC08), HP-AC09 release, Factory change + R-02 repeat | 600 reserve |
 
 Budgets are a team planning proposal, not agreed with the instructor yet.
 
-Actual S7 effort (from `costs/usage.csv`): **TODO h human + TODO agent credits + TODO CI = TODO credits** (`CUST-002` TODO, `FACTORY-S7` TODO, R-02 TODO).
-Plan deviations: R-02 was planned for 13:30–14:15. Setup and tags ran ≈ 14:05–14:55, the run 14:57–15:06, evaluation and rework until ≈ 15:30 – after the 15:00 deadline. The R-02 check was fixed after the run (CRLF, see section 4). Second R-02 run not done (time). Further deviations: TODO.
+Actual S7 effort (from `costs/usage.csv`, 23 Nov): **5.55 h human (555.00) + 11.04 agent credits + 28 CI runs (28.00) = 594.04 credits** (`CUST-002` 315.60, `FACTORY-S7` 74.59, `R-02` 203.85). Human hours: Daniil 1.5, Fatih 1.3, Francisco 1.2, Rafael 0.8, Caitlin 0.75. Lower bound: Francisco's gate/fault-case hours, Rafael's CUST-002 time-tracking hours and the agent credits of the failed UI runs `7272cdc6` + `fbc26776` (1.81) are not in `usage.csv`.
+Plan deviations: R-02 was planned for 13:30–14:15. Setup and tags ran ≈ 14:05–14:55, the run 14:57–15:06, evaluation and rework until ≈ 15:30 – after the 15:00 deadline. The R-02 check was fixed after the run (CRLF, see section 4). Second R-02 run not done (time). Further deviations: actual ≈ 594 of 1600 planned credits – far fewer human hours recorded than planned (5.55 h vs. ≈ 15 h) and only 4 agent runs recorded instead of ≈ 25; web UI written by a human after two failed Factory attempts (`7272cdc6`, `fbc26776`); E06/E09/E10 validation written by hand and only verified by the Factory (`--verify-only`); the export run needed one human feedback round.
 
 ## Bottleneck and hypothesis
 
